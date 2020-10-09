@@ -37,6 +37,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     private val minDelayTime = 500 // 两次点击间隔不能少于500ms
     private var lastClickTime: Long = 0
     private var rootView: View? = null
+
     //ImmersionBar代理类
     private val mImmersionProxy = ImmersionProxy(this)
 
@@ -88,7 +89,8 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     }
 
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        if (layoutRes != 0) binding = DataBindingUtil.inflate<BINDING>(inflater, layoutRes, container, false)
+        if (layoutRes != 0) binding =
+            DataBindingUtil.inflate<BINDING>(inflater, layoutRes, container, false)
         mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel()))[viewModel()::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
@@ -132,9 +134,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     override fun onDestroy() {
         super.onDestroy()
         mImmersionProxy.onDestroy()
-        binding?.let {
-            it.unbind()
-        }
+        binding?.let { it.unbind() }
         mViewModel?.let { lifecycle.removeObserver(it) }
     }
 

@@ -5,25 +5,10 @@ import android.content.Context
 import android.os.Build
 import android.os.LocaleList
 import android.text.TextUtils
-import com.zh.common.schedulers.SchedulerProvider
 import com.zh.config.ZjConfig
 import java.util.*
 
-class LanguageUtil private constructor() {
-
-    //单列
-    companion object {
-        private var INSTANCE: LanguageUtil? = null
-
-        @get:Synchronized
-        val instance: LanguageUtil
-            get() {
-                if (INSTANCE == null) {
-                    INSTANCE = LanguageUtil()
-                }
-                return INSTANCE!!
-            }
-    }
+class LanguageUtil {
 
     /**
      * 更改应用语言

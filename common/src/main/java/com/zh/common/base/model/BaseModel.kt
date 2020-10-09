@@ -32,7 +32,6 @@ abstract class BaseModel<T> : IBaseModel {
         mCompositeDisposable?.add(disposable)
     }
 
-
     override fun onCleared() {
         //解除网络请求
         if (mCompositeDisposable != null) {

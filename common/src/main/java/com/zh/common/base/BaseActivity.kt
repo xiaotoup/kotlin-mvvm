@@ -28,8 +28,7 @@ import me.jessyan.autosize.internal.CustomAdapt
  * @desc Activity基类，MVVM架构
  */
 abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
-    RxAppCompatActivity(),
-    CustomAdapt {
+    RxAppCompatActivity(), CustomAdapt {
 
     private lateinit var binding: BINDING
     var mViewModel: VM? = null
@@ -97,9 +96,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     override fun onDestroy() {
         super.onDestroy()
         synchronized(BaseActivity::class.java) { mApplication?.getActivityList()?.remove(this) }
-        binding?.let {
-            it.unbind()
-        }
+        binding?.let { it.unbind() }
         mViewModel?.let { lifecycle.removeObserver(it) }
     }
 
@@ -167,7 +164,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      * 语言适配
      */
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(newBase?.let { LanguageUtil.instance.attachBaseContext(it) })
+        super.attachBaseContext(newBase?.let { LanguageUtil().attachBaseContext(it) })
     }
 
     /**
