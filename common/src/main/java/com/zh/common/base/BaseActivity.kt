@@ -166,7 +166,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      * 语言适配
      */
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(newBase?.let { LanguageUtil.get().attachBaseContext(it) })
+        super.attachBaseContext(newBase?.let { LanguageUtil.instance.attachBaseContext(it) })
     }
 
     /**

@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.LocaleList
 import android.text.TextUtils
+import com.zh.common.schedulers.SchedulerProvider
 import com.zh.config.ZjConfig
 import java.util.*
 
@@ -12,14 +13,16 @@ class LanguageUtil private constructor() {
 
     //单列
     companion object {
-        private var instance: LanguageUtil? = null
-            get() {
-                if (field == null) field = LanguageUtil()
-                return field
-            }
+        private var INSTANCE: LanguageUtil? = null
 
-        @Synchronized
-        fun get(): LanguageUtil = instance!!
+        @get:Synchronized
+        val instance: LanguageUtil
+            get() {
+                if (INSTANCE == null) {
+                    INSTANCE = LanguageUtil()
+                }
+                return INSTANCE!!
+            }
     }
 
     /**

@@ -52,7 +52,7 @@ open class BaseViewModel<MODEL : BaseModel<*>?>(model: MODEL) : ViewModel(), IBa
     }
 
     override fun onDestroy() {
-
+        mModel?.onCleared()
     }
 }
 

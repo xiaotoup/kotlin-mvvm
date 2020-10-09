@@ -33,6 +33,7 @@ private constructor() : BaseSchedulerProvider {
     }
 
     companion object {
+
         private var INSTANCE: SchedulerProvider? = null
 
         @get:Synchronized

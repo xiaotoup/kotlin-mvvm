@@ -11,6 +11,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.BuildConfig
 import com.zh.common.di.ClientModule
 import com.zh.common.utils.GlideManager
+import com.zh.common.utils.LanguageUtil
 import com.zh.common.utils.SpUtil
 import com.zh.common.utils.ToastUtils
 import com.zh.config.ZjConfig
@@ -32,6 +33,7 @@ abstract class BaseApplication : MultiDexApplication() {
     //让外部获取到BaseApplication
     companion object {
         private var mApplication: BaseApplication? = null
+        @Synchronized
         fun getApplication(): BaseApplication = mApplication!!
     }
 

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MainViewModel(private val model: MainModel) : BaseViewModel<MainModel>(model) {
 
     fun doLogin(context: Context, map: Map<String, Any>) {
-        model.onLogin(map, object : BaseObserver<LoginBean>(context) {
+        model.onLogin(map, object : BaseObserver<LoginBean>(context, true) {
             override fun onISuccess(response: LoginBean) {
                 ToastUtils.showMessage(response.data?.bussData.toString())
             }
