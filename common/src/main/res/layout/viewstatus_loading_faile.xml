@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <com.zh.common.view.ShadowContainer
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:containerCornerRadius="10dp"
+        app:containerDeltaLength="2dp"
+        app:containerShadowColor="#50e2e2e2"
+        app:containerShadowRadius="10dp">
+
+        <LinearLayout
+            android:id="@+id/vs_le_root"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/r10_white_bg"
+            android:gravity="center"
+            android:minWidth="90dp"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/viewstatus_loading_faile_image_bg" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="8dp"
+                android:text="@string/load_failed"
+                android:textColor="#aeaeae"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </com.zh.common.view.ShadowContainer>
+</ScrollView>

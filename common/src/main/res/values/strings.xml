@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">common</string>
+
+    <string name="http_network_error">网络错误</string>
+    <string name="http_parsing_error">解析错误</string>
+    <string name="http_connection_failed">连接失败</string>
+    <string name="http_ssl_verification_failed">证书验证失败</string>
+    <string name="http_connection_timed_out">连接超时</string>
+    <string name="http_unknown_error">未知错误</string>
+
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
+    <string name="loading">加载中</string>
+    <string name="load_failed">加载失败</string>
+    <string name="no_data">没有数据</string>
+    <string name="no_network">没有网络</string>
+</resources>

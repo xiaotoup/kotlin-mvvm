@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    defaultConfig {
+        applicationId "com.zh.kotlin_mvvm"
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+        multiDexEnabled true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+kapt {
+    generateStubs = true
+}
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation project(':common')
+    kapt "com.android.databinding:compiler:$compiler_version"
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    if (isNeedHomeModule.toBoolean()) {
+        implementation project(path: ':home')
+    }
+    if (isNeedNewsModule.toBoolean()) {
+        implementation project(path: ':news')
+    }
+    if (isNeedMineModule.toBoolean()) {
+        implementation project(path: ':mine')
+    }
+    if (isNeedLoginModule.toBoolean()) {
+        implementation project(path: ':login')
+    }
+    if (isNeedFoundModule.toBoolean()) {
+        implementation project(path: ':found')
+    }
+}

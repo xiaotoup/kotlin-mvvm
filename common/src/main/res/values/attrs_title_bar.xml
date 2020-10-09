@@ -1,0 +1,49 @@
+<resources>
+    <!--标题栏-->
+    <declare-styleable name="TitleBarView">
+        <!-- 中间标题 -->
+        <attr name="tb_centerText" format="string" />
+        <!-- 中间标题文字颜色 -->
+        <attr name="tb_centerTextColor" format="color" />
+        <!-- 中间标题文字_字体大小 -->
+        <attr name="tb_centerTextSize" format="dimension" />
+        <!-- 右边文字 -->
+        <attr name="tb_rightText" format="string" />
+        <!-- 右边文字颜色 -->
+        <attr name="tb_rightTextColor" format="color" />
+        <!-- 右边文字_字体大小 -->
+        <attr name="tb_rightTextSize" format="dimension" />
+        <!-- 左边文字 -->
+        <attr name="tb_leftText" format="string" />
+        <!-- 左边文字颜色 -->
+        <attr name="tb_leftTextColor" format="color" />
+        <!-- 左边文字_字体大小 -->
+        <attr name="tb_leftTextSize" format="dimension" />
+        <!-- 左边图片 -->
+        <attr name="tb_leftImageDrawable" format="reference" />
+        <!-- 右边图片 -->
+        <attr name="tb_rightImageDrawable" format="reference" />
+        <!-- 右边图片2 -->
+        <attr name="tb_rightImageDrawable2" format="reference" />
+        <!-- 右边图片2_距离右边距离 -->
+        <attr name="tb_rightImage2_marginRight" format="dimension" />
+        <!-- 底部分割线 -->
+        <attr name="tb_divider" format="boolean" />
+        <!-- TitleBar高度 -->
+        <attr name="tb_titleBarHeight" format="dimension" />
+        <!-- TitleBar背景色 -->
+        <attr name="tb_titleBarBackground" format="color" />
+    </declare-styleable>
+
+    <!--验证码控件-->
+    <declare-styleable name="VCodeView">
+        <!-- 正常文字颜色 -->
+        <attr name="vc_normalColor" format="color" />
+        <!-- 点击之后文字颜色 -->
+        <attr name="vc_disableColor" format="color" />
+        <!-- 文字大小 -->
+        <attr name="vc_textSize" format="dimension" />
+        <!-- 文字 -->
+        <attr name="vc_text" format="string" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,94 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    buildToolsVersion rootProject.ext.android["buildToolsVersion"]
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+kapt {
+    generateStubs = true
+}
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    testApi 'junit:junit:4.12'
+    androidTestApi 'androidx.test.ext:junit:1.1.2'
+    androidTestApi 'androidx.test.espresso:espresso-core:3.3.0'
+
+    api 'androidx.core:core-ktx:1.3.2'
+    api 'androidx.multidex:multidex:2.0.1'
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'androidx.constraintlayout:constraintlayout:2.0.2'
+
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+
+    api 'me.jessyan:autosize:1.2.1'
+    api 'com.alibaba:arouter-api:1.5.0'
+    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+
+    api 'com.youth.banner:banner:2.1.0'
+    api 'com.jakewharton.timber:timber:4.7.1'
+    api 'com.contrarywind:Android-PickerView:4.1.9'
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    api 'com.github.bumptech.glide:okhttp3-integration:4.11.0'
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.9'
+
+    api 'io.reactivex.rxjava2:rxjava:2.2.5'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+
+    api 'com.squareup.okhttp3:okhttp:4.4.0'
+    api 'com.squareup.okhttp3:logging-interceptor:4.4.0'
+
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
+
+    api 'com.trello.rxlifecycle2:rxlifecycle:2.2.2'
+    api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.2'
+    api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
+
+    kapt "com.android.databinding:compiler:$compiler_version"
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    //新导入的包全部添加到下面
+    
+}
