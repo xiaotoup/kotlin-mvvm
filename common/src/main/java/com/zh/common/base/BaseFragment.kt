@@ -135,6 +135,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
         binding?.let {
             it.unbind()
         }
+        mViewModel?.let { lifecycle.removeObserver(it) }
     }
 
     /**

@@ -100,6 +100,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
         binding?.let {
             it.unbind()
         }
+        mViewModel?.let { lifecycle.removeObserver(it) }
     }
 
     /**
