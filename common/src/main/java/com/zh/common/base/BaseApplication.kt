@@ -7,11 +7,14 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
+import com.scwang.smart.refresh.footer.ClassicsFooter
+import com.scwang.smart.refresh.header.MaterialHeader
+import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.BuildConfig
+import com.zh.common.R
 import com.zh.common.di.ClientModule
 import com.zh.common.utils.GlideManager
-import com.zh.common.utils.LanguageUtil
 import com.zh.common.utils.SpUtil
 import com.zh.common.utils.ToastUtils
 import com.zh.config.ZjConfig
@@ -20,6 +23,7 @@ import me.jessyan.autosize.unit.Subunits
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 import java.util.*
+
 
 abstract class BaseApplication : MultiDexApplication() {
 
@@ -30,9 +34,11 @@ abstract class BaseApplication : MultiDexApplication() {
     val mClientModule: ClientModule by lazy {
         mBaseUrl?.let { ClientModule.Buidler().baseurl(it).build() }
     }
+
     //让外部获取到BaseApplication
     companion object {
         private var mApplication: BaseApplication? = null
+
         @Synchronized
         fun getApplication(): BaseApplication = mApplication!!
     }
@@ -138,5 +144,17 @@ abstract class BaseApplication : MultiDexApplication() {
     override fun onTerminate() {
         super.onTerminate()
         ARouter.getInstance().destroy()
+    }
+
+    init {
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+            layout.setPrimaryColorsId(R.color.colorPrimary, R.color.colorAccent) //全局设置主题颜色
+            MaterialHeader(context)
+        }
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+            ClassicsFooter(context).setDrawableSize(20f)
+        }
     }
 }

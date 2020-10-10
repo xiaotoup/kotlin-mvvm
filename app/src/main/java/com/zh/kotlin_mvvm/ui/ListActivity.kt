@@ -3,6 +3,8 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.model.NormalModel
 import com.zh.common.base.viewmodel.NormalViewModel
@@ -31,13 +33,26 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         for (i in 0..20) {
-            list.add(ListBean(i,"$i item"))
+            list.add(ListBean(i, "$i item"))
         }
         recyclerView.adapter = mAdapter
     }
 
     override fun initData() {
+        for (i in list.indices) {
+            println("$i ${list[i].title}")
+        }
+        refreshLayout.autoRefresh()
+        refreshLayout.autoLoadMore()
+        refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
+            override fun onLoadMore(refreshLayout: RefreshLayout) {
+                refreshLayout.finishLoadMore(2000)
+            }
 
+            override fun onRefresh(refreshLayout: RefreshLayout) {
+                refreshLayout.finishRefresh(2000)
+            }
+        })
     }
 
     override fun onDestroy() {

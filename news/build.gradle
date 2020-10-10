@@ -48,9 +48,11 @@ kapt {
 }
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 
     implementation project(':common')
-    kapt "com.android.databinding:compiler:$compiler_version"
     kapt 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt "com.android.databinding:compiler:$compiler_version"
 }

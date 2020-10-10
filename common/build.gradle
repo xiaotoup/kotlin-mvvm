@@ -40,6 +40,8 @@ kapt {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 
     testApi 'junit:junit:4.12'
     androidTestApi 'androidx.test.ext:junit:1.1.2'
@@ -47,9 +49,7 @@ dependencies {
 
     api 'androidx.core:core-ktx:1.3.2'
     api 'androidx.multidex:multidex:2.0.1'
-    api 'androidx.appcompat:appcompat:1.2.0'
     api 'androidx.recyclerview:recyclerview:1.1.0'
-    api 'androidx.constraintlayout:constraintlayout:2.0.2'
 
     api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
@@ -65,6 +65,10 @@ dependencies {
     api 'com.jakewharton.timber:timber:4.7.1'
     api 'com.contrarywind:Android-PickerView:4.1.9'
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'
+    api 'com.scwang.smart:refresh-header-material:2.0.1'
+    api 'com.scwang.smart:refresh-footer-classics:2.0.1'
 
     api 'com.github.bumptech.glide:glide:4.11.0'
     api 'com.github.bumptech.glide:okhttp3-integration:4.11.0'
@@ -86,10 +90,10 @@ dependencies {
     api 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.2'
     api 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
 
-    kapt "com.android.databinding:compiler:$compiler_version"
     kapt 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt "com.android.databinding:compiler:$compiler_version"
 
     //新导入的包全部添加到下面
-    
+
 }
