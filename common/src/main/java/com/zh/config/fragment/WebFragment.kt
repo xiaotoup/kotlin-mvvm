@@ -25,9 +25,7 @@ class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
     private var mScrollView: NestedScrollView? = null
 
     override val layoutRes = R.layout.fragment_web
-
-    override fun viewModel() = NormalViewModel()
-
+    override val viewModel = NormalViewModel()
     override val onBindVariableId = BR.viewModel
 
     override fun initView(savedInstanceState: Bundle?) {
