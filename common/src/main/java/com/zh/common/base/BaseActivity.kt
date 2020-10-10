@@ -56,7 +56,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
 
     private fun initViewDataBinding() {
         if (layoutRes != 0) binding = DataBindingUtil.setContentView(this, layoutRes)
-        mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel()))[viewModel()::class.java]
+        mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.let { binding.setVariable(viewModelId, mViewModel) }
@@ -68,7 +68,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
 
     @get:LayoutRes
     abstract val layoutRes: Int
-    abstract fun viewModel(): VM
+    abstract val viewModel: VM
     abstract val onBindVariableId: Int
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData()

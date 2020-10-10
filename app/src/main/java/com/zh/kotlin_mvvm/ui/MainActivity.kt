@@ -16,7 +16,7 @@ class MainActivity : BaseActivity<ViewDataBinding, MainViewModel>() {
 
     override val layoutRes: Int = R.layout.activity_main
     override val onBindVariableId: Int = BR.viewModel
-    override fun viewModel(): MainViewModel = MainViewModel(MainModel())
+    override val viewModel: MainViewModel = MainViewModel()
     override fun initView(savedInstanceState: Bundle?) {
         mViewModel?.setContext(this)
     }

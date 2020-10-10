@@ -12,7 +12,7 @@ import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.model.MainModel
 import com.zh.kotlin_mvvm.net.bean.LoginBean
 
-class MainViewModel(private val model: MainModel) : BaseViewModel<MainModel>(model) {
+class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
 
     private var mContext: Context? = null
     var sid: ObservableField<String> = ObservableField("")
@@ -28,7 +28,7 @@ class MainViewModel(private val model: MainModel) : BaseViewModel<MainModel>(mod
     }
 
     fun doLogin(context: Context, map: Map<String, Any>) {
-        model.onLogin(map, object : BaseObserver<LoginBean>(context, true) {
+        mModel?.onLogin(map, object : BaseObserver<LoginBean>(context, true) {
             override fun onISuccess(response: LoginBean) {
                 sid.set(response.data?.bussData)
             }

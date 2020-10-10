@@ -12,6 +12,7 @@ import android.view.Window
 import android.view.WindowManager
 import com.alibaba.android.arouter.launcher.ARouter
 import com.zh.common.R
+import io.reactivex.disposables.CompositeDisposable
 
 /**
  * @Author： zxh
@@ -21,6 +22,7 @@ import com.zh.common.R
 abstract class BaseDialog : Dialog {
     var dialogWindow: Window? = window
     private var mContext: Context
+    private var mCompositeDisposable: CompositeDisposable? = null
 
     constructor(context: Context, layoutId: Int) : super(context, R.style.StyleDialog) {
         mContext = context
@@ -32,6 +34,12 @@ abstract class BaseDialog : Dialog {
             dialogWindow?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         }
         setCanceledOnTouchOutside(true) // 设置点击屏幕Dialog消失
+        if (null == mCompositeDisposable) {
+            mCompositeDisposable = CompositeDisposable()
+        }
+        setOnDismissListener {
+            mCompositeDisposable?.let { it2 -> it2.clear() }
+        }
     }
 
     fun setDialogWidth(width: Int) {

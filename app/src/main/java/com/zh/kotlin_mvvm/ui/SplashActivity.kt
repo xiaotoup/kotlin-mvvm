@@ -3,7 +3,6 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.zh.common.base.BaseActivity
-import com.zh.common.base.model.NormalModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.utils.ToastUtils
 import com.zh.config.ZjConfig
@@ -14,7 +13,7 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override val layoutRes = R.layout.activity_splash
 
-    override fun viewModel(): NormalViewModel = NormalViewModel(NormalModel())
+    override val viewModel: NormalViewModel = NormalViewModel()
 
     override val onBindVariableId = 0
 

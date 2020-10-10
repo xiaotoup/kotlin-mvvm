@@ -13,7 +13,6 @@ import com.just.agentweb.AgentWeb
 import com.zh.common.BR
 import com.zh.common.R
 import com.zh.common.base.BaseFragment
-import com.zh.common.base.model.NormalModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import kotlinx.android.synthetic.main.fragment_web.*
 
@@ -27,7 +26,7 @@ class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
 
     override val layoutRes = R.layout.fragment_web
 
-    override fun viewModel() = NormalViewModel(NormalModel())
+    override fun viewModel() = NormalViewModel()
 
     override val onBindVariableId = BR.viewModel
 

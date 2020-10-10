@@ -5,7 +5,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import com.zh.common.base.model.BaseModel
-import com.zh.common.utils.LogUtil
 import io.reactivex.disposables.Disposable
 
 /**
@@ -28,7 +27,7 @@ open class BaseViewModel<MODEL : BaseModel<*>?>(model: MODEL) : ViewModel(), IBa
     }
 
     override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
-        LogUtil.d("--okHttp--", "viewModel onAny")
+
     }
 
     override fun onCreate() {

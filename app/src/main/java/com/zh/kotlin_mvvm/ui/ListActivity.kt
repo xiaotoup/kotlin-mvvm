@@ -6,7 +6,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
-import com.zh.common.base.model.NormalModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
@@ -23,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_list.*
 class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override val layoutRes = R.layout.activity_list
-    override fun viewModel(): NormalViewModel = NormalViewModel(NormalModel())
+    override val viewModel: NormalViewModel = NormalViewModel()
     override val onBindVariableId = 0
 
     private var list: MutableList<ListBean> = mutableListOf<ListBean>()
