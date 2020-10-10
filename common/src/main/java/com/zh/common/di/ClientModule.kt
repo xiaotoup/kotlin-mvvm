@@ -28,7 +28,7 @@ import java.util.concurrent.TimeUnit
 class ClientModule private constructor(buidler: Buidler) {
     private var mApiUrl: HttpUrl? = null
     private var mHandler: GlobeHttpHandler? = null
-    private var mInterceptors: Array<Interceptor>?
+    private var mInterceptors: MutableList<Interceptor>?
     private var mErroListener: ResponseErrorListener? = null
 
     /**
@@ -97,7 +97,7 @@ class ClientModule private constructor(buidler: Buidler) {
         return mRetrofit
     }
 
-    fun provideBaseUrl(): HttpUrl? {
+    private fun provideBaseUrl(): HttpUrl? {
         return mApiUrl
     }
 
@@ -136,7 +136,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      * @description:配置retrofit
      */
-    fun configureRetrofit(
+    private fun configureRetrofit(
         builder: Retrofit.Builder,
         client: OkHttpClient?,
         httpUrl: HttpUrl?
@@ -156,7 +156,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @param okHttpClient
      * @return
      */
-    fun configureClient(
+    private fun configureClient(
         okHttpClient: OkHttpClient.Builder,
         cache: Cache?,
         intercept: Interceptor?
@@ -172,7 +172,7 @@ class ClientModule private constructor(buidler: Buidler) {
             )
             .cache(cache) //设置缓存
             .addNetworkInterceptor(intercept!!)
-        if (mInterceptors != null && mInterceptors!!.size > 0) { //如果外部提供了interceptor的数组则遍历添加
+        if (mInterceptors != null && mInterceptors!!.isNotEmpty()) { //如果外部提供了interceptor的数组则遍历添加
             for (interceptor in mInterceptors!!) {
                 builder.addInterceptor(interceptor)
             }
@@ -183,7 +183,7 @@ class ClientModule private constructor(buidler: Buidler) {
     class Buidler {
         var apiUrl = "https://api.github.com/".toHttpUrlOrNull()
         var handler: GlobeHttpHandler? = null
-        var interceptors: Array<Interceptor>? = null
+        var interceptors: MutableList<Interceptor> = mutableListOf<Interceptor>()
         var responseErroListener: ResponseErrorListener? = null
 
         fun baseurl(baseurl: String): Buidler { //基础url
@@ -197,7 +197,7 @@ class ClientModule private constructor(buidler: Buidler) {
             return this
         }
 
-        fun interceptors(interceptors: Array<Interceptor>): Buidler { //动态添加任意个interceptor
+        fun interceptors(interceptors: MutableList<Interceptor>): Buidler { //动态添加任意个interceptor
             this.interceptors = interceptors
             return this
         }
