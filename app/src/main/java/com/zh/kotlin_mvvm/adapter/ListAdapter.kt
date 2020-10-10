@@ -18,17 +18,19 @@ class ListAdapter(data: MutableList<ListBean>) :
 
     private var binding: ViewDataBinding? = null
 
-    override fun onItemViewHolderCreated(viewHolder: BaseDataBindingHolder<ViewDataBinding>, viewType: Int) {
+    override fun onItemViewHolderCreated( viewHolder: BaseDataBindingHolder<ViewDataBinding>, viewType: Int) {
         DataBindingUtil.bind<ViewDataBinding>(viewHolder.itemView)
     }
 
     override fun convert(holder: BaseDataBindingHolder<ViewDataBinding>, item: ListBean) {
         binding = holder.dataBinding
-        binding?.setVariable(BR.bean, item)
-        binding?.executePendingBindings()
+        binding?.let {
+            it.setVariable(BR.bean, item)
+            it.executePendingBindings()
+        }
     }
 
-    fun unbind(){
+    fun unbind() {
         binding?.let { it.unbind() }
     }
 }
