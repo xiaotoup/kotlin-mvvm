@@ -4,19 +4,23 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.exception.ApiException
+import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.model.MainModel
 import com.zh.kotlin_mvvm.net.bean.LoginBean
 
 class MainViewModel(private val model: MainModel) : BaseViewModel<MainModel>(model) {
 
+    private var mContext: Context? = null
     var sid: ObservableField<String> = ObservableField("")
-    var mContext : Context? = null
+    var imgUrl: ObservableInt = ObservableInt()
 
-    fun setContext(context: Context){
+    fun setContext(context: Context) {
         mContext = context
+        imgUrl.set(R.mipmap.teenmodel_bg_4)
     }
 
     fun back(view: View) {

@@ -14,14 +14,14 @@ abstract class BaseModel<T> : IBaseModel {
 
     private var iNetService: T
     private var mCompositeDisposable: CompositeDisposable? = null
+    private val mClientModule = BaseApplication.getApplication().mClientModule
 
     init {
         mCompositeDisposable = CompositeDisposable()
     }
 
-    constructor(service: Class<*> ){
-        iNetService = BaseApplication.getApplication().mClientModule
-            .provideRequestService(BaseApplication.getApplication().mClientModule)?.create(service) as T
+    constructor(service: Class<*>) {
+        iNetService = mClientModule.provideRequestService(mClientModule)?.create(service) as T
     }
 
     //添加网络请求到CompositeDisposable

@@ -52,5 +52,5 @@ dependencies {
     implementation project(':common')
     kapt "com.android.databinding:compiler:$compiler_version"
     kapt 'com.alibaba:arouter-compiler:1.2.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 }

@@ -43,9 +43,11 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation project(':common')
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     kapt "com.android.databinding:compiler:$compiler_version"
     kapt 'com.alibaba:arouter-compiler:1.2.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     if (isNeedHomeModule.toBoolean()) {
         implementation project(path: ':home')

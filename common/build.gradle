@@ -61,6 +61,7 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
 
     api 'com.youth.banner:banner:2.1.0'
+    api 'com.just.agentweb:agentweb:4.1.2'
     api 'com.jakewharton.timber:timber:4.7.1'
     api 'com.contrarywind:Android-PickerView:4.1.9'
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
@@ -87,7 +88,7 @@ dependencies {
 
     kapt "com.android.databinding:compiler:$compiler_version"
     kapt 'com.alibaba:arouter-compiler:1.2.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
 
     //新导入的包全部添加到下面
     

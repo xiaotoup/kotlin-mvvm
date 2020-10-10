@@ -21,4 +21,5 @@ object ZjConfig {
 
     const val MainActivity: String = "/app/mainUI"
     const val LoginActivity: String = "/login/loginUI"
+    const val ListActivity: String = "/login/ListUI"
 }

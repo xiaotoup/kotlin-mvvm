@@ -29,5 +29,8 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         btnLogin.setOnClickListener {
             startActivity(ZjConfig.LoginActivity)
         }
+        btnList.setOnClickListener {
+            startActivity(ZjConfig.ListActivity)
+        }
     }
 }
