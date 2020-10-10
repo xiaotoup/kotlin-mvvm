@@ -10,10 +10,8 @@ import com.zh.common.http.OSSUploadUrlBean
 import com.zh.common.schedulers.SchedulerProvider
 import com.zh.common.utils.SpUtil
 import com.zh.common.utils.ToastUtils
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okhttp3.MediaType
+import io.reactivex.disposables.Disposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.net.URLConnection
@@ -75,6 +73,10 @@ class FileUploadModule(var clientModule: ClientModule) {
                         ToastUtils.showMessage(e.message)
                         callBack?.onError(e)
                     }
+
+                    override fun onISubscribe(d: Disposable) {
+
+                    }
                 })
         }
     }
@@ -122,14 +124,8 @@ class FileUploadModule(var clientModule: ClientModule) {
             }
         } else {
             //不同重新创建单例上传
-            clientModule.provideClient(
-                clientModule.provideCache(clientModule.provideCacheFile()),
-                clientModule.provideIntercept()
-            )?.let {
-                clientModule.provideRetrofit(
-                    it, baseUrl.toHttpUrlOrNull()!!
-                )
-            }?.also {
+            val clientModule = ClientModule.Buidler().baseurl(baseUrl).build()
+            clientModule.provideRequestService(clientModule)?.also {
                 it.create(INetService::class.java)
                     .upLoadFile(contentType, uploadUrl.substring(n + 1), requestFile)
                     .compose(SchedulerProvider.instance.applySchedulers())

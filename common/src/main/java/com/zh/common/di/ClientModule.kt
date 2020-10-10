@@ -64,7 +64,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      * @description:提供OkhttpClient
      */
-    fun provideClient(cache: Cache, intercept: Interceptor): OkHttpClient? {
+    private fun provideClient(cache: Cache, intercept: Interceptor): OkHttpClient? {
         if (mOkHttpClient == null) {
             synchronized(ClientModule::class.java) {
                 if (mOkHttpClient == null) {
@@ -83,7 +83,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      * @description: 提供retrofit
      */
-    fun provideRetrofit(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
+    private fun provideRetrofit(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
         if (mRetrofit == null) {
             synchronized(ClientModule::class.java) {
                 if (mRetrofit == null) {
@@ -101,18 +101,18 @@ class ClientModule private constructor(buidler: Buidler) {
         return mApiUrl
     }
 
-    fun provideCache(cacheFile: File): Cache {
+    private fun provideCache(cacheFile: File): Cache {
         return Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE.toLong()) //设置缓存路径和大小
     }
 
-    fun provideIntercept(): Interceptor {
+    private fun provideIntercept(): Interceptor {
         return RequestIntercept(mHandler) //打印请求信息的拦截器
     }
 
     /**
      * 提供缓存地址
      */
-    fun provideCacheFile(): File {
+    private fun provideCacheFile(): File {
         return SpUtil.cacheFile
     }
 
@@ -121,7 +121,7 @@ class ClientModule private constructor(buidler: Buidler) {
      *
      * @return
      */
-    fun proRxErrorHandler(application: Application?): RxErrorHandler {
+    private fun proRxErrorHandler(application: Application?): RxErrorHandler {
         return RxErrorHandler
             .builder()
             .with(application)

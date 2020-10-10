@@ -19,7 +19,7 @@ object ZjConfig {
     const val lag_es = "spanish" //西班牙
 
 
-    const val MainActivity: String = "/app/mainUI"
-    const val LoginActivity: String = "/login/loginUI"
-    const val ListActivity: String = "/login/ListUI"
+    const val MainActivity: String = "/app/MainUI"
+    const val ListActivity: String = "/app/ListUI"
+    const val LoginActivity: String = "/login/LoginUI"
 }

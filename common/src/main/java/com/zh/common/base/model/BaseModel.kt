@@ -22,9 +22,6 @@ abstract class BaseModel<T> : IBaseModel {
 
     constructor(service: Class<*>) {
         iNetService = mClientModule.provideRequestService(mClientModule)?.create(service) as T
-
-        val create = mClientModule.provideRequestService(mClientModule)?.create(service)
-        LogUtil.d("--okhttp--", "constructor " + iNetService.toString() + " "+create.toString())
     }
 
     //添加网络请求到CompositeDisposable

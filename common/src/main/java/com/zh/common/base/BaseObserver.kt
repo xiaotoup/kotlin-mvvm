@@ -14,7 +14,7 @@ import io.reactivex.disposables.Disposable
  * 自定义Subscriber
  */
 abstract class BaseObserver<T> : Observer<T> {
-    private var  context: Context
+    private var context: Context
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoadingDialog = false //是否显示加载进度对话框
 
@@ -30,6 +30,8 @@ abstract class BaseObserver<T> : Observer<T> {
 
     override fun onSubscribe(d: Disposable) {
         LogUtil.d("ThomasDebug", "BaseObserver : Http is start")
+        onISubscribe(d)
+
         if (!NetworkUtil.isNetworkConnected(context)) {
             ToastUtils.showMessage("网络异常")
             onComplete() //一定要手动调用
@@ -62,10 +64,11 @@ abstract class BaseObserver<T> : Observer<T> {
         if (isShowLoadingDialog) dismissLoading()
     }
 
+    open fun onISubscribe(d: Disposable) {}
     protected abstract fun onISuccess(response: T)
     protected abstract fun onIError(e: ApiException)
 
-    fun getLoadingDialog(): LoadingDialog? {
+    private fun getLoadingDialog(): LoadingDialog? {
         if (loadingDialog == null) {
             loadingDialog = LoadingDialog(context)
         }
@@ -75,7 +78,7 @@ abstract class BaseObserver<T> : Observer<T> {
     /**
      * 显示加载dialog
      */
-    fun showLoading() {
+    private fun showLoading() {
         if (loadingDialog == null) {
             loadingDialog = LoadingDialog(context)
         }
@@ -85,7 +88,7 @@ abstract class BaseObserver<T> : Observer<T> {
     /**
      * 结束dialog
      */
-    fun dismissLoading() {
+    private fun dismissLoading() {
         if (loadingDialog != null && loadingDialog!!.isShowing) {
             loadingDialog!!.dismiss()
         }

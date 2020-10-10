@@ -1,6 +1,5 @@
 package com.zh.common.base
 
-import android.content.Context
 import com.zh.common.exception.ApiException
 import com.zh.common.exception.ERROR
 import com.zh.common.utils.LogUtil
@@ -8,35 +7,31 @@ import com.zh.common.utils.NetworkUtil
 import com.zh.common.utils.ToastUtils
 import com.zh.common.view.dialog.LoadingDialog
 import io.reactivex.Observer
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
 /**
  * 自定义Dialog的Subscriber
  */
-abstract class BaseDialogObserver<T> : Observer<T> {
-    private var context: Context
+abstract class BaseObserverDialog<T> : Observer<T> {
+    private var impl: BaseImpl
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoadingDialog = false //是否显示加载进度对话框
-    private var disposable: CompositeDisposable
 
-    constructor(context: Context, disposable: CompositeDisposable) {
-        this.context = context
-        this.disposable = disposable
+    constructor(impl: BaseImpl) {
+        this.impl = impl
     }
 
-    constructor(context: Context, disposable: CompositeDisposable, isShowLoadingDialog: Boolean) {
-        this.context = context
-        this.disposable = disposable
+    constructor(impl: BaseImpl, isShowLoadingDialog: Boolean) {
+        this.impl = impl
         this.isShowLoadingDialog = isShowLoadingDialog
         if (isShowLoadingDialog) getLoadingDialog()
     }
 
     override fun onSubscribe(d: Disposable) {
         LogUtil.d("ThomasDebug", "BaseObserver : Http is start")
-        disposable.add(d)
+        impl.disposable.add(d)
 
-        if (!NetworkUtil.isNetworkConnected(context)) {
+        if (!NetworkUtil.isNetworkConnected(impl.context)) {
             ToastUtils.showMessage("网络异常")
             onComplete() //一定要手动调用
         }
@@ -73,7 +68,7 @@ abstract class BaseDialogObserver<T> : Observer<T> {
 
     fun getLoadingDialog(): LoadingDialog? {
         if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(context)
+            loadingDialog = LoadingDialog(impl.context)
         }
         return loadingDialog
     }
@@ -83,7 +78,7 @@ abstract class BaseDialogObserver<T> : Observer<T> {
      */
     fun showLoading() {
         if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(context)
+            loadingDialog = LoadingDialog(impl.context)
         }
         loadingDialog!!.show()
     }

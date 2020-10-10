@@ -21,6 +21,7 @@ open class BaseViewModel<MODEL : BaseModel<*>?>(model: MODEL) : ViewModel(), IBa
         mModel = model
     }
 
+
     //绑定网络请求
     override fun accept(disposable: Disposable) {
         mModel?.addSubscribe(disposable)

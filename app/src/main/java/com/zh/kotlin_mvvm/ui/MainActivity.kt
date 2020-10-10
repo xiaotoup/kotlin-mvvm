@@ -8,7 +8,6 @@ import com.zh.common.base.BaseActivity
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.BR
 import com.zh.kotlin_mvvm.R
-import com.zh.kotlin_mvvm.mvvm.model.MainModel
 import com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel
 
 @Route(path = ZjConfig.MainActivity)

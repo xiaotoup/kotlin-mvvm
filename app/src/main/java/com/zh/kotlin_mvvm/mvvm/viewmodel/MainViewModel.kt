@@ -5,12 +5,14 @@ import android.content.Context
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import com.zh.common.base.BaseImpl
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.exception.ApiException
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.model.MainModel
 import com.zh.kotlin_mvvm.net.bean.LoginBean
+import io.reactivex.disposables.Disposable
 
 class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
 
@@ -29,6 +31,11 @@ class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
 
     fun doLogin(context: Context, map: Map<String, Any>) {
         mModel?.onLogin(map, object : BaseObserver<LoginBean>(context, true) {
+
+            override fun onISubscribe(d: Disposable) {
+                accept(d)
+            }
+
             override fun onISuccess(response: LoginBean) {
                 sid.set(response.data?.bussData)
             }
