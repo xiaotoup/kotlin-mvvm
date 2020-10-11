@@ -1,7 +1,11 @@
 package com.zh.common.base.model
 
 import com.zh.common.base.BaseApplication
+import com.zh.common.base.BaseObserver
+import com.zh.common.exception.ResponseTransformer
+import com.zh.common.schedulers.SchedulerProvider
 import com.zh.common.utils.LogUtil
+import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -45,5 +49,14 @@ abstract class BaseModel<T> : IBaseModel {
 
     fun getINetService(): T {
         return iNetService
+    }
+
+    fun doNetRequest(observable: Observable<*>, observer: BaseObserver<*>) {
+        addSubscribe(
+            observable
+                .compose(ResponseTransformer.handleResult())
+                .compose(SchedulerProvider.instance.applySchedulers())
+                .subscribe(observer)
+        )
     }
 }
