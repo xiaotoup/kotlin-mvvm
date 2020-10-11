@@ -14,9 +14,9 @@ class MainModel : BaseModel<INetService>(INetService::class.java) {
         doNetRequest(getINetService().login(BaseMapToBody.convertMapToBody(map)) ,observer)
 
 
-        getINetService().login(BaseMapToBody.convertMapToBody(map))
+        /*getINetService().login(BaseMapToBody.convertMapToBody(map))
             .compose(ResponseTransformer.handleResult())
             .compose(SchedulerProvider.instance.applySchedulers())
-            .subscribe(observer)
+            .subscribe(observer)*/
     }
 }

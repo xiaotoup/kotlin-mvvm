@@ -73,10 +73,6 @@ class FileUploadModule(var clientModule: ClientModule) {
                         ToastUtils.showMessage(e.message)
                         callBack?.onError(e)
                     }
-
-                    override fun onISubscribe(d: Disposable) {
-
-                    }
                 })
         }
     }

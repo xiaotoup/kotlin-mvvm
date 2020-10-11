@@ -17,6 +17,7 @@ abstract class BaseObserver<T> : Observer<T> {
     private var context: Context
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoadingDialog = false //是否显示加载进度对话框
+    private var disposable: Disposable? = null
 
     constructor(context: Context) {
         this.context = context
@@ -30,7 +31,7 @@ abstract class BaseObserver<T> : Observer<T> {
 
     override fun onSubscribe(d: Disposable) {
         LogUtil.d("ThomasDebug", "BaseObserver : Http is start")
-        onISubscribe(d)
+        disposable = d
 
         if (!NetworkUtil.isNetworkConnected(context)) {
             ToastUtils.showMessage("网络异常")
@@ -64,9 +65,11 @@ abstract class BaseObserver<T> : Observer<T> {
         if (isShowLoadingDialog) dismissLoading()
     }
 
-    open fun onISubscribe(d: Disposable) {}
+
     protected abstract fun onISuccess(response: T)
     protected abstract fun onIError(e: ApiException)
+
+    fun getDisposable() = disposable
 
     private fun getLoadingDialog(): LoadingDialog? {
         if (loadingDialog == null) {

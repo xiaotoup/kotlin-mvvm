@@ -32,10 +32,6 @@ class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
     fun doLogin(context: Context, map: Map<String, Any>) {
         mModel?.onLogin(map, object : BaseObserver<LoginBean>(context, true) {
 
-            override fun onISubscribe(d: Disposable) {
-                accept(d)
-            }
-
             override fun onISuccess(response: LoginBean) {
                 sid.set(response.data?.bussData)
             }

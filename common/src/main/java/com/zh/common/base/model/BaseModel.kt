@@ -2,6 +2,7 @@ package com.zh.common.base.model
 
 import com.zh.common.base.BaseApplication
 import com.zh.common.base.BaseObserver
+import com.zh.common.base.bean.BaseResponse
 import com.zh.common.exception.ResponseTransformer
 import com.zh.common.schedulers.SchedulerProvider
 import com.zh.common.utils.LogUtil
@@ -17,12 +18,8 @@ import io.reactivex.disposables.Disposable
 abstract class BaseModel<T> : IBaseModel {
 
     private var iNetService: T
-    private var mCompositeDisposable: CompositeDisposable? = null
+    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
     private val mClientModule = BaseApplication.getApplication().mClientModule
-
-    init {
-        mCompositeDisposable = CompositeDisposable()
-    }
 
     constructor(service: Class<*>) {
         iNetService = mClientModule.provideRequestService(mClientModule)?.create(service) as T
@@ -30,9 +27,6 @@ abstract class BaseModel<T> : IBaseModel {
 
     //添加网络请求到CompositeDisposable
     fun addSubscribe(disposable: Disposable) {
-        if (mCompositeDisposable == null) {
-            mCompositeDisposable = CompositeDisposable()
-        }
         mCompositeDisposable?.also {
             LogUtil.d("--okhttp--", "disposable is add")
             it.add(disposable)
@@ -41,9 +35,9 @@ abstract class BaseModel<T> : IBaseModel {
 
     override fun onCleared() {
         //解除网络请求
-        if (mCompositeDisposable != null) {
-            mCompositeDisposable?.clear()
+        mCompositeDisposable?.also {
             LogUtil.d("--okhttp--", "disposable is clear")
+            mCompositeDisposable.clear()
         }
     }
 
@@ -51,12 +45,14 @@ abstract class BaseModel<T> : IBaseModel {
         return iNetService
     }
 
-    fun doNetRequest(observable: Observable<*>, observer: BaseObserver<*>) {
-        addSubscribe(
-            observable
-                .compose(ResponseTransformer.handleResult())
-                .compose(SchedulerProvider.instance.applySchedulers())
-                .subscribe(observer)
-        )
+    /**
+     * 公用的网络请求发起的操作
+     */
+    fun <R> doNetRequest(observable: Observable<out BaseResponse<R>>, observer: BaseObserver<R>) {
+        val subscribeWith = observable
+            .compose(ResponseTransformer.handleResult())
+            .compose(SchedulerProvider.instance.applySchedulers())
+            .subscribeWith(observer)
+        subscribeWith.getDisposable()?.let { addSubscribe(it) }
     }
 }
