@@ -12,11 +12,7 @@ import com.zh.common.base.model.BaseModel
  */
 open class BaseViewModel<MODEL : BaseModel<*>?>(model: MODEL) : ViewModel(), IBaseViewModel {
 
-    var mModel: MODEL? = null
-
-    init {
-        mModel = model
-    }
+    val mModel: MODEL = model
 
     override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
 

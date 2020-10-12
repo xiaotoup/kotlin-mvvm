@@ -2,12 +2,14 @@ package com.zh.common.base
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.LayoutRes
+import androidx.core.graphics.red
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
@@ -18,8 +20,10 @@ import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.utils.LanguageUtil
+import com.zh.common.utils.LogUtil
 import com.zh.config.ZjConfig
 import me.jessyan.autosize.internal.CustomAdapt
+import kotlin.math.absoluteValue
 
 
 /**
@@ -37,6 +41,9 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     private val minDelayTime = 500 // 两次点击间隔不能少于500ms
     private var lastClickTime: Long = 0
     private var mApplication: BaseApplication? = null
+    //默认状态栏和导航栏颜色
+    private val defaultStatusBarColor = R.color.white
+    private val defaultNavigationBarColor = R.color.white
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,20 +83,24 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     //今日头条适配方案
     override fun isBaseOnWidth(): Boolean = true
     override fun getSizeInDp(): Float = ZjConfig.screenWidth
+    //可以重写状态栏和导航栏颜色
+    // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white
+    open fun statusBarColor(): Int = defaultStatusBarColor
+    open fun navigationBarColor(): Int = defaultNavigationBarColor
 
     /**
      * 沉侵式
      */
     private fun initImmersionBar() {
-        ImmersionBar.with(this).let {
-            it.statusBarColor(R.color.colorPrimary) //状态栏颜色
-            it.navigationBarColor(R.color.colorPrimary) //导航栏颜色
+        ImmersionBar.with(this).apply {
+            statusBarColor(statusBarColor()) //状态栏颜色
+            navigationBarColor(navigationBarColor()) //导航栏颜色
             //状态栏为淡色statusBarDarkFont要设置为true
-            it.statusBarDarkFont(false) //状态栏字体是深色，不写默认为亮色
+            statusBarDarkFont(statusBarColor() == R.color.white) //状态栏字体是深色，不写默认为亮色
             //导航栏为淡色navigationBarDarkIcon要设置为true
-            it.navigationBarDarkIcon(false) //导航栏图标是深色，不写默认为亮色
-            it.keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
-            it.init()
+            navigationBarDarkIcon(navigationBarColor() == R.color.white) //导航栏图标是深色，不写默认为亮色
+            keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
+            init()
         }
     }
 
