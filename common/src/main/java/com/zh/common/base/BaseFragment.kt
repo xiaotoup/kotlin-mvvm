@@ -37,17 +37,22 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     private val minDelayTime = 500 // 两次点击间隔不能少于500ms
     private var lastClickTime: Long = 0
     private var rootView: View? = null
-
+    //默认状态栏和导航栏颜色
+    private val defaultStatusBarColor = R.color.white
+    private val defaultNavigationBarColor = R.color.white
     //ImmersionBar代理类
     private val mImmersionProxy = ImmersionProxy(this)
 
     override fun initImmersionBar() {
-        ImmersionBar.with(this).let {
-            it.statusBarColor(R.color.colorPrimary) //状态栏颜色
+        ImmersionBar.with(this).apply {
+            statusBarColor(statusBarColor()) //状态栏颜色
+            navigationBarColor(navigationBarColor()) //导航栏颜色
             //状态栏为淡色statusBarDarkFont要设置为true
-            it.statusBarDarkFont(false) //状态栏字体是深色，不写默认为亮色
-            it.keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
-            it.init()
+            statusBarDarkFont(statusBarColor() == R.color.white) //状态栏字体是深色，不写默认为亮色
+            //导航栏为淡色navigationBarDarkIcon要设置为true
+            navigationBarDarkIcon(navigationBarColor() == R.color.white) //导航栏图标是深色，不写默认为亮色
+            keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
+            init()
         }
     }
 
@@ -112,6 +117,10 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     override fun isBaseOnWidth(): Boolean = true
     override fun getSizeInDp(): Float = ZjConfig.screenWidth
     open fun getRootView(): View? = rootView
+    //可以重写状态栏和导航栏颜色
+    // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white
+    open fun statusBarColor(): Int = defaultStatusBarColor
+    open fun navigationBarColor(): Int = defaultNavigationBarColor
 
     override fun onResume() {
         super.onResume()

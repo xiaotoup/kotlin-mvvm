@@ -1,5 +1,6 @@
 package com.zh.kotlin_mvvm.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -24,6 +25,13 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
     override val layoutRes = R.layout.activity_list
     override val viewModel: NormalViewModel = NormalViewModel()
     override val onBindVariableId = 0
+    override fun navigationBarColor(): Int {
+        return R.color.colorPrimary
+    }
+
+    override fun statusBarColor(): Int {
+        return R.color.colorPrimary
+    }
 
     private var list: MutableList<ListBean> = mutableListOf<ListBean>()
     private val mAdapter by lazy {
