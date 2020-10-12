@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">common</string>
 
+    <!--解决AppBarLayout滑动回弹-->
+    <string name="behavior_app_bar_layout">com.zh.common.utils.FixAppBarLayoutBehavior</string>
     <string name="http_network_error">网络错误</string>
     <string name="http_parsing_error">解析错误</string>
     <string name="http_connection_failed">连接失败</string>

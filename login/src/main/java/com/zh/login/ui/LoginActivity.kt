@@ -8,6 +8,7 @@ import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.config.ZjConfig
 import com.zh.login.R
 
+
 @Route(path = ZjConfig.LoginActivity)
 class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
