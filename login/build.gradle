@@ -57,6 +57,4 @@ dependencies {
     kapt 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     kapt "com.android.databinding:compiler:$compiler_version"
-
-    implementation 'com.google.android.material:material:1.0.0'
 }
