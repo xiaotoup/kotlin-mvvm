@@ -33,9 +33,6 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override fun initData() {
         var beforeY = 0
-        scrollView.post(Runnable {
-            beforeY = scrollView.top
-        })
         appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 //得到滑动后可视子布局的高度
