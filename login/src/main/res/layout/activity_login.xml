@@ -55,6 +55,7 @@
                         android:background="@color/bar_grey_90"
                         android:src="@mipmap/my_yaode_code_bg_1"
                         app:layout_collapseMode="parallax" />
+
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
             </com.google.android.material.appbar.AppBarLayout>
 

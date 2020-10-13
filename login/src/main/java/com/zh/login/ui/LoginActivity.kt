@@ -41,25 +41,20 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
             viewHeight = changeView.measuredHeight
         })
         var beforeY = sTop
+        appBarLayout.setExpanded(true)
         appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
 
                 var sy = appBarLayout.measuredHeight + verticalOffset    //距离原来的位置高度
-                LogUtil.e("sy  "+sy)
-                LogUtil.e("changeView  "+changeView?.top)
-                LogUtil.e("scrollView=  "+(sTop - scrollView.top))
+                LogUtil.e("sy  " + sy)
+                LogUtil.e("changeView  " + changeView?.top)
+                LogUtil.e("scrollView=  " + (sTop - scrollView.top))
+                LogUtil.e("verticalOffset  " + verticalOffset)
 
-                val  cy = sTop - scrollView.top
-
-                LogUtil.e("verticalOffset  "+verticalOffset)
-
-                if (beforeY != (scrollView.top)){
-                    var lps: CollapsingToolbarLayout.LayoutParams  = changeView.layoutParams as CollapsingToolbarLayout.LayoutParams
-                    if (cy != abs(verticalOffset)){
-                        lps.height =  appBarLayout.measuredHeight
-                    } else{
-                        lps.height =  sy
-                    }
+                if (beforeY != scrollView.top) {
+                    var lps: CollapsingToolbarLayout.LayoutParams =
+                        changeView.layoutParams as CollapsingToolbarLayout.LayoutParams
+                    lps.height = sy
                     changeView.layoutParams = lps
                 }
                 beforeY = (scrollView.top)
