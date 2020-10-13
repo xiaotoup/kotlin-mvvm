@@ -108,7 +108,7 @@ class FixAppBarLayoutBehavior : AppBarLayout.Behavior {
         velocityY: Float
     ): Boolean {
         //惯性滑动的时候设置为true
-        isFlinging = true;
+        isFlinging = true
         return super.onNestedPreFling(coordinatorLayout, child, target, velocityX, velocityY)
     }
 

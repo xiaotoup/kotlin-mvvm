@@ -3,10 +3,17 @@ package com.zh.login.ui
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
+import com.zh.common.utils.LogUtil
+import com.zh.common.utils.ScreenUtils
 import com.zh.config.ZjConfig
 import com.zh.login.R
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.view.*
+import kotlin.math.abs
 
 
 @Route(path = ZjConfig.LoginActivity)
@@ -25,6 +32,38 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
     }
 
     override fun initData() {
+        var sTop = 0
+        scrollView.post(Runnable {
+            sTop = scrollView.top
+        })
+        var viewHeight = 0
+        changeView.post(Runnable {
+            viewHeight = changeView.measuredHeight
+        })
+        var beforeY = sTop
+        appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+            override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
 
+                var sy = appBarLayout.measuredHeight + verticalOffset    //距离原来的位置高度
+                LogUtil.e("sy  "+sy)
+                LogUtil.e("changeView  "+changeView?.top)
+                LogUtil.e("scrollView=  "+(sTop - scrollView.top))
+
+                val  cy = sTop - scrollView.top
+
+                LogUtil.e("verticalOffset  "+verticalOffset)
+
+                if (beforeY != (scrollView.top)){
+                    var lps: CollapsingToolbarLayout.LayoutParams  = changeView.layoutParams as CollapsingToolbarLayout.LayoutParams
+                    if (cy != abs(verticalOffset)){
+                        lps.height =  appBarLayout.measuredHeight
+                    } else{
+                        lps.height =  sy
+                    }
+                    changeView.layoutParams = lps
+                }
+                beforeY = (scrollView.top)
+            }
+        })
     }
 }
