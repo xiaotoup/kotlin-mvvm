@@ -32,32 +32,22 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
     }
 
     override fun initData() {
-        var sTop = 0
+        var beforeY = 0
         scrollView.post(Runnable {
-            sTop = scrollView.top
+            beforeY = scrollView.top
         })
-        var viewHeight = 0
-        changeView.post(Runnable {
-            viewHeight = changeView.measuredHeight
-        })
-        var beforeY = sTop
-        appBarLayout.setExpanded(true)
         appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-
-                var sy = appBarLayout.measuredHeight + verticalOffset    //距离原来的位置高度
-                LogUtil.e("sy  " + sy)
-                LogUtil.e("changeView  " + changeView?.top)
-                LogUtil.e("scrollView=  " + (sTop - scrollView.top))
-                LogUtil.e("verticalOffset  " + verticalOffset)
-
-                if (beforeY != scrollView.top) {
+                //得到滑动后可视子布局的高度
+                var sy = appBarLayout.measuredHeight + verticalOffset
+                //当高度改变就重新设置子布局的高度
+                if (beforeY != abs(verticalOffset)) {
                     var lps: CollapsingToolbarLayout.LayoutParams =
                         changeView.layoutParams as CollapsingToolbarLayout.LayoutParams
                     lps.height = sy
                     changeView.layoutParams = lps
                 }
-                beforeY = (scrollView.top)
+                beforeY = abs(verticalOffset)
             }
         })
     }
