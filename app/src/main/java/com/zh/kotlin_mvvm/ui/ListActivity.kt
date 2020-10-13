@@ -49,6 +49,29 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         for (i in list.indices) {
             println("$i ${list[i].title}")
         }
+        /**
+         * 高阶函数
+         */
+        //1、forEach 便利
+        val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
+        list.forEach(::println)
+        val newList = arrayListOf<Int>()
+        list.forEach { newList.add(it * 2) }
+        newList.forEach(::println)
+        //2、map 变换
+        list.map { (it * 3).toString() }.forEach(::println)
+        list.map { it.toDouble() }.forEach(::println)
+        //3、flatMap 对集合的集合进行变换
+        val listInt = arrayOf(1..5, 50..55, 100..105)
+        //把多个数组集合变成一个数组，并且对数据进行变换
+        listInt.flatMap { intRange -> intRange.map { "No.$it" } }.forEach(::println)
+        //直接多个数组集合变换成一个结集合
+        listInt.flatMap { it }.forEach(::println)
+        //4、reduce ，fold，foldRight 倒叙, joinToString转换字符去
+        val listNew = arrayOf(1..5, 2..3)
+        val nList = listNew.flatMap { it }.forEach(::println)
+        //求和 reduce 返回值必须是 acc类型
+
         refreshLayout.autoRefresh()
         refreshLayout.autoLoadMore()
         refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {

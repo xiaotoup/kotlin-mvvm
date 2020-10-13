@@ -7,13 +7,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
-        if (!isNeedLoginModule.toBoolean()) {
+        if (!isNeedFoundModule.toBoolean()) {
             applicationId "com.zh.module_found"
         }
         minSdkVersion rootProject.ext.android["minSdkVersion"]
@@ -41,6 +40,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 kapt {

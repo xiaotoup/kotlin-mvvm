@@ -18,12 +18,11 @@ import com.zh.common.R
 class CustomDialog : Dialog {
     constructor(context: Context) : super(context) {}
     constructor(context: Context, theme: Int) : super(context, theme) {}
-    protected constructor(
+    constructor(
         context: Context,
         cancelable: Boolean,
         cancelListener: DialogInterface.OnCancelListener
-    ) : super(context, cancelable, cancelListener) {
-    }
+    ) : super(context, cancelable, cancelListener) {}
 
     class Builder(//上下文
         private val context: Context

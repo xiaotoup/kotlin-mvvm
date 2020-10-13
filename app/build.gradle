@@ -1,7 +1,9 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+plugins{
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+}
 
 android {
     compileSdkVersion rootProject.ext.android["compileSdkVersion"]
@@ -35,6 +37,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 kapt {
     generateStubs = true
@@ -52,6 +57,9 @@ dependencies {
     if (isNeedHomeModule.toBoolean()) {
         implementation project(path: ':home')
     }
+    if (isNeedFoundModule.toBoolean()) {
+        implementation project(path: ':found')
+    }
     if (isNeedNewsModule.toBoolean()) {
         implementation project(path: ':news')
     }
@@ -60,8 +68,5 @@ dependencies {
     }
     if (isNeedLoginModule.toBoolean()) {
         implementation project(path: ':login')
-    }
-    if (isNeedFoundModule.toBoolean()) {
-        implementation project(path: ':found')
     }
 }
