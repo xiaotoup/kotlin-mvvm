@@ -29,19 +29,18 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
     }
 
     override fun initData() {
-        var beforeY = 0
+        var afterY = 0
         appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                //得到滑动后可视子布局的高度
-                var sy = appBarLayout.measuredHeight + verticalOffset
                 //当高度改变就重新设置子布局的高度
-                if (beforeY != abs(verticalOffset)) {
+                if (afterY != abs(verticalOffset)) {
                     var lps: CollapsingToolbarLayout.LayoutParams =
                         changeView.layoutParams as CollapsingToolbarLayout.LayoutParams
-                    lps.height = sy
+                    //得到滑动后可视子布局的高度
+                    lps.height = appBarLayout.measuredHeight - abs(verticalOffset)
                     changeView.layoutParams = lps
                 }
-                beforeY = abs(verticalOffset)
+                afterY = abs(verticalOffset)
             }
         })
     }
