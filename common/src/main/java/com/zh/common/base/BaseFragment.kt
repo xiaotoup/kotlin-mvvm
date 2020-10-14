@@ -75,17 +75,21 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
         if (null == rootView) { //如果缓存中有rootView则直接使用
             initViewDataBinding(inflater, container)
             this.rootView = binding.root;
-            //在OnCreate方法中调用下面方法，然后再使用线程，就能在uncaughtException方法中捕获到异常
-            if (isAdded) {
-                initView(savedInstanceState)
-                initData()
-            }
         } else {
             rootView?.let {
                 it.parent?.let { it2 -> (it2 as ViewGroup).removeView(it) }
             }
         }
         return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //在OnCreate方法中调用下面方法，然后再使用线程，就能在uncaughtException方法中捕获到异常
+        if (isAdded) {
+            initView(savedInstanceState)
+            initData()
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
