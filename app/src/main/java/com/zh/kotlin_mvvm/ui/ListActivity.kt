@@ -35,7 +35,7 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     private var list: MutableList<ListBean> = mutableListOf<ListBean>()
     private val mAdapter by lazy {
-        ListAdapter(list)
+        ListAdapter()
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -49,6 +49,7 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         for (i in list.indices) {
             println("$i ${list[i].title}")
         }
+        mAdapter.setNewInstance(list)
         /**
          * 高阶函数
          */

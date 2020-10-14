@@ -1,11 +1,10 @@
 package com.zh.kotlin_mvvm.adapter
 
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
-import com.zh.kotlin_mvvm.BR
+import com.zh.common.base.adapter.BaseQuickAdapter
 import com.zh.kotlin_mvvm.R
+import com.zh.kotlin_mvvm.BR
 import com.zh.kotlin_mvvm.bean.ListBean
 
 /**
@@ -13,24 +12,11 @@ import com.zh.kotlin_mvvm.bean.ListBean
  * @time 2020/10/10 - 14:51
  * @desc DataBinding 与 recyclerView适配器 绑定的示例
  */
-class ListAdapter(data: MutableList<ListBean>) :
-    BaseQuickAdapter<ListBean, BaseDataBindingHolder<ViewDataBinding>>(R.layout.item_list, data) {
+class ListAdapter : BaseQuickAdapter<ListBean>(R.layout.item_list){
 
-    private var binding: ViewDataBinding? = null
+    override val onBindVariableId: Int = BR.bean
 
-    override fun onItemViewHolderCreated( viewHolder: BaseDataBindingHolder<ViewDataBinding>, viewType: Int) {
-        DataBindingUtil.bind<ViewDataBinding>(viewHolder.itemView)
-    }
+    override fun onConvert(holder: BaseDataBindingHolder<ViewDataBinding>, item: ListBean) {
 
-    override fun convert(holder: BaseDataBindingHolder<ViewDataBinding>, item: ListBean) {
-        binding = holder.dataBinding
-        binding?.let {
-            it.setVariable(BR.bean, item)
-            it.executePendingBindings()
-        }
-    }
-
-    fun unbind() {
-        binding?.let { it.unbind() }
     }
 }
