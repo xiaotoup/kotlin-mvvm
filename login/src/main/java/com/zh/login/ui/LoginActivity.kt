@@ -34,13 +34,16 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
                 LogUtil.e("verticalOffset  $verticalOffset")
+                LogUtil.e("toolbarLayout  ${toolbarLayout.measuredHeight}")
                 //当高度改变就重新设置子布局的高度
                 if (afterY != abs(verticalOffset)) {
-                    var lps: CollapsingToolbarLayout.LayoutParams =
+                    /*var lps: CollapsingToolbarLayout.LayoutParams =
                         changeView.layoutParams as CollapsingToolbarLayout.LayoutParams
                     //得到滑动后可视子布局的高度
                     lps.height = appBarLayout.measuredHeight - abs(verticalOffset)
-                    changeView.layoutParams = lps
+                    changeView.layoutParams = lps*/
+                    changeView.scaleX = (abs(verticalOffset) / changeView.measuredHeight).toFloat()
+                    changeView.scaleY = (abs(verticalOffset) / changeView.measuredHeight).toFloat()
                 }
                 afterY = abs(verticalOffset)
             }
