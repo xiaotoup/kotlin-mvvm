@@ -5,7 +5,7 @@ package com.zh.common.base.bean
  * @date: 2019/6/16
  * @description:
  */
-class CustomIntBean : BaseResponse<CustomIntBean?>() {
+class CustomIntBean : BaseResponse<CustomIntBean>() {
     /**
      * data : {"bussData":false}
      */
