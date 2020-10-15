@@ -96,13 +96,21 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
             statusBarColor(statusBarColor()) //状态栏颜色
             navigationBarColor(navigationBarColor()) //导航栏颜色
             //状态栏为淡色statusBarDarkFont要设置为true
-            statusBarDarkFont(statusBarColor() == R.color.white) //状态栏字体是深色，不写默认为亮色
+            statusBarDarkFont(setStatusBarColor.contains(statusBarColor())) //状态栏字体是深色，不写默认为亮色
             //导航栏为淡色navigationBarDarkIcon要设置为true
-            navigationBarDarkIcon(navigationBarColor() == R.color.white) //导航栏图标是深色，不写默认为亮色
+            navigationBarDarkIcon(setNavigationBarColor.contains(navigationBarColor())) //导航栏图标是深色，不写默认为亮色
             keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
             init()
         }
     }
+
+    /**
+     * 沉侵式颜色
+     */
+    private val setStatusBarColor: List<Int> =
+        listOf(R.color.white)
+    private val setNavigationBarColor: List<Int> =
+        listOf(R.color.white)
 
     override fun onDestroy() {
         super.onDestroy()

@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
@@ -37,9 +36,11 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     private val minDelayTime = 500 // 两次点击间隔不能少于500ms
     private var lastClickTime: Long = 0
     private var rootView: View? = null
+
     //默认状态栏和导航栏颜色
     private val defaultStatusBarColor = R.color.white
     private val defaultNavigationBarColor = R.color.white
+
     //ImmersionBar代理类
     private val mImmersionProxy = ImmersionProxy(this)
 
@@ -48,13 +49,21 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
             statusBarColor(statusBarColor()) //状态栏颜色
             navigationBarColor(navigationBarColor()) //导航栏颜色
             //状态栏为淡色statusBarDarkFont要设置为true
-            statusBarDarkFont(statusBarColor() == R.color.white) //状态栏字体是深色，不写默认为亮色
+            statusBarDarkFont(setStatusBarColor.contains(statusBarColor())) //状态栏字体是深色，不写默认为亮色
             //导航栏为淡色navigationBarDarkIcon要设置为true
-            navigationBarDarkIcon(navigationBarColor() == R.color.white) //导航栏图标是深色，不写默认为亮色
+            navigationBarDarkIcon(setNavigationBarColor.contains(navigationBarColor())) //导航栏图标是深色，不写默认为亮色
             keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
             init()
         }
     }
+
+    /**
+     * 沉侵式颜色
+     */
+    private val setStatusBarColor: List<Int> =
+        listOf(R.color.white)
+    private val setNavigationBarColor: List<Int> =
+        listOf(R.color.white)
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -121,6 +130,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     override fun isBaseOnWidth(): Boolean = true
     override fun getSizeInDp(): Float = ZjConfig.screenWidth
     open fun getRootView(): View? = rootView
+
     //可以重写状态栏和导航栏颜色
     // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white
     open fun statusBarColor(): Int = defaultStatusBarColor
@@ -156,8 +166,8 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivity(url: String): Fragment {
-        return ARouter.getInstance().build(url).navigation() as Fragment
+    open fun startActivity(url: String) {
+        ARouter.getInstance().build(url).navigation()
     }
 
     /**
@@ -165,8 +175,8 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivity(url: String, bundle: Bundle): Fragment {
-        return ARouter.getInstance().build(url).with(bundle).navigation() as Fragment
+    open fun startActivity(url: String, bundle: Bundle) {
+        ARouter.getInstance().build(url).with(bundle).navigation()
     }
 
     /**
@@ -186,10 +196,10 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivityNewTask(url: String): Fragment {
-        return ARouter.getInstance().build(url)
+    open fun startActivityNewTask(url: String) {
+        ARouter.getInstance().build(url)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            .navigation() as Fragment
+            .navigation()
     }
 
     /**
@@ -197,10 +207,10 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivityNewTask(url: String, bundle: Bundle): Fragment {
-        return ARouter.getInstance().build(url).with(bundle)
+    open fun startActivityNewTask(url: String, bundle: Bundle) {
+        ARouter.getInstance().build(url).with(bundle)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            .navigation() as Fragment
+            .navigation()
     }
 
     /**
