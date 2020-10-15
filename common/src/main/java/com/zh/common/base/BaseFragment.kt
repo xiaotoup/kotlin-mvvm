@@ -46,13 +46,14 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
 
     override fun initImmersionBar() {
         ImmersionBar.with(this).apply {
-            statusBarColor(statusBarColor()) //状态栏颜色
-            navigationBarColor(navigationBarColor()) //导航栏颜色
+            statusBarColor(statusBarColor) //状态栏颜色
+            navigationBarColor(navigationBarColor) //导航栏颜色
             //状态栏为淡色statusBarDarkFont要设置为true
-            statusBarDarkFont(setStatusBarColor.contains(statusBarColor())) //状态栏字体是深色，不写默认为亮色
+            statusBarDarkFont(setStatusBarColor.contains(statusBarColor)) //状态栏字体是深色，不写默认为亮色
             //导航栏为淡色navigationBarDarkIcon要设置为true
-            navigationBarDarkIcon(setNavigationBarColor.contains(navigationBarColor())) //导航栏图标是深色，不写默认为亮色
+            navigationBarDarkIcon(setNavigationBarColor.contains(navigationBarColor)) //导航栏图标是深色，不写默认为亮色
             keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
+            fitsSystemWindows(fitsSystemWindows)
             init()
         }
     }
@@ -133,8 +134,9 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
 
     //可以重写状态栏和导航栏颜色
     // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white
-    open fun statusBarColor(): Int = defaultStatusBarColor
-    open fun navigationBarColor(): Int = defaultNavigationBarColor
+    open val statusBarColor: Int = defaultStatusBarColor
+    open val navigationBarColor: Int = defaultNavigationBarColor
+    open val fitsSystemWindows : Boolean = true
 
     override fun onResume() {
         super.onResume()
