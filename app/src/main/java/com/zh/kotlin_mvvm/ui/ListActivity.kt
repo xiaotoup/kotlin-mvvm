@@ -25,13 +25,8 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
     override val layoutRes = R.layout.activity_list
     override val viewModel: NormalViewModel = NormalViewModel()
     override val onBindVariableId = 0
-    override fun navigationBarColor(): Int {
-        return R.color.colorPrimary
-    }
-
-    override fun statusBarColor(): Int {
-        return R.color.colorPrimary
-    }
+    override val navigationBarColor: Int = R.color.colorPrimary
+    override val statusBarColor: Int =  R.color.colorPrimary
 
     private var list: MutableList<ListBean> = mutableListOf<ListBean>()
     private val mAdapter by lazy {
