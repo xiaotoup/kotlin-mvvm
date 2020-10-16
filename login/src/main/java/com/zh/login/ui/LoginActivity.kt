@@ -42,8 +42,10 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
                     //得到滑动后可视子布局的高度
                     lps.height = appBarLayout.measuredHeight - abs(verticalOffset)
                     changeView.layoutParams = lps*/
-                    changeView.scaleX = (abs(verticalOffset) / changeView.measuredHeight).toFloat()
-                    changeView.scaleY = (abs(verticalOffset) / changeView.measuredHeight).toFloat()
+                    val scale =
+                        abs(changeView.measuredHeight + verticalOffset).toFloat() / changeView.measuredHeight
+                    changeView.scaleX = scale
+                    changeView.scaleY = scale
                 }
                 afterY = abs(verticalOffset)
             }
