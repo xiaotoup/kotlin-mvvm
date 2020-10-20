@@ -270,7 +270,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     /**
      * 防连点
      */
-    open fun isFastClick(): Boolean {
+    fun isFastClick(): Boolean {
         var flag = true
         val currentClickTime = System.currentTimeMillis()
         if (currentClickTime - lastClickTime >= minDelayTime) {
