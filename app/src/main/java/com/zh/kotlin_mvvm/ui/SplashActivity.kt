@@ -7,6 +7,7 @@ import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.utils.ToastUtils
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
+import com.zh.kotlin_mvvm.dialog.TestDialog
 import kotlinx.android.synthetic.main.activity_splash.*
 
 class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
@@ -30,6 +31,9 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         }
         btnList.setOnClickListener {
             startActivity(ZjConfig.ListActivity)
+        }
+        btnDialog.setOnClickListener {
+            TestDialog().show(supportFragmentManager, "test")
         }
     }
 }

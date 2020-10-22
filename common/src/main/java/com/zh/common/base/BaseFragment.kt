@@ -1,5 +1,6 @@
 package com.zh.common.base
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -36,6 +37,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     private val minDelayTime = 500 // 两次点击间隔不能少于500ms
     private var lastClickTime: Long = 0
     private var rootView: View? = null
+    private lateinit var mContext: Context
 
     //默认状态栏和导航栏颜色
     private val defaultStatusBarColor = R.color.white
@@ -69,6 +71,11 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         mImmersionProxy.isUserVisibleHint = isVisibleToUser
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

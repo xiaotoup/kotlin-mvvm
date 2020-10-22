@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import com.zh.common.base.BaseImpl
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.exception.ApiException
@@ -36,7 +37,7 @@ class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
                 DialogInterface.OnClickListener { p0, p1 -> p0?.dismiss() }).create().show()
     }
 
-    fun doLogin(context: Context, map: Map<String, Any>) {
+    fun doLogin(context : Context, map: Map<String, Any>) {
         mModel.onLogin(map, object : BaseObserver<LoginBean>(context, true) {
 
             override fun onISuccess(response: LoginBean) {

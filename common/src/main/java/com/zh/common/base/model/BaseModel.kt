@@ -15,14 +15,17 @@ import io.reactivex.disposables.Disposable
  * @time 2020/10/8 - 10:03
  * @desc model基类
  */
-abstract class BaseModel<T> : IBaseModel {
+@Suppress("UNCHECKED_CAST")
+abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
 
     private var iNetService: T
+    private var iNetServiceAsync: T
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
-    private val mClientModule = BaseApplication.getApplication().mClientModule
+    private val mClient = BaseApplication.getApplication().mClientModule
 
-    constructor(service: Class<*>) {
-        iNetService = mClientModule.provideRequestService(mClientModule)?.create(service) as T
+    init {
+        iNetService = mClient.provideRequestService(mClient)?.create(service) as T
+        iNetServiceAsync = mClient.provideRequestServiceAsync(mClient)?.create(service) as T
     }
 
     //添加网络请求到CompositeDisposable
@@ -41,8 +44,18 @@ abstract class BaseModel<T> : IBaseModel {
         }
     }
 
+    /**
+     * 同步调用
+     */
     fun getINetService(): T {
         return iNetService
+    }
+
+    /**
+     * 异步调用
+     */
+    fun getINetServiceAsync(): T {
+        return iNetServiceAsync
     }
 
     /**

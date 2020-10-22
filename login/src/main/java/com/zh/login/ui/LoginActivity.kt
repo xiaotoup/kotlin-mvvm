@@ -1,5 +1,6 @@
 package com.zh.login.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -10,6 +11,7 @@ import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.utils.LogUtil
 import com.zh.config.ZjConfig
 import com.zh.login.R
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlin.math.abs
 

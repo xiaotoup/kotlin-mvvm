@@ -1,10 +1,12 @@
 package com.zh.kotlin_mvvm.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zh.common.base.BaseActivity
+import com.zh.common.base.BaseImpl
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.BR
 import com.zh.kotlin_mvvm.R

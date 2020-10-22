@@ -42,11 +42,12 @@ class ClientModule private constructor(buidler: Buidler) {
     }
 
     /**
-     * 使用请求
+     * 使用请求 - 同步
      *
      * @param clientModule
      * @return
      */
+    @Synchronized
     fun provideRequestService(clientModule: ClientModule): Retrofit? {
         return clientModule.provideClient(
             clientModule.provideCache(clientModule.provideCacheFile()),
@@ -54,6 +55,23 @@ class ClientModule private constructor(buidler: Buidler) {
         )?.let {
             clientModule.provideBaseUrl()?.let { it1 ->
                 clientModule.provideRetrofit(it, it1)
+            }
+        }
+    }
+
+    /**
+     * 使用请求 - 异步
+     *
+     * @param clientModule
+     * @return
+     */
+    fun provideRequestServiceAsync(clientModule: ClientModule): Retrofit? {
+        return clientModule.provideClient(
+            clientModule.provideCache(clientModule.provideCacheFile()),
+            clientModule.provideIntercept()
+        )?.let {
+            clientModule.provideBaseUrl()?.let { it1 ->
+                clientModule.provideRetrofitAsync(it, it1)
             }
         }
     }
@@ -78,11 +96,13 @@ class ClientModule private constructor(buidler: Buidler) {
     }
 
     /**
+     * 同步
      * @param client
      * @param httpUrl
      * @return
      * @description: 提供retrofit
      */
+    @Synchronized
     private fun provideRetrofit(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
         if (mRetrofit == null) {
             synchronized(ClientModule::class.java) {
@@ -93,6 +113,27 @@ class ClientModule private constructor(buidler: Buidler) {
         }
         if (httpUrl.toString() != mRetrofit!!.baseUrl().toString()) {
             mRetrofit = configureRetrofit(Retrofit.Builder(), client, httpUrl)
+        }
+        return mRetrofit
+    }
+
+    /**
+     * 异步
+     * @param client
+     * @param httpUrl
+     * @return
+     * @description: 提供retrofit
+     */
+    private fun provideRetrofitAsync(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
+        if (mRetrofit == null) {
+            synchronized(ClientModule::class.java) {
+                if (mRetrofit == null) {
+                    mRetrofit = configureRetrofitAsync(Retrofit.Builder(), client, httpUrl)
+                }
+            }
+        }
+        if (httpUrl.toString() != mRetrofit!!.baseUrl().toString()) {
+            mRetrofit = configureRetrofitAsync(Retrofit.Builder(), client, httpUrl)
         }
         return mRetrofit
     }
@@ -130,12 +171,14 @@ class ClientModule private constructor(buidler: Buidler) {
     }
 
     /**
+     * 同步
      * @param builder
      * @param client
      * @param httpUrl
      * @return
      * @description:配置retrofit
      */
+    @Synchronized
     private fun configureRetrofit(
         builder: Retrofit.Builder,
         client: OkHttpClient?,
@@ -145,6 +188,28 @@ class ClientModule private constructor(buidler: Buidler) {
             .baseUrl(httpUrl) //域名
             .client(client) //设置okhttp
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //使用rxjava
+            .addConverterFactory(ScalarsConverterFactory.create()) // 添加String转换器
+            .addConverterFactory(GsonConverterFactory.create()) //使用Gson
+            .build()
+    }
+
+    /**
+     * 异步
+     * @param builder
+     * @param client
+     * @param httpUrl
+     * @return
+     * @description:配置retrofit
+     */
+    private fun configureRetrofitAsync(
+        builder: Retrofit.Builder,
+        client: OkHttpClient?,
+        httpUrl: HttpUrl?
+    ): Retrofit {
+        return builder
+            .baseUrl(httpUrl) //域名
+            .client(client) //设置okhttp
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync()) //使用rxjava
             .addConverterFactory(ScalarsConverterFactory.create()) // 添加String转换器
             .addConverterFactory(GsonConverterFactory.create()) //使用Gson
             .build()

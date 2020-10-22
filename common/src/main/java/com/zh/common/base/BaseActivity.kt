@@ -2,14 +2,12 @@ package com.zh.common.base
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.LayoutRes
-import androidx.core.graphics.red
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
@@ -20,10 +18,8 @@ import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.utils.LanguageUtil
-import com.zh.common.utils.LogUtil
 import com.zh.config.ZjConfig
 import me.jessyan.autosize.internal.CustomAdapt
-import kotlin.math.absoluteValue
 
 
 /**
@@ -41,6 +37,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     private val minDelayTime = 500 // 两次点击间隔不能少于500ms
     private var lastClickTime: Long = 0
     private var mApplication: BaseApplication? = null
+
     //默认状态栏和导航栏颜色
     private val defaultStatusBarColor = R.color.white
     private val defaultNavigationBarColor = R.color.white
@@ -83,11 +80,12 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     //今日头条适配方案
     override fun isBaseOnWidth(): Boolean = true
     override fun getSizeInDp(): Float = ZjConfig.screenWidth
+
     //可以重写状态栏和导航栏颜色
     // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white
     open val statusBarColor: Int = defaultStatusBarColor
     open val navigationBarColor: Int = defaultNavigationBarColor
-    open val fitsSystemWindows : Boolean = true
+    open val fitsSystemWindows: Boolean = true
 
     /**
      * 沉侵式
