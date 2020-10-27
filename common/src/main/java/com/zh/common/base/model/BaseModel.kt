@@ -19,13 +19,13 @@ import io.reactivex.disposables.Disposable
 abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
 
     private var iNetService: T
-    private var iNetServiceAsync: T
+//    private var iNetServiceAsync: T
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
     private val mClient = BaseApplication.getApplication().mClientModule
 
     init {
         iNetService = mClient.provideRequestService(mClient)?.create(service) as T
-        iNetServiceAsync = mClient.provideRequestServiceAsync(mClient)?.create(service) as T
+//        iNetServiceAsync = mClient.provideRequestServiceAsync(mClient)?.create(service) as T
     }
 
     //添加网络请求到CompositeDisposable
@@ -54,9 +54,9 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     /**
      * 异步调用
      */
-    fun getINetServiceAsync(): T {
-        return iNetServiceAsync
-    }
+//    fun getINetServiceAsync(): T {
+//        return iNetServiceAsync
+//    }
 
     /**
      * 公用的网络请求发起的操作

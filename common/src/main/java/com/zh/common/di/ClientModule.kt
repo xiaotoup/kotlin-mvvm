@@ -65,7 +65,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @param clientModule
      * @return
      */
-    fun provideRequestServiceAsync(clientModule: ClientModule): Retrofit? {
+    /*fun provideRequestServiceAsync(clientModule: ClientModule): Retrofit? {
         return clientModule.provideClient(
             clientModule.provideCache(clientModule.provideCacheFile()),
             clientModule.provideIntercept()
@@ -74,7 +74,7 @@ class ClientModule private constructor(buidler: Buidler) {
                 clientModule.provideRetrofitAsync(it, it1)
             }
         }
-    }
+    }*/
 
     /**
      * @param cache     缓存
@@ -124,7 +124,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      * @description: 提供retrofit
      */
-    private fun provideRetrofitAsync(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
+   /* private fun provideRetrofitAsync(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
         if (mRetrofit == null) {
             synchronized(ClientModule::class.java) {
                 if (mRetrofit == null) {
@@ -136,7 +136,7 @@ class ClientModule private constructor(buidler: Buidler) {
             mRetrofit = configureRetrofitAsync(Retrofit.Builder(), client, httpUrl)
         }
         return mRetrofit
-    }
+    }*/
 
     private fun provideBaseUrl(): HttpUrl? {
         return mApiUrl
@@ -201,7 +201,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      * @description:配置retrofit
      */
-    private fun configureRetrofitAsync(
+    /*private fun configureRetrofitAsync(
         builder: Retrofit.Builder,
         client: OkHttpClient?,
         httpUrl: HttpUrl?
@@ -213,7 +213,7 @@ class ClientModule private constructor(buidler: Buidler) {
             .addConverterFactory(ScalarsConverterFactory.create()) // 添加String转换器
             .addConverterFactory(GsonConverterFactory.create()) //使用Gson
             .build()
-    }
+    }*/
 
     /**
      * 配置okhttpclient

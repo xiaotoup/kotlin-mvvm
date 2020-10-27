@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.zh.common.R
 
 /**
@@ -236,8 +237,9 @@ class CustomDialog : Dialog {
             }
 
             // 设置内容
+            var tvMessage: TextView? =null
             if (message != null) {
-                val tvMessage = layout.findViewById<View>(R.id.tvMessage) as TextView
+                tvMessage = layout.findViewById<View>(R.id.tvMessage) as TextView
                 if (contentSpannableString != null) {
                     tvMessage.text = contentSpannableString
                 } else {
@@ -252,6 +254,10 @@ class CustomDialog : Dialog {
                         ViewGroup.LayoutParams.MATCH_PARENT
                     )
                 )
+            }
+            if (message.isNullOrEmpty()){
+                tvMessage = layout.findViewById<View>(R.id.tvMessage) as TextView
+                tvMessage.visibility = View.GONE
             }
 
             // 设置确认按钮
@@ -269,7 +275,7 @@ class CustomDialog : Dialog {
 
                 //确定按钮文字颜色
                 if (positiveBtnTextColor != 0) {
-                    positiveBtnTextColor?.let { textView.setTextColor(it) }
+                    positiveBtnTextColor?.let { textView.setTextColor(ContextCompat.getColor(context, it)) }
                 }
             } else {
                 // 没有设置"确认"按钮文字，隐藏
@@ -291,7 +297,7 @@ class CustomDialog : Dialog {
 
                 //取消按钮文字颜色
                 if (negativeBtnTextColor != 0) {
-                    negativeBtnTextColor?.let { textView.setTextColor(it) }
+                    negativeBtnTextColor?.let { textView.setTextColor(ContextCompat.getColor(context,it)) }
                 }
             } else {
                 // 没有设置"取消"按钮文字，隐藏
