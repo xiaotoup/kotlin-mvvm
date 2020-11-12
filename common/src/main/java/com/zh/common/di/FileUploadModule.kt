@@ -10,7 +10,6 @@ import com.zh.common.http.OSSUploadUrlBean
 import com.zh.common.schedulers.SchedulerProvider
 import com.zh.common.utils.SpUtil
 import com.zh.common.utils.ToastUtils
-import io.reactivex.disposables.Disposable
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
@@ -21,14 +20,10 @@ import java.net.URLConnection
  * 1、获取阿里云de上传与下载链接
  * 2、获取链接再调起阿里云的接口上传文件或下载文件
  */
-class FileUploadModule(var clientModule: ClientModule) {
-
-    init {
-        clientModule = BaseApplication.getApplication().mClientModule
-    }
+class FileUploadModule {
 
     fun provideFileUpload(): FileUploadModule {
-        return FileUploadModule(clientModule)
+        return FileUploadModule()
     }
 
     /**
@@ -57,24 +52,24 @@ class FileUploadModule(var clientModule: ClientModule) {
         // TODO: 获取文件后缀名
         val suffix = getFileTypeForPath(filePath) //文件后缀
         val contentType = URLConnection.getFileNameMap().getContentTypeFor(filePath) //文件类型
-        clientModule.provideRequestService(clientModule)?.also {
-            it.create(INetService::class.java)
-                .getOSSUploadUrl(suffix, contentType, SpUtil.getStringSF("sessionId"))
-                .compose(ResponseTransformer.handleResult())
-                .compose(SchedulerProvider.instance.applySchedulers())
-                .subscribe(object : BaseObserver<OSSUploadUrlBean>(impl, false) {
-                    override fun onISuccess(uploadUrlBean: OSSUploadUrlBean) {
-                        if (uploadUrlBean != null && uploadUrlBean.data?.bussData != null) {
-                            UploadFile(impl, filePath, contentType, uploadUrlBean, callBack)
-                        }
+        val clientModule =
+            (ClientModule.instance.netRequest(INetService::class.java) as INetService)
+        clientModule
+            .getOSSUploadUrl(suffix, contentType, SpUtil.getStringSF("sessionId"))
+            .compose(ResponseTransformer.handleResult())
+            .compose(SchedulerProvider.instance.applySchedulers())
+            .subscribe(object : BaseObserver<OSSUploadUrlBean>(impl, false) {
+                override fun onISuccess(uploadUrlBean: OSSUploadUrlBean) {
+                    if (uploadUrlBean != null && uploadUrlBean.data?.bussData != null) {
+                        UploadFile(impl, filePath, contentType, uploadUrlBean, callBack)
                     }
+                }
 
-                    override fun onIError(e: ApiException) {
-                        ToastUtils.showMessage(e.message)
-                        callBack?.onError(e)
-                    }
-                })
-        }
+                override fun onIError(e: ApiException) {
+                    ToastUtils.showMessage(e.message)
+                    callBack.onError(e)
+                }
+            })
     }
 
     /**
@@ -104,37 +99,39 @@ class FileUploadModule(var clientModule: ClientModule) {
         val baseUrl: String = uploadUrl!!.substring(0, n) //域名
         //判断域名是否相同，相同则上传
         if (baseUrl == BaseApplication.getApplication().mBaseUrl) {
-            clientModule.provideRequestService(clientModule)?.also {
-                it.create(INetService::class.java)
-                    .upLoadFile(contentType, uploadUrl!!.substring(n + 1), requestFile)
-                    .compose(SchedulerProvider.instance.applySchedulers())
-                    .subscribe(object : BaseObserver<String>(impl, false) {
-                        override fun onISuccess(response: String) {
-                            callBack?.onNext(uploadUrlBean)
-                        }
+            val clientModule =
+                (ClientModule.instance.netRequest(INetService::class.java) as INetService)
+            clientModule
+                .upLoadFile(contentType, uploadUrl!!.substring(n + 1), requestFile)
+                .compose(SchedulerProvider.instance.applySchedulers())
+                .subscribe(object : BaseObserver<String>(impl, false) {
+                    override fun onISuccess(response: String) {
+                        callBack.onNext(uploadUrlBean)
+                    }
 
-                        override fun onIError(e: ApiException) {
-                            callBack?.onError(e)
-                        }
-                    })
-            }
+                    override fun onIError(e: ApiException) {
+                        callBack.onError(e)
+                    }
+                })
+
         } else {
             //不同重新创建单例上传
-            val clientModule = ClientModule.Buidler().baseurl(baseUrl).build()
-            clientModule.provideRequestService(clientModule)?.also {
-                it.create(INetService::class.java)
-                    .upLoadFile(contentType, uploadUrl.substring(n + 1), requestFile)
-                    .compose(SchedulerProvider.instance.applySchedulers())
-                    .subscribe(object : BaseObserver<String>(impl, false) {
-                        override fun onISuccess(response: String) {
-                            callBack?.onNext(uploadUrlBean)
-                        }
+            val clientModule = ClientModule.instance.netRequestAsyncOther(
+                INetService::class.java,
+                baseUrl
+            ) as INetService
+            clientModule
+                .upLoadFile(contentType, uploadUrl.substring(n + 1), requestFile)
+                .compose(SchedulerProvider.instance.applySchedulers())
+                .subscribe(object : BaseObserver<String>(impl, false) {
+                    override fun onISuccess(response: String) {
+                        callBack.onNext(uploadUrlBean)
+                    }
 
-                        override fun onIError(e: ApiException) {
-                            callBack?.onError(e)
-                        }
-                    })
-            }
+                    override fun onIError(e: ApiException) {
+                        callBack.onError(e)
+                    }
+                })
         }
     }
 }

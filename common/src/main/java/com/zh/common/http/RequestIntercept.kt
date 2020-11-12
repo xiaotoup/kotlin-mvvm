@@ -21,15 +21,15 @@ import java.nio.charset.Charset
  * @description :
  * @date : 2019/5/6.
  */
-class RequestIntercept(private val mHandler: GlobeHttpHandler?) : Interceptor {
+class RequestIntercept : Interceptor {
     private val tag = "--okhttp--"
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
-        val requestbuffer = Buffer()
+        val requestBuffer = Buffer()
         if (request.body != null) {
-            request.body!!.writeTo(requestbuffer)
+            request.body?.writeTo(requestBuffer)
         } else {
             Timber.tag(tag).w("request.body() == null")
         }
@@ -39,15 +39,13 @@ class RequestIntercept(private val mHandler: GlobeHttpHandler?) : Interceptor {
             request = request.newBuilder()
                 .addHeader("sessionId", SpUtil.getStringSF(ZjConfig.sessionId)).build()
         }
-        if (mHandler != null) //在请求服务器之前可以拿到request,做一些操作比如给request添加header,如果不做操作则返回参数中的request
-            request = mHandler.onHttpRequestBefore(chain, request)!!
 
         //打印url信息
         Timber.tag(tag).w(
             "Sending Request -> %s %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s"
-            , request!!.method
+            , request.method
             , request.url
-            , if (request.body != null) requestbuffer.readUtf8() else "null"
+            , if (request.body != null) requestBuffer.readUtf8() else "null"
             , chain.connection()
             , request.headers
         )
@@ -64,57 +62,56 @@ class RequestIntercept(private val mHandler: GlobeHttpHandler?) : Interceptor {
 
         //读取服务器返回的结果
         val responseBody = originalResponse.body
-        val source = responseBody!!.source()
-        source.request(Long.MAX_VALUE) // Buffer the entire body.
-        val buffer = source.buffer()
+        val source = responseBody?.source()
+        source?.apply {
+            request(Long.MAX_VALUE) // Buffer the entire body.
+            val buffer = buffer
 
-        //获取content的压缩类型
-        val encoding = originalResponse
-            .headers["Content-Encoding"]
-        val clone = buffer.clone()
-        val bodyString: String
+            //获取content的压缩类型
+            val encoding = originalResponse.headers["Content-Encoding"]
+            val clone = buffer.clone()
+            val bodyString: String
 
-        //解析response content
-        if (encoding != null && encoding.equals("gzip", ignoreCase = true)) { //content使用gzip压缩
-            val outputStream = ByteArrayOutputStream()
-            clone.writeTo(outputStream)
-            val bytes = outputStream.toByteArray()
-            bodyString = ZipHelper.instance.decompressForGzip(bytes).toString() //解压
-            outputStream.close()
-        } else if (encoding != null && encoding.equals(
-                "zlib",
-                ignoreCase = true
-            )
-        ) { //content使用zlib压缩
-            val outputStream = ByteArrayOutputStream()
-            clone.writeTo(outputStream)
-            val bytes = outputStream.toByteArray()
-            bodyString = ZipHelper.instance.decompressToStringForZlib(bytes).toString() //解压
-            outputStream.close()
-        } else { //content没有被压缩
-            var charset = Charset.forName("UTF-8")
-            val contentType = responseBody.contentType()
-            if (contentType != null) {
-                charset = contentType.charset(charset)
+            //解析response content
+            if (encoding != null && encoding.equals("gzip", ignoreCase = true)) { //content使用gzip压缩
+                val outputStream = ByteArrayOutputStream()
+                clone.writeTo(outputStream)
+                val bytes = outputStream.toByteArray()
+                bodyString = ZipHelper.instance.decompressForGzip(bytes).toString() //解压
+                outputStream.close()
+            } else if (encoding != null && encoding.equals(
+                    "zlib",
+                    ignoreCase = true
+                )
+            ) { //content使用zlib压缩
+                val outputStream = ByteArrayOutputStream()
+                clone.writeTo(outputStream)
+                val bytes = outputStream.toByteArray()
+                bodyString = ZipHelper.instance.decompressToStringForZlib(bytes).toString() //解压
+                outputStream.close()
+            } else { //content没有被压缩
+                var charset = Charset.forName("UTF-8")
+                val contentType = responseBody.contentType()
+                if (contentType != null) {
+                    charset = contentType.charset(charset)
+                }
+                bodyString = clone.readString(charset)
             }
-            bodyString = clone.readString(charset!!)
-        }
 
 //        Timber.tag(tag).w(jsonFormat(bodyString));
-        Timber.tag(tag).w(bodyString)
-        if (mHandler != null) //这里可以比客户端提前一步拿到服务器返回的结果,可以做一些操作,比如token超时,重新获取
-            return mHandler.onHttpResultResponse(bodyString, chain, originalResponse)!!
+            Timber.tag(tag).w(bodyString)
 
-        //sessionId失效，去登录
-        try {
-            val jsonObject = JSONObject(bodyString)
-            val code = jsonObject.getInt("code")
-            if (code == StatusCode.STATUS_CODE_NO_LOGIN) {
-                SpUtil.setStringSF(ZjConfig.sessionId, "")
-                //ARouter.getInstance().build(ZjConfig.LoginActivity).navigation();
+            //sessionId失效，去登录
+            try {
+                val jsonObject = JSONObject(bodyString)
+                val code = jsonObject.getInt("code")
+                if (code == StatusCode.STATUS_CODE_NO_LOGIN) {
+                    SpUtil.setStringSF(ZjConfig.sessionId, "")
+                    //ARouter.getInstance().build(ZjConfig.LoginActivity).navigation();
+                }
+            } catch (e: JSONException) {
+                e.printStackTrace()
             }
-        } catch (e: JSONException) {
-            e.printStackTrace()
         }
         return originalResponse
     }

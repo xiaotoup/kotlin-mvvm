@@ -1,14 +1,10 @@
 package com.zh.common.base
 
-import android.R
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import androidx.annotation.LayoutRes
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
@@ -16,7 +12,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
+import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.utils.ScreenUtils
@@ -27,11 +25,20 @@ import me.jessyan.autosize.internal.CustomAdapt
 abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     DialogFragment(), CustomAdapt {
 
+    private val TAG = "BaseDialogFragment"
     private lateinit var binding: BINDING
     var mViewModel: VM? = null
     private var viewModelId = 0
-    private lateinit var mContext: Context
     private var rootView: View? = null
+    lateinit var mContext: Context
+
+    @get:LayoutRes
+    abstract val layoutRes: Int
+    abstract val marginWidth: Int//diaog到两边的距离,设置一边的距离
+    abstract val viewModel: VM
+    abstract val onBindVariableId: Int
+    abstract fun initView(savedInstanceState: Bundle?, view: View)
+    abstract fun initData()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -53,6 +60,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.StyleDialog)
     }
 
     override fun onCreateView(
@@ -75,8 +83,9 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //在OnCreate方法中调用下面方法，然后再使用线程，就能在uncaughtException方法中捕获到异常
+        isCancelable = true
         if (isAdded) {
-            initView(savedInstanceState)
+            initView(savedInstanceState, view)
             initData()
         }
     }
@@ -94,17 +103,10 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             window?.setBackgroundDrawableResource(R.color.transparent)
             setCanceledOnTouchOutside(true)
-            setCancelable(false)
+            setCancelable(true)
         }
         return dialog
     }
-
-    @get:LayoutRes
-    abstract val layoutRes: Int
-    abstract val viewModel: VM
-    abstract val onBindVariableId: Int
-    abstract fun initView(savedInstanceState: Bundle?)
-    abstract fun initData()
 
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
@@ -122,20 +124,20 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     //今日头条适配方案
     override fun isBaseOnWidth(): Boolean = true
     override fun getSizeInDp(): Float = ZjConfig.screenWidth
-    open fun getRootView(): View? = rootView
 
     override fun onStart() {
         super.onStart()
-        // 全屏显示Dialog，重新测绘宽高
-//        if (dialog != null) {
-//            val dm = DisplayMetrics()
-//            activity!!.windowManager.defaultDisplay.getMetrics(dm)
-//            dialog!!.window?.setLayout(
-//                ViewGroup.LayoutParams.WRAP_CONTENT,
-//                ViewGroup.LayoutParams.WRAP_CONTENT
-//            )
-//            ScreenUtils
-//        }
+        dialog?.let {
+            it.window?.setLayout(
+                ScreenUtils.screenRealWidth - 2 * ScreenUtils.dip2px(marginWidth.toFloat()),
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        onDestroyView()
     }
 
     override fun onDestroyView() {
@@ -150,5 +152,73 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
         super.onDestroy()
         binding?.let { it.unbind() }
         mViewModel?.let { lifecycle.removeObserver(it) }
+        dialog?.dismiss()
+    }
+
+    fun setBottomAnimation() {
+        dialog?.window?.setGravity(Gravity.BOTTOM)
+        dialog?.window?.setWindowAnimations(R.style.StyleBottomAnimation)
+    }
+
+    /**
+     * 页面跳转
+     *
+     * @param url 对应组建的名称  (“/mine/setting”)
+     */
+    fun startActivity(url: String) {
+        ARouter.getInstance().build(url).navigation()
+    }
+
+    /**
+     * 携带数据的页面跳转
+     *
+     * @param url 对应组建的名称  (“/mine/setting”)
+     */
+    fun startActivity(url: String, bundle: Bundle) {
+        ARouter.getInstance().build(url).with(bundle).navigation()
+    }
+
+    /**
+     * 携带数据的页面跳转
+     *
+     * @param url 对应组建的名称  (“/mine/setting”)
+     * 第二个参数则是RequestCode
+     */
+    fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
+        val intent = Intent(context, getDestination(url))
+        intent.putExtras(bundle)
+        startActivityForResult(intent, type)
+    }
+
+    /**
+     * 页面跳转 - 清楚该类之前的所有activity
+     *
+     * @param url 对应组建的名称  (“/mine/setting”)
+     */
+    fun startActivityNewTask(url: String) {
+        ARouter.getInstance().build(url)
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            .navigation()
+    }
+
+    /**
+     * 携带数据的页面跳转 - 清楚该类之前的所有activity
+     *
+     * @param url 对应组建的名称  (“/mine/setting”)
+     */
+    fun startActivityNewTask(url: String, bundle: Bundle) {
+        ARouter.getInstance().build(url).with(bundle)
+            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            .navigation()
+    }
+
+    /**
+     * 由于ARouter不支持Fragment startActivityForResult(),需要获取跳转的Class
+     * 根据路径获取具体要跳转的class
+     */
+    private fun getDestination(url: String): Class<*> {
+        val postcard = ARouter.getInstance().build(url)
+        LogisticsCenter.completion(postcard)
+        return postcard.destination
     }
 }

@@ -28,16 +28,11 @@ import java.util.*
 abstract class BaseApplication : MultiDexApplication() {
 
     private var mActivityList: LinkedList<RxAppCompatActivity>? = null
-    val mBaseUrl: String by lazy {
-        ZjConfig.base_url
-    }
-    val mClientModule: ClientModule by lazy {
-        mBaseUrl?.let { ClientModule.Buidler().baseurl(it).build() }
-    }
+    val mBaseUrl: String = ZjConfig.base_url
 
     //让外部获取到BaseApplication
     companion object {
-        private var mApplication: BaseApplication? = null
+        private  var mApplication: BaseApplication ?= null
 
         @Synchronized
         fun getApplication(): BaseApplication = mApplication!!

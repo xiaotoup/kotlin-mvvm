@@ -124,7 +124,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivity(url: String) {
+    fun startActivity(url: String) {
         ARouter.getInstance().build(url).navigation()
     }
 
@@ -134,7 +134,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      * @param url 对应组建的名称 (“/mine/setting”)
      * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
      */
-    open fun startActivityForResult(url: String, type: Int) {
+    fun startActivityForResult(url: String, type: Int) {
         ARouter.getInstance().build(url).navigation(this, type)
     }
 
@@ -143,7 +143,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivity(url: String, bundle: Bundle) {
+    fun startActivity(url: String, bundle: Bundle) {
         ARouter.getInstance().build(url).with(bundle).navigation()
     }
 
@@ -153,7 +153,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      * @param url 对应组建的名称  (“/mine/setting”)
      * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
      */
-    open fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
+    fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
         ARouter.getInstance().build(url).with(bundle).navigation(this, type)
     }
 
@@ -162,7 +162,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivityNewTask(url: String) {
+    fun startActivityNewTask(url: String) {
         ARouter.getInstance().build(url)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             .navigation()
@@ -173,7 +173,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivityNewTask(url: String, bundle: Bundle) {
+    fun startActivityNewTask(url: String, bundle: Bundle) {
         ARouter.getInstance().build(url).with(bundle)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             .navigation()

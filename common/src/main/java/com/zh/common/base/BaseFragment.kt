@@ -143,7 +143,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white
     open val statusBarColor: Int = defaultStatusBarColor
     open val navigationBarColor: Int = defaultNavigationBarColor
-    open val fitsSystemWindows : Boolean = true
+    open val fitsSystemWindows: Boolean = true
 
     override fun onResume() {
         super.onResume()
@@ -175,7 +175,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivity(url: String) {
+    fun startActivity(url: String) {
         ARouter.getInstance().build(url).navigation()
     }
 
@@ -184,7 +184,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivity(url: String, bundle: Bundle) {
+    fun startActivity(url: String, bundle: Bundle) {
         ARouter.getInstance().build(url).with(bundle).navigation()
     }
 
@@ -194,7 +194,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      * @param url 对应组建的名称  (“/mine/setting”)
      * 第二个参数则是RequestCode
      */
-    open fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
+    fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
         val intent = Intent(context, getDestination(url))
         intent.putExtras(bundle)
         startActivityForResult(intent, type)
@@ -205,7 +205,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivityNewTask(url: String) {
+    fun startActivityNewTask(url: String) {
         ARouter.getInstance().build(url)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             .navigation()
@@ -216,7 +216,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      *
      * @param url 对应组建的名称  (“/mine/setting”)
      */
-    open fun startActivityNewTask(url: String, bundle: Bundle) {
+    fun startActivityNewTask(url: String, bundle: Bundle) {
         ARouter.getInstance().build(url).with(bundle)
             .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
             .navigation()

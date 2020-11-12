@@ -33,7 +33,7 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
             startActivity(ZjConfig.ListActivity)
         }
         btnDialog.setOnClickListener {
-            TestDialog().show(supportFragmentManager, "test")
+            TestDialog().show(supportFragmentManager, "s")
         }
     }
 }

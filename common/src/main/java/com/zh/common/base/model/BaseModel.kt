@@ -1,8 +1,8 @@
 package com.zh.common.base.model
 
-import com.zh.common.base.BaseApplication
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.bean.BaseResponse
+import com.zh.common.di.ClientModule
 import com.zh.common.exception.ResponseTransformer
 import com.zh.common.schedulers.SchedulerProvider
 import com.zh.common.utils.LogUtil
@@ -15,22 +15,15 @@ import io.reactivex.disposables.Disposable
  * @time 2020/10/8 - 10:03
  * @desc model基类
  */
-@Suppress("UNCHECKED_CAST")
 abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
 
-    private var iNetService: T
-//    private var iNetServiceAsync: T
+    private val iNetService: T = ClientModule.instance.netRequest(service)
+    private val iNetServiceAsync: T = ClientModule.instance.netRequestAsync(service)
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
-    private val mClient = BaseApplication.getApplication().mClientModule
-
-    init {
-        iNetService = mClient.provideRequestService(mClient)?.create(service) as T
-//        iNetServiceAsync = mClient.provideRequestServiceAsync(mClient)?.create(service) as T
-    }
 
     //添加网络请求到CompositeDisposable
-    fun addSubscribe(disposable: Disposable) {
-        mCompositeDisposable?.also {
+    private fun addSubscribe(disposable: Disposable) {
+        mCompositeDisposable.also {
             LogUtil.d("--okhttp--", "disposable is add")
             it.add(disposable)
         }
@@ -38,7 +31,7 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
 
     override fun onCleared() {
         //解除网络请求
-        mCompositeDisposable?.also {
+        mCompositeDisposable.also {
             LogUtil.d("--okhttp--", "disposable is clear")
             mCompositeDisposable.clear()
         }
@@ -54,9 +47,9 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     /**
      * 异步调用
      */
-//    fun getINetServiceAsync(): T {
-//        return iNetServiceAsync
-//    }
+    fun getINetServiceAsync(): T {
+        return iNetServiceAsync
+    }
 
     /**
      * 公用的网络请求发起的操作

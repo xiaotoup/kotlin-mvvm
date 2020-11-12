@@ -9,6 +9,6 @@ import com.zh.kotlin_mvvm.net.bean.LoginBean
 class MainModel : BaseModel<INetService>(INetService::class.java) {
 
     fun onLogin(map: Map<String, Any>, observer: BaseObserver<LoginBean>) {
-        doNetRequest(getINetService().login(BaseMapToBody.convertMapToBody(map)), observer)
+        doNetRequest(getINetServiceAsync().login(BaseMapToBody.convertMapToBody(map)), observer)
     }
 }

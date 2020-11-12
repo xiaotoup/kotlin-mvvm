@@ -1,15 +1,12 @@
 package com.zh.common.di
 
-import android.app.Application
-import android.text.TextUtils
-import com.zh.common.http.GlobeHttpHandler
+import com.zh.common.base.BaseApplication
 import com.zh.common.http.RequestIntercept
-import com.zh.common.rxerrorhandler.ResponseErrorListener
-import com.zh.common.rxerrorhandler.RxErrorHandler
+import com.zh.common.utils.LogUtil
 import com.zh.common.utils.SpUtil
 import okhttp3.Cache
 import okhttp3.HttpUrl
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -25,20 +22,39 @@ import java.util.concurrent.TimeUnit
  * @description : 使用构建者模式,模块化组件
  * @date : 2019/5/6.
  */
-class ClientModule private constructor(buidler: Buidler) {
-    private var mApiUrl: HttpUrl? = null
-    private var mHandler: GlobeHttpHandler? = null
-    private var mInterceptors: MutableList<Interceptor>?
-    private var mErroListener: ResponseErrorListener? = null
+class ClientModule private constructor() {
+
+    companion object {
+        private const val TOME_OUT = 10
+        const val HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024 //缓存文件最大值为10Mb
+        private var mRetrofit: Retrofit? = null
+        private var mOkHttpClient: OkHttpClient? = null
+
+        val instance: ClientModule by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            LogUtil.d("--okhttp--", "网络实例化成功")
+            ClientModule()
+        }
+    }
 
     /**
-     * @description: 设置baseurl
+     * 外部调同步请求
      */
-    init {
-        mApiUrl = buidler.apiUrl
-        mHandler = buidler.handler
-        mInterceptors = buidler.interceptors
-        mErroListener = buidler.responseErroListener
+    fun <T> netRequest(service: Class<*>): T {
+        return provideRequestService(instance)?.create(service) as T
+    }
+
+    /**
+     * 外部调异步请求
+     */
+    fun <T> netRequestAsync(service: Class<*>): T {
+        return provideRequestServiceAsync(instance)?.create(service) as T
+    }
+
+    /**
+     * 外部调异步请求 - 不同的域名地址（用于直接上行到阿里文件库）
+     */
+    fun <T> netRequestAsyncOther(service: Class<*>, baseUrl: String): T {
+        return provideRequestServiceAsyncOther(instance, baseUrl)?.create(service) as T
     }
 
     /**
@@ -48,7 +64,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      */
     @Synchronized
-    fun provideRequestService(clientModule: ClientModule): Retrofit? {
+    private fun provideRequestService(clientModule: ClientModule): Retrofit? {
         return clientModule.provideClient(
             clientModule.provideCache(clientModule.provideCacheFile()),
             clientModule.provideIntercept()
@@ -65,7 +81,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @param clientModule
      * @return
      */
-    /*fun provideRequestServiceAsync(clientModule: ClientModule): Retrofit? {
+    private fun provideRequestServiceAsync(clientModule: ClientModule): Retrofit? {
         return clientModule.provideClient(
             clientModule.provideCache(clientModule.provideCacheFile()),
             clientModule.provideIntercept()
@@ -74,7 +90,27 @@ class ClientModule private constructor(buidler: Buidler) {
                 clientModule.provideRetrofitAsync(it, it1)
             }
         }
-    }*/
+    }
+
+    /**
+     * 使用请求 - 异步
+     *
+     * @param clientModule
+     * @return
+     */
+    private fun provideRequestServiceAsyncOther(
+        clientModule: ClientModule,
+        baseUrl: String
+    ): Retrofit? {
+        return clientModule.provideClient(
+            clientModule.provideCache(clientModule.provideCacheFile()),
+            clientModule.provideIntercept()
+        )?.let {
+            clientModule.provideBaseUrlOther(baseUrl)?.let { it1 ->
+                clientModule.provideRetrofitAsync(it, it1)
+            }
+        }
+    }
 
     /**
      * @param cache     缓存
@@ -111,7 +147,7 @@ class ClientModule private constructor(buidler: Buidler) {
                 }
             }
         }
-        if (httpUrl.toString() != mRetrofit!!.baseUrl().toString()) {
+        if (httpUrl.toString() != mRetrofit?.baseUrl().toString()) {
             mRetrofit = configureRetrofit(Retrofit.Builder(), client, httpUrl)
         }
         return mRetrofit
@@ -124,7 +160,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      * @description: 提供retrofit
      */
-   /* private fun provideRetrofitAsync(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
+    private fun provideRetrofitAsync(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
         if (mRetrofit == null) {
             synchronized(ClientModule::class.java) {
                 if (mRetrofit == null) {
@@ -132,22 +168,38 @@ class ClientModule private constructor(buidler: Buidler) {
                 }
             }
         }
-        if (httpUrl.toString() != mRetrofit!!.baseUrl().toString()) {
+        if (httpUrl.toString() != mRetrofit?.baseUrl().toString()) {
             mRetrofit = configureRetrofitAsync(Retrofit.Builder(), client, httpUrl)
         }
         return mRetrofit
-    }*/
+    }
 
+    /**
+     * 设置域名地址
+     */
     private fun provideBaseUrl(): HttpUrl? {
-        return mApiUrl
+        return BaseApplication.getApplication().mBaseUrl.toHttpUrl()
     }
 
+    /**
+     * 其他不同得域名地址
+     */
+    private fun provideBaseUrlOther(baseUrl: String): HttpUrl? {
+        return baseUrl.toHttpUrl()
+    }
+
+    /**
+     * 设置缓存路径和大小
+     */
     private fun provideCache(cacheFile: File): Cache {
-        return Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE.toLong()) //设置缓存路径和大小
+        return Cache(cacheFile, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE.toLong())
     }
 
+    /**
+     * 打印请求信息的拦截器
+     */
     private fun provideIntercept(): Interceptor {
-        return RequestIntercept(mHandler) //打印请求信息的拦截器
+        return RequestIntercept()
     }
 
     /**
@@ -155,19 +207,6 @@ class ClientModule private constructor(buidler: Buidler) {
      */
     private fun provideCacheFile(): File {
         return SpUtil.cacheFile
-    }
-
-    /**
-     * 提供处理Rxjava错误的管理器
-     *
-     * @return
-     */
-    private fun proRxErrorHandler(application: Application?): RxErrorHandler {
-        return RxErrorHandler
-            .builder()
-            .with(application)
-            .responseErrorListener(mErroListener)
-            .build()
     }
 
     /**
@@ -201,7 +240,7 @@ class ClientModule private constructor(buidler: Buidler) {
      * @return
      * @description:配置retrofit
      */
-    /*private fun configureRetrofitAsync(
+    private fun configureRetrofitAsync(
         builder: Retrofit.Builder,
         client: OkHttpClient?,
         httpUrl: HttpUrl?
@@ -213,7 +252,7 @@ class ClientModule private constructor(buidler: Buidler) {
             .addConverterFactory(ScalarsConverterFactory.create()) // 添加String转换器
             .addConverterFactory(GsonConverterFactory.create()) //使用Gson
             .build()
-    }*/
+    }
 
     /**
      * 配置okhttpclient
@@ -224,65 +263,13 @@ class ClientModule private constructor(buidler: Buidler) {
     private fun configureClient(
         okHttpClient: OkHttpClient.Builder,
         cache: Cache?,
-        intercept: Interceptor?
+        intercept: Interceptor
     ): OkHttpClient {
         val builder = okHttpClient
-            .connectTimeout(
-                TOME_OUT.toLong(),
-                TimeUnit.SECONDS
-            )
-            .readTimeout(
-                TOME_OUT.toLong(),
-                TimeUnit.SECONDS
-            )
+            .connectTimeout(TOME_OUT.toLong(), TimeUnit.SECONDS)
+            .readTimeout(TOME_OUT.toLong(), TimeUnit.SECONDS)
             .cache(cache) //设置缓存
-            .addNetworkInterceptor(intercept!!)
-        if (mInterceptors != null && mInterceptors!!.isNotEmpty()) { //如果外部提供了interceptor的数组则遍历添加
-            for (interceptor in mInterceptors!!) {
-                builder.addInterceptor(interceptor)
-            }
-        }
+            .addNetworkInterceptor(intercept)
         return builder.build()
-    }
-
-    class Buidler {
-        var apiUrl = "https://api.github.com/".toHttpUrlOrNull()
-        var handler: GlobeHttpHandler? = null
-        var interceptors: MutableList<Interceptor> = mutableListOf<Interceptor>()
-        var responseErroListener: ResponseErrorListener? = null
-
-        fun baseurl(baseurl: String): Buidler { //基础url
-            require(!TextUtils.isEmpty(baseurl)) { "baseurl can not be empty" }
-            apiUrl = baseurl.toHttpUrlOrNull()
-            return this
-        }
-
-        fun globeHttpHandler(handler: GlobeHttpHandler?): Buidler { //用来处理http响应结果
-            this.handler = handler
-            return this
-        }
-
-        fun interceptors(interceptors: MutableList<Interceptor>): Buidler { //动态添加任意个interceptor
-            this.interceptors = interceptors
-            return this
-        }
-
-        fun responseErroListener(listener: ResponseErrorListener?): Buidler { //处理所有Rxjava的onError逻辑
-            responseErroListener = listener
-            return this
-        }
-
-        fun build(): ClientModule {
-            checkNotNull(apiUrl) { "baseurl is required" }
-            return ClientModule(this)
-        }
-    }
-
-    companion object {
-        private const val TOME_OUT = 10
-        const val HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024 //缓存文件最大值为10Mb
-        private var mRetrofit: Retrofit? = null
-        private var mOkHttpClient: OkHttpClient? = null
-        private var clientModule: ClientModule? = null//域名不相同，重新创建域名
     }
 }
