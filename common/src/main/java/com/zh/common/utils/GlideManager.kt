@@ -37,14 +37,12 @@ object GlideManager {
             .centerCrop()
             .circleCrop()
             .skipMemoryCache(true)
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .asDrawable()
-                    .load(doUrl(url))
-                    .apply(options)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .asDrawable()
+                .load(doUrl(url))
+                .apply(options)
+                .into(it1)
         }
     }
 
@@ -62,14 +60,12 @@ object GlideManager {
             .skipMemoryCache(true)
             .error(defaultRes)
             .placeholder(defaultRes)
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .asDrawable()
-                    .load(doUrl(url))
-                    .apply(options)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .asDrawable()
+                .load(doUrl(url))
+                .apply(options)
+                .into(it1)
         }
     }
 
@@ -85,15 +81,13 @@ object GlideManager {
             .centerCrop()
             .circleCrop()
             .skipMemoryCache(true)
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .asDrawable()
-                    .load(doUrl(url))
-                    .apply(options)
-                    .listener(requestListener)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .asDrawable()
+                .load(doUrl(url))
+                .apply(options)
+                .listener(requestListener)
+                .into(it1)
         }
     }
 
@@ -106,14 +100,12 @@ object GlideManager {
     fun loadUrl(url: Any, imageView: ImageView) {
         val options = RequestOptions()
             .skipMemoryCache(true)
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .asDrawable()
-                    .load(doUrl(url))
-                    .apply(options)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .asDrawable()
+                .load(doUrl(url))
+                .apply(options)
+                .into(it1)
         }
     }
 
@@ -130,14 +122,12 @@ object GlideManager {
             .skipMemoryCache(true)
             .error(defaultError)
             .placeholder(defaultPlaceholder)
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .asDrawable()
-                    .load(doUrl(url))
-                    .apply(options)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .asDrawable()
+                .load(doUrl(url))
+                .apply(options)
+                .into(it1)
         }
     }
 
@@ -151,15 +141,13 @@ object GlideManager {
     fun loadUrl(url: Any, imageView: ImageView, requestListener: RequestListener<Drawable>) {
         val options = RequestOptions()
             .skipMemoryCache(true)
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .asDrawable()
-                    .load(doUrl(url))
-                    .apply(options)
-                    .listener(requestListener)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .asDrawable()
+                .load(doUrl(url))
+                .apply(options)
+                .listener(requestListener)
+                .into(it1)
         }
     }
 
@@ -180,15 +168,13 @@ object GlideManager {
             .skipMemoryCache(true)
             .error(defaultError)
             .placeholder(defaultPlaceholder)
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .asDrawable()
-                    .load(doUrl(url))
-                    .apply(options)
-                    .listener(requestListener)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .asDrawable()
+                .load(doUrl(url))
+                .apply(options)
+                .listener(requestListener)
+                .into(it1)
         }
     }
 
@@ -200,13 +186,11 @@ object GlideManager {
      */
     fun loadGifUrl(url: Any, imageView: ImageView) {
         val options = RequestOptions()
-        mContext?.get()?.let {
-            SoftReference(imageView).get()?.let { it1 ->
-                Glide.with(it)
-                    .load(doUrl(url))
-                    .apply(options)
-                    .into(it1)
-            }
+        SoftReference(imageView).get()?.let { it1 ->
+            Glide.with(imageView)
+                .load(doUrl(url))
+                .apply(options)
+                .into(it1)
         }
     }
 
