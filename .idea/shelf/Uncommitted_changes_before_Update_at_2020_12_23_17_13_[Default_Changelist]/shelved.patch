@@ -1,0 +1,358 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins{\r\n    id 'com.android.application'\r\n    id 'kotlin-android'\r\n    id 'kotlin-android-extensions'\r\n    id 'kotlin-kapt'\r\n}\r\n\r\nandroid {\r\n    compileSdkVersion rootProject.ext.android[\"compileSdkVersion\"]\r\n    buildToolsVersion rootProject.ext.android[\"buildToolsVersion\"]\r\n\r\n    defaultConfig {\r\n        applicationId \"com.zh.kotlin_mvvm\"\r\n        minSdkVersion rootProject.ext.android[\"minSdkVersion\"]\r\n        targetSdkVersion rootProject.ext.android[\"targetSdkVersion\"]\r\n        versionCode rootProject.ext.android[\"versionCode\"]\r\n        versionName rootProject.ext.android[\"versionName\"]\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n        kapt {\r\n            arguments {\r\n                arg(\"AROUTER_MODULE_NAME\", project.getName())\r\n            }\r\n        }\r\n        multiDexEnabled true\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    dataBinding {\r\n        enabled = true\r\n    }\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n}\r\nkapt {\r\n    generateStubs = true\r\n}\r\ndependencies {\r\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\r\n    implementation 'androidx.appcompat:appcompat:1.2.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'\r\n\r\n    implementation project(':common')\r\n    kapt 'com.alibaba:arouter-compiler:1.2.2'\r\n    kapt 'com.github.bumptech.glide:compiler:4.11.0'\r\n    kapt \"com.android.databinding:compiler:$compiler_version\"\r\n\r\n    if (isNeedHomeModule.toBoolean()) {\r\n        implementation project(path: ':home')\r\n    }\r\n    if (isNeedFoundModule.toBoolean()) {\r\n        implementation project(path: ':found')\r\n    }\r\n    if (isNeedNewsModule.toBoolean()) {\r\n        implementation project(path: ':news')\r\n    }\r\n    if (isNeedMineModule.toBoolean()) {\r\n        implementation project(path: ':mine')\r\n    }\r\n    if (isNeedLoginModule.toBoolean()) {\r\n        implementation project(path: ':login')\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ app/build.gradle	(date 1604914283144)
+@@ -1,4 +1,4 @@
+-plugins{
++plugins {
+     id 'com.android.application'
+     id 'kotlin-android'
+     id 'kotlin-android-extensions'
+@@ -24,6 +24,23 @@
+         }
+         multiDexEnabled true
+     }
++    flavorDimensions "default"
++    productFlavors {
++        cutting {
++            manifestPlaceholders = [
++                    package_name: "com.yaode",
++            ]
++            applicationId "com.yaode"
++        }
++    }
++    signingConfigs {
++        config {
++            keyAlias 'yaode'
++            keyPassword 'mdwl@yaode'
++            storeFile file('yaode.jks')
++            storePassword 'mdwl@yaode'
++        }
++    }
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_1_8
+         targetCompatibility JavaVersion.VERSION_1_8
+@@ -32,9 +49,16 @@
+         enabled = true
+     }
+     buildTypes {
++        debug {
++            minifyEnabled false
++            buildConfigField "boolean", "LOG_DEBUG", "true"
++            signingConfig signingConfigs.config
++        }
+         release {
+             minifyEnabled false
+             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
++            buildConfigField "boolean", "LOG_DEBUG", "true"
++            signingConfig signingConfigs.config
+         }
+     }
+     kotlinOptions {
+@@ -53,6 +77,8 @@
+     kapt 'com.alibaba:arouter-compiler:1.2.2'
+     kapt 'com.github.bumptech.glide:compiler:4.11.0'
+     kapt "com.android.databinding:compiler:$compiler_version"
++    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
++    implementation 'org.greenrobot:eventbus:3.1.1'
+ 
+     if (isNeedHomeModule.toBoolean()) {
+         implementation project(path: ':home')
+Index: app/src/main/res/layout/activity_splash.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<layout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <data>\r\n\r\n        <variable\r\n            name=\"viewModel\"\r\n            type=\"com.zh.common.base.viewmodel.NormalViewModel\" />\r\n    </data>\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        tools:context=\".ui.SplashActivity\">\r\n\r\n        <Button\r\n            android:id=\"@+id/btnToLogin\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"跳转登录接口请求\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnLogin\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"跳转登录页面\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnList\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"跳转List页面\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/btnDialog\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"DialogFragment\" />\r\n\r\n    </LinearLayout>\r\n</layout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_splash.xml	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ app/src/main/res/layout/activity_splash.xml	(date 1604911265426)
+@@ -39,5 +39,11 @@
+             android:layout_height="wrap_content"
+             android:text="DialogFragment" />
+ 
++            <Button
++            android:id="@+id/btnWxPay"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            android:text="微信支付" />
++
+     </LinearLayout>
+ </layout>
+\ No newline at end of file
+Index: common/src/main/java/com/zh/config/ZjConfig.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zh.config\r\n\r\nobject ZjConfig {\r\n    const val screenWidth = 375f//今日头条屏幕适配 - 以宽度\r\n    const val base_url = \"https://guanli.huadupack.com/\"\r\n\r\n\r\n    /********************************** 用户信息 **********************************/\r\n    const val sessionId = \"sessionId\"\r\n\r\n    /********************************** 语言 **********************************/\r\n    const val LANGUAGE = \"language\"\r\n    const val lag_en = \"en\" //英文\r\n    const val lag_zh_CN = \"zh_CN\" //中文\r\n    const val lag_it_IT = \"it_IT\" //意大利\r\n    const val lag_ge = \"german\" //德国\r\n    const val lag_fr = \"french\" //法国\r\n    const val lag_gr = \"greek\" //希腊\r\n    const val lag_es = \"spanish\" //西班牙\r\n\r\n\r\n    const val MainActivity: String = \"/app/MainUI\"\r\n    const val ListActivity: String = \"/app/ListUI\"\r\n    const val LoginActivity: String = \"/login/LoginUI\"\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- common/src/main/java/com/zh/config/ZjConfig.kt	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ common/src/main/java/com/zh/config/ZjConfig.kt	(date 1604914839035)
+@@ -2,7 +2,8 @@
+ 
+ object ZjConfig {
+     const val screenWidth = 375f//今日头条屏幕适配 - 以宽度
+-    const val base_url = "https://guanli.huadupack.com/"
++//    const val base_url = "https://guanli.huadupack.com/"
++    const val base_url = "http://192.168.0.117:19014/"
+ 
+ 
+     /********************************** 用户信息 **********************************/
+Index: app/src/main/java/com/zh/kotlin_mvvm/mvvm/model/MainModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zh.kotlin_mvvm.mvvm.model\r\n\r\nimport com.zh.common.base.BaseMapToBody\r\nimport com.zh.common.base.BaseObserver\r\nimport com.zh.common.base.model.BaseModel\r\nimport com.zh.kotlin_mvvm.net.INetService\r\nimport com.zh.kotlin_mvvm.net.bean.LoginBean\r\n\r\nclass MainModel : BaseModel<INetService>(INetService::class.java) {\r\n\r\n    fun onLogin(map: Map<String, Any>, observer: BaseObserver<LoginBean>) {\r\n        doNetRequest(getINetService().login(BaseMapToBody.convertMapToBody(map)), observer)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/zh/kotlin_mvvm/mvvm/model/MainModel.kt	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ app/src/main/java/com/zh/kotlin_mvvm/mvvm/model/MainModel.kt	(date 1604913506423)
+@@ -3,12 +3,18 @@
+ import com.zh.common.base.BaseMapToBody
+ import com.zh.common.base.BaseObserver
+ import com.zh.common.base.model.BaseModel
++import com.zh.kotlin_mvvm.net.ApiManager
+ import com.zh.kotlin_mvvm.net.INetService
+ import com.zh.kotlin_mvvm.net.bean.LoginBean
++import com.zh.kotlin_mvvm.utils.AliOrderInfo
+ 
+ class MainModel : BaseModel<INetService>(INetService::class.java) {
+ 
+     fun onLogin(map: Map<String, Any>, observer: BaseObserver<LoginBean>) {
+         doNetRequest(getINetService().login(BaseMapToBody.convertMapToBody(map)), observer)
+     }
++
++    fun onWxPay(orderId: String, observer: BaseObserver<AliOrderInfo>){
++        doNetRequest(getINetService().wxPay(ApiManager.wx_pay, orderId, "1"), observer)
++    }
+ }
+\ No newline at end of file
+Index: common/src/main/java/com/zh/common/base/bean/BaseResponse.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zh.common.base.bean\r\n\r\nimport com.zh.common.exception.StatusCode\r\n\r\n/**\r\n * @author: qq363\r\n * @date: 2019/5/10\r\n * @description:\r\n */\r\nabstract class BaseResponse<T> {\r\n    var code = 0\r\n    var msg: String = \"\"\r\n\r\n    //请求成功返回数据\r\n    val isSuccess: Boolean = code == StatusCode.STATUS_CODE_SUCCESS\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- common/src/main/java/com/zh/common/base/bean/BaseResponse.kt	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ common/src/main/java/com/zh/common/base/bean/BaseResponse.kt	(date 1604971808751)
+@@ -8,9 +8,9 @@
+  * @description:
+  */
+ abstract class BaseResponse<T> {
+-    var code = 0
++    var status = 0
+     var msg: String = ""
+ 
+     //请求成功返回数据
+-    val isSuccess: Boolean = code == StatusCode.STATUS_CODE_SUCCESS
++    val isSuccess: Boolean = (status == StatusCode.STATUS_CODE_SUCCESS)
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/zh/kotlin_mvvm/net/ApiManager.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zh.kotlin_mvvm.net\r\n\r\nobject ApiManager {\r\n    const val APPLOGIN_URL = \"api/app/user/login\"\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/zh/kotlin_mvvm/net/ApiManager.kt	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ app/src/main/java/com/zh/kotlin_mvvm/net/ApiManager.kt	(date 1604915001950)
+@@ -2,4 +2,5 @@
+ 
+ object ApiManager {
+     const val APPLOGIN_URL = "api/app/user/login"
++    const val wx_pay = "payOrder/add"
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/zh/kotlin_mvvm/ui/SplashActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zh.kotlin_mvvm.ui\r\n\r\nimport android.os.Bundle\r\nimport androidx.databinding.ViewDataBinding\r\nimport com.zh.common.base.BaseActivity\r\nimport com.zh.common.base.viewmodel.NormalViewModel\r\nimport com.zh.common.utils.ToastUtils\r\nimport com.zh.config.ZjConfig\r\nimport com.zh.kotlin_mvvm.R\r\nimport com.zh.kotlin_mvvm.dialog.TestDialog\r\nimport kotlinx.android.synthetic.main.activity_splash.*\r\n\r\nclass SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {\r\n\r\n    override val layoutRes = R.layout.activity_splash\r\n\r\n    override val viewModel: NormalViewModel = NormalViewModel()\r\n\r\n    override val onBindVariableId = 0\r\n\r\n    override fun initView(savedInstanceState: Bundle?) {\r\n        ToastUtils.showMessage(\"启动了\")\r\n    }\r\n\r\n    override fun initData() {\r\n        btnToLogin.setOnClickListener {\r\n            startActivity(ZjConfig.MainActivity)\r\n        }\r\n        btnLogin.setOnClickListener {\r\n            startActivity(ZjConfig.LoginActivity)\r\n        }\r\n        btnList.setOnClickListener {\r\n            startActivity(ZjConfig.ListActivity)\r\n        }\r\n        btnDialog.setOnClickListener {\r\n            TestDialog().show(supportFragmentManager, \"test\")\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/zh/kotlin_mvvm/ui/SplashActivity.kt	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ app/src/main/java/com/zh/kotlin_mvvm/ui/SplashActivity.kt	(date 1604911265416)
+@@ -1,5 +1,6 @@
+ package com.zh.kotlin_mvvm.ui
+ 
++import android.content.Intent
+ import android.os.Bundle
+ import androidx.databinding.ViewDataBinding
+ import com.zh.common.base.BaseActivity
+@@ -35,5 +36,8 @@
+         btnDialog.setOnClickListener {
+             TestDialog().show(supportFragmentManager, "test")
+         }
++        btnWxPay.setOnClickListener {
++            startActivity(Intent(this, TestWxPayActivity::class.java))
++        }
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/zh/kotlin_mvvm/net/INetService.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zh.kotlin_mvvm.net\r\n\r\nimport com.zh.common.http.INetService\r\nimport com.zh.kotlin_mvvm.net.bean.LoginBean\r\nimport io.reactivex.Observable\r\nimport okhttp3.RequestBody\r\nimport retrofit2.http.Body\r\nimport retrofit2.http.POST\r\n\r\n/**\r\n * @author: qq363\r\n * @date: 2019/5/10\r\n * @description:\r\n */\r\ninterface INetService : INetService{\r\n    /**\r\n     *\r\n     * @param body  可以固定死\r\n     * @return\r\n     */\r\n    @POST(ApiManager.APPLOGIN_URL)\r\n    fun login(@Body body: RequestBody): Observable<LoginBean>\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/zh/kotlin_mvvm/net/INetService.kt	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ app/src/main/java/com/zh/kotlin_mvvm/net/INetService.kt	(date 1604914641304)
+@@ -2,17 +2,17 @@
+ 
+ import com.zh.common.http.INetService
+ import com.zh.kotlin_mvvm.net.bean.LoginBean
++import com.zh.kotlin_mvvm.utils.AliOrderInfo
+ import io.reactivex.Observable
+ import okhttp3.RequestBody
+-import retrofit2.http.Body
+-import retrofit2.http.POST
++import retrofit2.http.*
+ 
+ /**
+  * @author: qq363
+  * @date: 2019/5/10
+  * @description:
+  */
+-interface INetService : INetService{
++interface INetService {
+     /**
+      *
+      * @param body  可以固定死
+@@ -20,4 +20,16 @@
+      */
+     @POST(ApiManager.APPLOGIN_URL)
+     fun login(@Body body: RequestBody): Observable<LoginBean>
++
++    /**
++     *
++     * @param body  可以固定死
++     * @return
++     */
++    @GET
++    fun wxPay(
++        @Url url: String,
++        @Query("orderId") orderId: String,
++        @Query("channelId") channelId: String
++    ): Observable<AliOrderInfo>
+ }
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    package=\"com.zh.kotlin_mvvm\">\r\n\r\n    <application\r\n        android:name=\".MyApp\"\r\n        android:allowBackup=\"true\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/AppTheme\">\r\n        <activity android:name=\".ui.ListActivity\"></activity>\r\n        <activity android:name=\".ui.SplashActivity\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n        <activity android:name=\".ui.MainActivity\"></activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ app/src/main/AndroidManifest.xml	(date 1604911002702)
+@@ -10,7 +10,8 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+-        <activity android:name=".ui.ListActivity"></activity>
++        <activity android:name=".ui.TestWxPayActivity"></activity>
++        <activity android:name=".ui.ListActivity" />
+         <activity android:name=".ui.SplashActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+@@ -18,7 +19,11 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity android:name=".ui.MainActivity"></activity>
++        <activity android:name=".ui.MainActivity" />
++        <activity
++            android:name="com.yaode.wxapi.WXPayEntryActivity"
++            android:exported="true"
++            android:launchMode="singleTop" />
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+Index: app/src/main/java/com/zh/kotlin_mvvm/utils/WxPaySuccessEvent.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/zh/kotlin_mvvm/utils/WxPaySuccessEvent.java	(date 1604910758609)
++++ app/src/main/java/com/zh/kotlin_mvvm/utils/WxPaySuccessEvent.java	(date 1604910758609)
+@@ -0,0 +1,14 @@
++package com.zh.kotlin_mvvm.utils;
++
++public class WxPaySuccessEvent {
++    private int errCode;
++
++    public WxPaySuccessEvent(int errCode) {
++        this.errCode = errCode;
++    }
++
++    public int getErrCode() {
++        return errCode;
++    }
++
++}
+Index: common/src/main/java/com/zh/common/exception/ServerResponseFunc.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.zh.common.exception\r\n\r\nimport com.zh.common.base.bean.BaseResponse\r\nimport io.reactivex.functions.Function\r\n\r\n/**\r\n * 拦截服务器返回的错误\r\n *\r\n *\r\n * 只返回有效数据data，不返回msg、code等数据\r\n */\r\nclass ServerResponseFunc<T> : Function<BaseResponse<T>, T> {\r\n    override fun apply(response: BaseResponse<T>): T {\r\n        //老版的 - 获取外部错误信息\r\n        if (response.code != StatusCode.STATUS_CODE_SUCCESS) {\r\n            throw  ServerException(response.code, response.msg)\r\n        }\r\n        return response as T\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- common/src/main/java/com/zh/common/exception/ServerResponseFunc.kt	(revision d90d91bbf42084cd6ae9070cf4b070768f6a26b3)
++++ common/src/main/java/com/zh/common/exception/ServerResponseFunc.kt	(date 1604971808705)
+@@ -12,8 +12,8 @@
+ class ServerResponseFunc<T> : Function<BaseResponse<T>, T> {
+     override fun apply(response: BaseResponse<T>): T {
+         //老版的 - 获取外部错误信息
+-        if (response.code != StatusCode.STATUS_CODE_SUCCESS) {
+-            throw  ServerException(response.code, response.msg)
++        if (response.status != StatusCode.STATUS_CODE_SUCCESS) {
++            throw  ServerException(response.status, response.msg)
+         }
+         return response as T
+     }
+Index: app/src/main/java/com/zh/kotlin_mvvm/mvvm/viewmodel/TestWxPayViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/zh/kotlin_mvvm/mvvm/viewmodel/TestWxPayViewModel.kt	(date 1604993322892)
++++ app/src/main/java/com/zh/kotlin_mvvm/mvvm/viewmodel/TestWxPayViewModel.kt	(date 1604993322892)
+@@ -0,0 +1,27 @@
++package com.zh.kotlin_mvvm.mvvm.viewmodel
++
++import com.tencent.mm.opensdk.modelpay.PayReq
++import com.tencent.mm.opensdk.openapi.IWXAPI
++import com.zh.common.base.viewmodel.BaseViewModel
++import com.zh.kotlin_mvvm.mvvm.model.MainModel
++
++class TestWxPayViewModel : BaseViewModel<MainModel>(MainModel()) {
++
++    fun wxPay(
++        prepayId: String,
++        nonceStr: String,
++        timeStamp: String,
++        sign: String,
++        msgApi: IWXAPI?
++    ) {
++        val request = PayReq()
++        request.appId = "wx2e1a8c833e05d4d4"
++        request.partnerId = "1603817423"
++        request.prepayId = prepayId
++        request.packageValue = "Sign=WXPay"
++        request.nonceStr = nonceStr
++        request.timeStamp = timeStamp
++        request.sign = sign
++        msgApi?.sendReq(request)
++    }
++}
+\ No newline at end of file

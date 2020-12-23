@@ -1,4 +1,4 @@
-plugins{
+plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
@@ -24,6 +24,15 @@ android {
         }
         multiDexEnabled true
     }
+    flavorDimensions "default"
+    signingConfigs {
+        config {
+            keyAlias 'yaode'
+            keyPassword 'mdwl@yaode'
+            storeFile file('yaode.jks')
+            storePassword 'mdwl@yaode'
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -32,9 +41,16 @@ android {
         enabled = true
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            signingConfig signingConfigs.config
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            signingConfig signingConfigs.config
         }
     }
     kotlinOptions {
@@ -56,6 +72,8 @@ dependencies {
     kapt 'com.alibaba:arouter-compiler:1.2.2'
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     kapt "com.android.databinding:compiler:$compiler_version"
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 
     if (isNeedHomeModule.toBoolean()) {
         implementation project(path: ':home')

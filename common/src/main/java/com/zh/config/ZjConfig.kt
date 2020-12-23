@@ -2,7 +2,8 @@ package com.zh.config
 
 object ZjConfig {
     const val screenWidth = 375f//今日头条屏幕适配 - 以宽度
-    const val base_url = "https://guanli.huadupack.com/"
+//    const val base_url = "https://guanli.huadupack.com/"
+    const val base_url = "http://192.168.0.117:19014/"
 
 
     /********************************** 用户信息 **********************************/

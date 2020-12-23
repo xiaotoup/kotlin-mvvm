@@ -12,8 +12,8 @@ import io.reactivex.functions.Function
 class ServerResponseFunc<T> : Function<BaseResponse<T>, T> {
     override fun apply(response: BaseResponse<T>): T {
         //老版的 - 获取外部错误信息
-        if (response.code != StatusCode.STATUS_CODE_SUCCESS) {
-            throw  ServerException(response.code, response.msg)
+        if (response.status != StatusCode.STATUS_CODE_SUCCESS) {
+            throw  ServerException(response.status, response.msg)
         }
         return response as T
     }

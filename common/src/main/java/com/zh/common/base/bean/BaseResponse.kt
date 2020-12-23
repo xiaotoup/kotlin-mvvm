@@ -8,9 +8,9 @@ import com.zh.common.exception.StatusCode
  * @description:
  */
 abstract class BaseResponse<T> {
-    var code = 0
+    var status = 0
     var msg: String = ""
 
     //请求成功返回数据
-    val isSuccess: Boolean = code == StatusCode.STATUS_CODE_SUCCESS
+    val isSuccess: Boolean = (status == StatusCode.STATUS_CODE_SUCCESS)
 }
