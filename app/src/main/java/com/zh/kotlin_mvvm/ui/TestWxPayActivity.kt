@@ -1,10 +1,13 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.databinding.ViewDataBinding
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.zh.common.base.BaseActivity
+import com.zh.common.utils.SpUtil
 import com.zh.common.utils.ToastUtils.showMessage
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.viewmodel.TestWxPayViewModel
@@ -24,12 +27,14 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
     override fun initView(savedInstanceState: Bundle?) {
         EventBus.getDefault().register(this)
         msgApi = WXAPIFactory.createWXAPI(this, null)
-        msgApi?.registerApp("wx2e1a8c833e05d4d4")
+        msgApi?.registerApp(tvAppId.text.toString())
     }
 
     override fun initData() {
         btnPay.setOnClickListener {
             viewModel.wxPay(
+                tvAppId.text.toString(),
+                tvPartnerId.text.toString(),
                 tvOrderPrepayId.text.toString(),
                 tvOrderNonceStr.text.toString(),
                 tvOrderTimeStamp.text.toString(),
@@ -37,6 +42,21 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
                 msgApi
             )
         }
+
+        SpUtil.setStringSF("appId", tvAppId.text.toString())
+        tvAppId.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                SpUtil.setStringSF("appId", tvAppId.text.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
     }
 
     /**

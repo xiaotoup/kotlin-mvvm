@@ -8,6 +8,8 @@ import com.zh.kotlin_mvvm.mvvm.model.MainModel
 class TestWxPayViewModel : BaseViewModel<MainModel>(MainModel()) {
 
     fun wxPay(
+        appId: String,
+        partnerId: String,
         prepayId: String,
         nonceStr: String,
         timeStamp: String,
@@ -15,8 +17,8 @@ class TestWxPayViewModel : BaseViewModel<MainModel>(MainModel()) {
         msgApi: IWXAPI?
     ) {
         val request = PayReq()
-        request.appId = "wx2e1a8c833e05d4d4"
-        request.partnerId = "1603817423"
+        request.appId = appId
+        request.partnerId = partnerId
         request.prepayId = prepayId
         request.packageValue = "Sign=WXPay"
         request.nonceStr = nonceStr

@@ -13,6 +13,22 @@
         tools:context=".ui.TestWxPayActivity">
 
         <EditText
+            android:id="@+id/tvAppId"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:text="wx2e1a8c833e05d4d4"
+            android:hint="appId" />
+
+        <EditText
+            android:id="@+id/tvPartnerId"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:text="1603737822"
+            android:hint="partnerId" />
+
+        <EditText
             android:id="@+id/tvOrderPrepayId"
             android:layout_width="match_parent"
             android:layout_height="50dp"

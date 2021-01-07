@@ -15,7 +15,9 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.zh.common.utils.SpUtil;
 import com.zh.kotlin_mvvm.R;
+import com.zh.kotlin_mvvm.ui.TestWxPayActivity;
 import com.zh.kotlin_mvvm.utils.WxPaySuccessEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,7 +36,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         //弄成透明的
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //接收到分享以及登录的intent传递handleIntent方法，处理结果
-        mWxapi = WXAPIFactory.createWXAPI(this, "wx2e1a8c833e05d4d4", false);
+        mWxapi = WXAPIFactory.createWXAPI(this, SpUtil.INSTANCE.getStringSF("appId"), false);
         mWxapi.handleIntent(getIntent(), this);
     }
 

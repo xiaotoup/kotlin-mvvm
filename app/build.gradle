@@ -25,6 +25,14 @@ android {
         multiDexEnabled true
     }
     flavorDimensions "default"
+    /*productFlavors {
+        yaode {
+            manifestPlaceholders = [
+                    package_name: "com.yaode",
+            ]
+            applicationId "com.yaode"
+        }
+    }*/
     signingConfigs {
         config {
             keyAlias 'yaode'
