@@ -39,5 +39,8 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         btnWxPay.setOnClickListener {
             startActivity(Intent(this, TestWxPayActivity::class.java))
         }
+        btnALiPay.setOnClickListener {
+            startActivity(Intent(this, TestALiPayActivity::class.java))
+        }
     }
 }

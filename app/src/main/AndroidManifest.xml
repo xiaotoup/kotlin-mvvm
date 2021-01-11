@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.TestWxPayActivity"></activity>
+        <activity android:name=".ui.TestALiPayActivity"></activity>
+        <activity android:name=".ui.TestWxPayActivity" />
         <activity android:name=".ui.ListActivity" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>

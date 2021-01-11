@@ -39,11 +39,17 @@
             android:layout_height="wrap_content"
             android:text="DialogFragment" />
 
-            <Button
+        <Button
             android:id="@+id/btnWxPay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="微信支付" />
+
+        <Button
+            android:id="@+id/btnALiPay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="支付宝支付" />
 
     </LinearLayout>
 </layout>
