@@ -17,24 +17,23 @@ import com.zh.kotlin_mvvm.net.bean.LoginBean
 
 class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
 
-    private var mContext: Context? = null
     var sid: ObservableField<String> = ObservableField("")
     var imgUrl: ObservableInt = ObservableInt()
 
-    fun setContext(context: Context) {
-        mContext = context
+    init {
         imgUrl.set(R.mipmap.teenmodel_bg_4)
+        sid.set("初始化")
     }
 
     fun back(view: View) {
-        CustomDialog.Builder(mContext!!)
+       /* CustomDialog.Builder(mContext!!)
             .setMessage("是否退出?")
             .setPositiveButton("确认", DialogInterface.OnClickListener { p0, p1 ->
                 (mContext as Activity).finish()
                 p0?.dismiss()
             })
             .setNegativeButton("取消",
-                DialogInterface.OnClickListener { p0, p1 -> p0?.dismiss() }).create().show()
+                DialogInterface.OnClickListener { p0, p1 -> p0?.dismiss() }).create().show()*/
     }
 
     fun doLogin(context : Context, map: Map<String, Any>) {

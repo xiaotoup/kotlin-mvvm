@@ -5,6 +5,8 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.request.RequestListener
 import com.zh.common.utils.GlideManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
  * @auth xiaohua
@@ -87,10 +89,12 @@ fun bindingGifAdapter(view: ImageView, gifUrl: Any) {
  * 清除内存缓存
  * 必须在主线程中调用
  */
-//@BindingAdapter("clearMemory")
-//fun bindingClearMemoryAdapter(view: ImageView) {
-//    GlideManager.clearMemory()
-//}
+/*@BindingAdapter("clearMemory")
+fun bindingClearMemoryAdapter(view: ImageView) {
+    GlobalScope.launch {
+        GlideManager.clearMemory()
+    }
+}*/
 
 /**
  * 清除磁盘缓存

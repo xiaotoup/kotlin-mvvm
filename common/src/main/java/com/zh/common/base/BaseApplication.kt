@@ -55,8 +55,6 @@ abstract class BaseApplication : MultiDexApplication() {
             SpUtil.init(this)
             //Toast实例
             ToastUtils.init(applicationContext)
-            //图片框架实例化
-            GlideManager.init(applicationContext)
             //组件化实例化
             initARouter()
             //今日头条适配

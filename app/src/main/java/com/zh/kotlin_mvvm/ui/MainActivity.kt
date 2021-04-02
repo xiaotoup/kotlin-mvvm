@@ -1,25 +1,28 @@
 package com.zh.kotlin_mvvm.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.databinding.ObservableField
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zh.common.base.BaseActivity
-import com.zh.common.base.BaseImpl
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.BR
 import com.zh.kotlin_mvvm.R
+import com.zh.kotlin_mvvm.databinding.ActivityMainBinding
 import com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel
 
 @Route(path = ZjConfig.MainActivity)
-class MainActivity : BaseActivity<ViewDataBinding, MainViewModel>() {
-
-    override val layoutRes: Int = R.layout.activity_main
+class MainActivity(
+    override val layoutRes: Int = R.layout.activity_main,
+    override val viewModel: MainViewModel = MainViewModel(),
     override val onBindVariableId: Int = BR.viewModel
-    override val viewModel: MainViewModel = MainViewModel()
+) : BaseActivity<ActivityMainBinding, MainViewModel>() {
+
+    var sid = ObservableField<String>("iiiii")
+
     override fun initView(savedInstanceState: Bundle?) {
-        mViewModel?.setContext(this)
+        sid.set("22222222222")
     }
 
     override fun initData() {

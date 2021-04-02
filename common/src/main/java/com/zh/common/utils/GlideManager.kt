@@ -16,11 +16,6 @@ import java.lang.ref.WeakReference
  * Glide 4.+ 图片显示
  */
 object GlideManager {
-    private var mContext: WeakReference<Context>? = null
-
-    fun init(context: Context) {
-        mContext = WeakReference(context)
-    }
 
     //处理缓存地址
     private fun doUrl(url: Any): Any =
@@ -199,9 +194,9 @@ object GlideManager {
      * 必须在主线程中调用
      */
     fun clearMemory() {
-        mContext?.get()?.let {
+        /*mContext?.get()?.let {
             Glide.get(it).clearMemory()
-        }
+        }*/
     }
 
     /**
@@ -209,8 +204,8 @@ object GlideManager {
      * 必须在工作线程中调用
      */
     fun clearDiskCache() {
-        mContext?.get()?.let {
+       /* mContext?.get()?.let {
             Glide.get(it).clearDiskCache()
-        }
+        }*/
     }
 }

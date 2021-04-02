@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_web.*
 /**
  * 解决NestedScrollView嵌套WebView问题
  */
-class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
+class WebFragment : BaseFragment<NormalViewModel>() {
 
     private var mAgentWeb: AgentWeb? = null
     private var mScrollView: NestedScrollView? = null
@@ -44,12 +44,12 @@ class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
     }
 
     fun loadUrl(url: String) {
-        mAgentWeb!!.urlLoader.loadUrl(url)
+        mAgentWeb?.urlLoader?.loadUrl(url)
     }
 
     fun loadUrl(url: String, scrollView: NestedScrollView) {
         mScrollView = scrollView
-        mAgentWeb!!.urlLoader.loadUrl(url)
+        mAgentWeb?.urlLoader?.loadUrl(url)
     }
 
     /**
@@ -88,23 +88,25 @@ class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
         private get() {
             val settings = mAgentWeb!!.webCreator.webView.settings
             //扩大比例的缩放
-            settings.useWideViewPort = true
-            // 设置可以支持缩放
-            settings.setSupportZoom(false)
-            settings.builtInZoomControls = true
-            //自适应屏幕
-            settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
-            settings.loadWithOverviewMode = true
-            //支持javascript
-            settings.javaScriptEnabled = true
-            //支持通过JS打开新窗口
-            settings.javaScriptCanOpenWindowsAutomatically = true
-            //关闭缓存
-            settings.cacheMode = WebSettings.LOAD_NO_CACHE
-            settings.setAppCacheEnabled(false)
-            settings.domStorageEnabled = true
-            settings.databaseEnabled = true
-            mAgentWeb!!.webCreator.webView.webViewClient = object : WebViewClient() {
+            settings.apply {
+                useWideViewPort = true
+                // 设置可以支持缩放
+                setSupportZoom(false)
+                builtInZoomControls = true
+                //自适应屏幕
+                layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+                loadWithOverviewMode = true
+                //支持javascript
+                javaScriptEnabled = true
+                //支持通过JS打开新窗口
+                javaScriptCanOpenWindowsAutomatically = true
+                //关闭缓存
+                cacheMode = WebSettings.LOAD_NO_CACHE
+                setAppCacheEnabled(false)
+                domStorageEnabled = true
+                databaseEnabled = true
+            }
+            mAgentWeb?.webCreator?.webView?.webViewClient = object : WebViewClient() {
                 override fun onReceivedSslError(
                     view: WebView,
                     handler: SslErrorHandler,
@@ -122,21 +124,18 @@ class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
             }
         }
 
-
     override fun onPause() {
-        mAgentWeb!!.webLifeCycle.onPause()
+        mAgentWeb?.webLifeCycle?.onPause()
         super.onPause()
     }
 
     override fun onResume() {
-        mAgentWeb!!.webLifeCycle.onResume()
+        mAgentWeb?.webLifeCycle?.onResume()
         super.onResume()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (mAgentWeb != null) {
-            mAgentWeb!!.webLifeCycle.onDestroy()
-        }
+        mAgentWeb?.webLifeCycle?.onDestroy()
     }
 }

@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel" />
+
+        <variable
+            name="activ"
+            type="com.zh.kotlin_mvvm.ui.MainActivity" />
     </data>
 
     <LinearLayout
@@ -32,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@{viewModel.sid}" />
+            android:text="@{activ.sid}" />
 
         <ImageView
             android:layout_width="300dp"
