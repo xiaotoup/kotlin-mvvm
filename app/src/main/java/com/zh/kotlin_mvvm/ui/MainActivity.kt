@@ -3,7 +3,6 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
-import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.zh.common.base.BaseActivity
 import com.zh.config.ZjConfig
@@ -26,7 +25,7 @@ class MainActivity(
     }
 
     override fun initData() {
-        
+
     }
 
     fun netLogin(view: View) {
