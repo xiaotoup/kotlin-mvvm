@@ -22,7 +22,7 @@ class MainActivity(
     var sid = ObservableField<String>("iiiii")
 
     override fun initView(savedInstanceState: Bundle?) {
-        sid.set("22222222222")
+        binding.activity = this
     }
 
     override fun initData() {

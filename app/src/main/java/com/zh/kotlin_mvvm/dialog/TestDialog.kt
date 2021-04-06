@@ -8,7 +8,7 @@ import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.kotlin_mvvm.R
 import java.util.*
 
-class TestDialog : BaseDialogFragment<NormalViewModel>() {
+class TestDialog : BaseDialogFragment<ViewDataBinding, NormalViewModel>() {
     override val layoutRes: Int = R.layout.dialog_test
     override val viewModel: NormalViewModel = NormalViewModel()
     override val onBindVariableId: Int = 0

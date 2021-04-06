@@ -30,7 +30,7 @@ import me.jessyan.autosize.internal.CustomAdapt
 abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     RxAppCompatActivity(), CustomAdapt {
 
-    private lateinit var binding: BINDING
+    lateinit var binding: BINDING
     var mViewModel: VM? = null
     private var viewModelId = 0
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理

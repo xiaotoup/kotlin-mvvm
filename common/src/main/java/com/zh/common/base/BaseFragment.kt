@@ -28,10 +28,10 @@ import me.jessyan.autosize.internal.CustomAdapt
  * @time 2020/10/7 - 15:21
  * @desc Fragment基类，MVVM架构
  */
-abstract class BaseFragment<VM : BaseViewModel<*>> : RxFragment(),
+abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : RxFragment(),
     CustomAdapt, ImmersionOwner {
 
-    private lateinit var binding: ViewDataBinding
+    lateinit var binding: BINDING
     private var mViewModel: VM? = null
     private var viewModelId = 0
     private val minDelayTime = 500 // 两次点击间隔不能少于500ms
@@ -116,7 +116,7 @@ abstract class BaseFragment<VM : BaseViewModel<*>> : RxFragment(),
 
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
-            DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutRes, container, false)
+            DataBindingUtil.inflate<BINDING>(inflater, layoutRes, container, false)
         mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映

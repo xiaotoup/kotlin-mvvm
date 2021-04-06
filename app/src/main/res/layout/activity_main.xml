@@ -10,7 +10,7 @@
             type="com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel" />
 
         <variable
-            name="activ"
+            name="activity"
             type="com.zh.kotlin_mvvm.ui.MainActivity" />
     </data>
 
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@{activ.sid}" />
+            android:text="@{activity.sid}" />
 
         <ImageView
             android:layout_width="300dp"

@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_web.*
 /**
  * 解决NestedScrollView嵌套WebView问题
  */
-class WebFragment : BaseFragment<NormalViewModel>() {
+class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
 
     private var mAgentWeb: AgentWeb? = null
     private var mScrollView: NestedScrollView? = null

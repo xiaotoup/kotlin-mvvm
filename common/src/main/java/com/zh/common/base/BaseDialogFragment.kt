@@ -22,11 +22,11 @@ import com.zh.config.ZjConfig
 import me.jessyan.autosize.internal.CustomAdapt
 
 
-abstract class BaseDialogFragment<VM : BaseViewModel<*>> :
+abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     DialogFragment(), CustomAdapt {
 
     private val TAG = "BaseDialogFragment"
-    private lateinit var binding: ViewDataBinding
+    lateinit var binding: BINDING
     var mViewModel: VM? = null
     private var viewModelId = 0
     private var rootView: View? = null
@@ -110,7 +110,7 @@ abstract class BaseDialogFragment<VM : BaseViewModel<*>> :
 
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
-            DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutRes, container, false)
+            DataBindingUtil.inflate<BINDING>(inflater, layoutRes, container, false)
         mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
