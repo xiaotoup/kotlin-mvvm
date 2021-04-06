@@ -1,5 +1,6 @@
 package com.zh.common.base
 
+import com.zh.common.base.bean.BaseResponse
 import com.zh.common.exception.ApiException
 import com.zh.common.exception.ERROR
 import com.zh.common.utils.LogUtil
@@ -41,7 +42,8 @@ abstract class BaseObserverDialog<T> : Observer<T> {
     }
 
     override fun onNext(response: T) {
-        onISuccess(response)
+        val result: BaseResponse<T> = response as BaseResponse<T>
+        onISuccess(result.msg, response)
     }
 
     override fun onError(e: Throwable) {
@@ -63,7 +65,7 @@ abstract class BaseObserverDialog<T> : Observer<T> {
         if (isShowLoadingDialog) dismissLoading()
     }
 
-    protected abstract fun onISuccess(response: T)
+    protected abstract fun onISuccess(message: String, response: T)
     protected abstract fun onIError(e: ApiException)
 
     fun getLoadingDialog(): LoadingDialog? {

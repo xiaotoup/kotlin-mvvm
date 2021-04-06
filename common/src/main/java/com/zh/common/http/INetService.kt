@@ -1,5 +1,6 @@
 package com.zh.common.http
 
+import com.zh.common.base.bean.BaseResponse
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
@@ -31,7 +32,7 @@ interface INetService {
         @Path("suffix") suffix: String,
         @Query("contentType") contentType: String,
         @Query("sessionId") sessionId: String
-    ): Observable<OSSUploadUrlBean>
+    ): Observable<BaseResponse<OSSUploadUrlBean>>
 
     /**
      * 上传文件

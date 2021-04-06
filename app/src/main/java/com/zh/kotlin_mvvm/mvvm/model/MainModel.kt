@@ -2,6 +2,7 @@ package com.zh.kotlin_mvvm.mvvm.model
 
 import com.zh.common.base.BaseMapToBody
 import com.zh.common.base.BaseObserver
+import com.zh.common.base.bean.BaseResponse
 import com.zh.common.base.model.BaseModel
 import com.zh.kotlin_mvvm.net.ApiManager
 import com.zh.kotlin_mvvm.net.INetService

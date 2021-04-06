@@ -1,5 +1,6 @@
 package com.zh.kotlin_mvvm.net
 
+import com.zh.common.base.bean.BaseResponse
 import com.zh.kotlin_mvvm.net.bean.LoginBean
 import com.zh.kotlin_mvvm.utils.AliOrderInfo
 import io.reactivex.Observable
@@ -18,7 +19,7 @@ interface INetService {
      * @return
      */
     @POST(ApiManager.APPLOGIN_URL)
-    fun login(@Body body: RequestBody): Observable<LoginBean>
+    fun login(@Body body: RequestBody): Observable<BaseResponse<LoginBean>>
 
     /**
      *
@@ -30,5 +31,5 @@ interface INetService {
         @Url url: String,
         @Query("orderId") orderId: String,
         @Query("channelId") channelId: String
-    ): Observable<AliOrderInfo>
+    ): Observable<BaseResponse<AliOrderInfo>>
 }

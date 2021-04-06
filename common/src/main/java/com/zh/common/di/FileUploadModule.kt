@@ -59,8 +59,8 @@ class FileUploadModule {
             .compose(ResponseTransformer.handleResult())
             .compose(SchedulerProvider.instance.applySchedulers())
             .subscribe(object : BaseObserver<OSSUploadUrlBean>(impl, false) {
-                override fun onISuccess(uploadUrlBean: OSSUploadUrlBean) {
-                    if (uploadUrlBean != null && uploadUrlBean.data?.bussData != null) {
+                override fun onISuccess(message: String, uploadUrlBean: OSSUploadUrlBean) {
+                    if (uploadUrlBean?.bussData != null) {
                         UploadFile(impl, filePath, contentType, uploadUrlBean, callBack)
                     }
                 }
@@ -89,7 +89,7 @@ class FileUploadModule {
         var file = File(filePath)
         // 执行
         val requestFile = file.asRequestBody(contentType.toMediaTypeOrNull())
-        val uploadUrl = uploadUrlBean.data?.let { it.bussData?.uploadUrl }
+        val uploadUrl = uploadUrlBean.bussData?.let { it.uploadUrl }
         var c = 0
         var n = 0
         while (c < 3) {
@@ -105,7 +105,7 @@ class FileUploadModule {
                 .upLoadFile(contentType, uploadUrl!!.substring(n + 1), requestFile)
                 .compose(SchedulerProvider.instance.applySchedulers())
                 .subscribe(object : BaseObserver<String>(impl, false) {
-                    override fun onISuccess(response: String) {
+                    override fun onISuccess(message: String, response: String) {
                         callBack.onNext(uploadUrlBean)
                     }
 
@@ -124,7 +124,7 @@ class FileUploadModule {
                 .upLoadFile(contentType, uploadUrl.substring(n + 1), requestFile)
                 .compose(SchedulerProvider.instance.applySchedulers())
                 .subscribe(object : BaseObserver<String>(impl, false) {
-                    override fun onISuccess(response: String) {
+                    override fun onISuccess(message: String, response: String) {
                         callBack.onNext(uploadUrlBean)
                     }
 
