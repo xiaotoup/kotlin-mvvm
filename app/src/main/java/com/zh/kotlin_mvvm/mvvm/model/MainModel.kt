@@ -12,7 +12,7 @@ import com.zh.kotlin_mvvm.utils.AliOrderInfo
 class MainModel : BaseModel<INetService>(INetService::class.java) {
 
     fun onLogin(map: Map<String, Any>, observer: BaseObserver<LoginBean>) {
-        doNetRequest(getINetServiceAsync().login(BaseMapToBody.convertMapToBody(map)), observer)
+        doNetRequest(getINetService().login(BaseMapToBody.convertMapToBody(map)), observer)
     }
 
     fun onWxPay(orderId: String, observer: BaseObserver<AliOrderInfo>){

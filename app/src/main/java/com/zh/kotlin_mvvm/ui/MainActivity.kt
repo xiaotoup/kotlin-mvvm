@@ -26,7 +26,7 @@ class MainActivity(
     }
 
     override fun initData() {
-
+        
     }
 
     fun netLogin(view: View) {

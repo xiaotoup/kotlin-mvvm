@@ -17,17 +17,17 @@ import io.reactivex.disposables.Disposable
 abstract class BaseObserver<T> : Observer<T> {
     private var context: Context
     private var loadingDialog: LoadingDialog? = null
-    private var isShowLoadingDialog = false //是否显示加载进度对话框
+    private var isShowLoading = false //是否显示加载进度对话框
     private var disposable: Disposable? = null
 
     constructor(context: Context) {
         this.context = context
     }
 
-    constructor(context: Context, isShowLoadingDialog: Boolean) {
+    constructor(context: Context, isShowLoading: Boolean) {
         this.context = context
-        this.isShowLoadingDialog = isShowLoadingDialog
-        if (isShowLoadingDialog) getLoadingDialog()
+        this.isShowLoading = isShowLoading
+        if (isShowLoading) getLoadingDialog()
     }
 
     override fun onSubscribe(d: Disposable) {
@@ -40,7 +40,7 @@ abstract class BaseObserver<T> : Observer<T> {
         }
 
         // 显示进度条
-        if (isShowLoadingDialog) showLoading()
+        if (isShowLoading) showLoading()
     }
 
     override fun onNext(response: T) {
@@ -57,14 +57,14 @@ abstract class BaseObserver<T> : Observer<T> {
         }
 
         //关闭等待进度条
-        if (isShowLoadingDialog) dismissLoading()
+        if (isShowLoading) dismissLoading()
     }
 
     override fun onComplete() {
         LogUtil.d("BaseObserver", "onCompleted : Http is complete")
 
         //关闭等待进度条
-        if (isShowLoadingDialog) dismissLoading()
+        if (isShowLoading) dismissLoading()
     }
 
 

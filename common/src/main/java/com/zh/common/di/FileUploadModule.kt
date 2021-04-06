@@ -116,7 +116,7 @@ class FileUploadModule {
 
         } else {
             //不同重新创建单例上传
-            val clientModule = ClientModule.instance.netRequestAsyncOther(
+            val clientModule = ClientModule.instance.netRequestOther(
                 INetService::class.java,
                 baseUrl
             ) as INetService

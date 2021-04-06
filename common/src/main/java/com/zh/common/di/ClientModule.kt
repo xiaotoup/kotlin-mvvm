@@ -44,17 +44,10 @@ class ClientModule private constructor() {
     }
 
     /**
-     * 外部调异步请求
+     * 外部调同步请求 - 不同的域名地址（用于直接上行到阿里文件库）
      */
-    fun <T> netRequestAsync(service: Class<*>): T {
-        return provideRequestServiceAsync(instance)?.create(service) as T
-    }
-
-    /**
-     * 外部调异步请求 - 不同的域名地址（用于直接上行到阿里文件库）
-     */
-    fun <T> netRequestAsyncOther(service: Class<*>, baseUrl: String): T {
-        return provideRequestServiceAsyncOther(instance, baseUrl)?.create(service) as T
+    fun <T> netRequestOther(service: Class<*>, baseUrl: String): T {
+        return provideRequestService(instance, baseUrl)?.create(service) as T
     }
 
     /**
@@ -76,29 +69,12 @@ class ClientModule private constructor() {
     }
 
     /**
-     * 使用请求 - 异步
+     * 使用请求 - 同步
      *
      * @param clientModule
      * @return
      */
-    private fun provideRequestServiceAsync(clientModule: ClientModule): Retrofit? {
-        return clientModule.provideClient(
-            clientModule.provideCache(clientModule.provideCacheFile()),
-            clientModule.provideIntercept()
-        )?.let {
-            clientModule.provideBaseUrl()?.let { it1 ->
-                clientModule.provideRetrofitAsync(it, it1)
-            }
-        }
-    }
-
-    /**
-     * 使用请求 - 异步
-     *
-     * @param clientModule
-     * @return
-     */
-    private fun provideRequestServiceAsyncOther(
+    private fun provideRequestService(
         clientModule: ClientModule,
         baseUrl: String
     ): Retrofit? {
@@ -107,7 +83,7 @@ class ClientModule private constructor() {
             clientModule.provideIntercept()
         )?.let {
             clientModule.provideBaseUrlOther(baseUrl)?.let { it1 ->
-                clientModule.provideRetrofitAsync(it, it1)
+                clientModule.provideRetrofit(it, it1)
             }
         }
     }
@@ -149,27 +125,6 @@ class ClientModule private constructor() {
         }
         if (httpUrl.toString() != mRetrofit?.baseUrl().toString()) {
             mRetrofit = configureRetrofit(Retrofit.Builder(), client, httpUrl)
-        }
-        return mRetrofit
-    }
-
-    /**
-     * 异步
-     * @param client
-     * @param httpUrl
-     * @return
-     * @description: 提供retrofit
-     */
-    private fun provideRetrofitAsync(client: OkHttpClient, httpUrl: HttpUrl): Retrofit? {
-        if (mRetrofit == null) {
-            synchronized(ClientModule::class.java) {
-                if (mRetrofit == null) {
-                    mRetrofit = configureRetrofitAsync(Retrofit.Builder(), client, httpUrl)
-                }
-            }
-        }
-        if (httpUrl.toString() != mRetrofit?.baseUrl().toString()) {
-            mRetrofit = configureRetrofitAsync(Retrofit.Builder(), client, httpUrl)
         }
         return mRetrofit
     }
@@ -227,28 +182,6 @@ class ClientModule private constructor() {
             .baseUrl(httpUrl) //域名
             .client(client) //设置okhttp
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) //使用rxjava
-            .addConverterFactory(ScalarsConverterFactory.create()) // 添加String转换器
-            .addConverterFactory(GsonConverterFactory.create()) //使用Gson
-            .build()
-    }
-
-    /**
-     * 异步
-     * @param builder
-     * @param client
-     * @param httpUrl
-     * @return
-     * @description:配置retrofit
-     */
-    private fun configureRetrofitAsync(
-        builder: Retrofit.Builder,
-        client: OkHttpClient?,
-        httpUrl: HttpUrl?
-    ): Retrofit {
-        return builder
-            .baseUrl(httpUrl) //域名
-            .client(client) //设置okhttp
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync()) //使用rxjava
             .addConverterFactory(ScalarsConverterFactory.create()) // 添加String转换器
             .addConverterFactory(GsonConverterFactory.create()) //使用Gson
             .build()
