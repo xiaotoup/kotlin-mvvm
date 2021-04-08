@@ -46,9 +46,9 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    testApi 'junit:junit:4.12'
+    testApi 'junit:junit:4.13.2'
     androidTestApi 'androidx.test.ext:junit:1.1.2'
     androidTestApi 'androidx.test.espresso:espresso-core:3.3.0'
 
@@ -62,13 +62,11 @@ dependencies {
 
     api 'me.jessyan:autosize:1.2.1'
     api 'com.alibaba:arouter-api:1.5.0'
-    api 'com.google.code.gson:gson:2.8.6'
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     api 'com.google.android.material:material:1.2.1'
 
     api 'com.youth.banner:banner:2.1.0'
     api 'com.just.agentweb:agentweb:4.1.2'
-    api 'com.jakewharton.timber:timber:4.7.1'
     api 'com.contrarywind:Android-PickerView:4.1.9'
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
 
@@ -81,14 +79,14 @@ dependencies {
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.2'
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.9'
 
-    api 'io.reactivex.rxjava2:rxjava:2.2.5'
-    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.10'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     api 'com.squareup.okhttp3:okhttp:4.4.0'
     api 'com.squareup.okhttp3:logging-interceptor:4.4.0'
 
-    api 'com.squareup.retrofit2:retrofit:2.4.0'
-    api 'com.squareup.retrofit2:converter-gson:2.4.0'
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     api 'com.squareup.retrofit2:converter-scalars:2.4.0'
 

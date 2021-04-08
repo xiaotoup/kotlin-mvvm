@@ -1,16 +1,14 @@
 package com.zh.login.ui
 
-import android.content.Context
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.LogUtils
 import com.google.android.material.appbar.AppBarLayout
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
-import com.zh.common.utils.LogUtil
 import com.zh.config.ZjConfig
 import com.zh.login.R
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_login.*
 
 
@@ -33,8 +31,8 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         var afterY = 0
         appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
-                LogUtil.e("verticalOffset  $verticalOffset")
-                LogUtil.e("toolbarLayout  ${toolbarLayout.measuredHeight}")
+                LogUtils.e("verticalOffset  $verticalOffset")
+                LogUtils.e("toolbarLayout  ${toolbarLayout.measuredHeight}")
                 //当高度改变就重新设置子布局的高度
                 /*var lps: CollapsingToolbarLayout.LayoutParams =
                     changeView.layoutParams as CollapsingToolbarLayout.LayoutParams

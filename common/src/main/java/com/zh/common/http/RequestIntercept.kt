@@ -1,8 +1,9 @@
 package com.zh.common.http
 
 import android.text.TextUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SPUtils
 import com.zh.common.exception.StatusCode
-import com.zh.common.utils.SpUtil
 import com.zh.common.utils.ZipHelper
 import com.zh.config.ZjConfig
 import okhttp3.Interceptor
@@ -11,7 +12,6 @@ import okhttp3.Response
 import okio.Buffer
 import org.json.JSONException
 import org.json.JSONObject
-import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.nio.charset.Charset
@@ -31,17 +31,18 @@ class RequestIntercept : Interceptor {
         if (request.body != null) {
             request.body?.writeTo(requestBuffer)
         } else {
-            Timber.tag(tag).w("request.body() == null")
+            LogUtils.w(tag, "request.body() == null")
         }
 
         //添加sessionId - 除去登录接口
-        if (!TextUtils.isEmpty(SpUtil.getStringSF(ZjConfig.sessionId))) {
+        if (!TextUtils.isEmpty(SPUtils.getInstance().getString(ZjConfig.sessionId))) {
             request = request.newBuilder()
-                .addHeader("sessionId", SpUtil.getStringSF(ZjConfig.sessionId)).build()
+                .addHeader("sessionId", SPUtils.getInstance().getString(ZjConfig.sessionId)).build()
         }
 
         //打印url信息
-        Timber.tag(tag).w(
+        LogUtils.w(
+            tag,
             "Sending Request -> %s %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s"
             , request.method
             , request.url
@@ -53,7 +54,8 @@ class RequestIntercept : Interceptor {
         val originalResponse = chain.proceed(request)
         val t2 = System.nanoTime()
         //打印响应时间
-        Timber.tag(tag).w(
+        LogUtils.w(
+            tag,
             "Received response -> %s %s %s in %.1fms%n%s"
             , request.method
             , originalResponse.code, request.url, (t2 - t1) / 1e6
@@ -99,14 +101,14 @@ class RequestIntercept : Interceptor {
             }
 
 //        Timber.tag(tag).w(jsonFormat(bodyString));
-            Timber.tag(tag).w(bodyString)
+            LogUtils.w(tag, bodyString)
 
             //sessionId失效，去登录
             try {
                 val jsonObject = JSONObject(bodyString)
                 val code = jsonObject.getInt("code")
                 if (code == StatusCode.STATUS_CODE_NO_LOGIN) {
-                    SpUtil.setStringSF(ZjConfig.sessionId, "")
+                    SPUtils.getInstance().put(ZjConfig.sessionId, "")
                     //ARouter.getInstance().build(ZjConfig.LoginActivity).navigation();
                 }
             } catch (e: JSONException) {

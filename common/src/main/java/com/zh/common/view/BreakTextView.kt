@@ -8,7 +8,7 @@ import android.text.Spanned
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.widget.TextView
-import com.zh.common.utils.ScreenUtils
+import com.luck.picture.lib.tools.ScreenUtils
 
 /**
  * 英文换行添加链接符“-”
@@ -62,7 +62,7 @@ class BreakTextView : TextView {
         val rawText = rawCharSequence.toString() //原始文本
         val tvPaint: Paint = tv.paint //paint，包含字体等信息
         //        final float tvWidth = tv.getWidth() - tv.getPaddingLeft() - tv.getPaddingRight(); //控件可用宽度
-        val tvWidth: Int = ScreenUtils.screenWidth / 3 - ScreenUtils.dip2px(10f)
+        val tvWidth: Int = ScreenUtils.getScreenWidth(tv.context) / 3 - ScreenUtils.dip2px(tv.context, 10f)
 
         //将原始文本按行拆分
         val rawTextLines =

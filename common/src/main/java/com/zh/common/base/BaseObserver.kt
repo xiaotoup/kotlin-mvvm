@@ -1,12 +1,12 @@
 package com.zh.common.base
 
 import android.content.Context
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.NetworkUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.bean.BaseResponse
 import com.zh.common.exception.ApiException
 import com.zh.common.exception.ERROR
-import com.zh.common.utils.LogUtil
-import com.zh.common.utils.NetworkUtil
-import com.zh.common.utils.ToastUtils
 import com.zh.common.view.dialog.LoadingDialog
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
@@ -31,11 +31,11 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onSubscribe(d: Disposable) {
-        LogUtil.d("ThomasDebug", "BaseObserver : Http is start")
+        LogUtils.d("ThomasDebug", "BaseObserver : Http is start")
         disposable = d
 
-        if (!NetworkUtil.isNetworkConnected(context)) {
-            ToastUtils.showMessage("网络异常")
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.showShort("网络异常")
             onComplete() //一定要手动调用
         }
 
@@ -49,7 +49,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-        LogUtil.d("BaseObserver", "onError : " + e.message)
+        LogUtils.d("BaseObserver", "onError : " + e.message)
         if (e is ApiException) {
             onIError(e)
         } else {
@@ -61,7 +61,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onComplete() {
-        LogUtil.d("BaseObserver", "onCompleted : Http is complete")
+        LogUtils.d("BaseObserver", "onCompleted : Http is complete")
 
         //关闭等待进度条
         if (isShowLoading) dismissLoading()

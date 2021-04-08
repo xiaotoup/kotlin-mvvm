@@ -1,10 +1,10 @@
 package com.zh.common.base
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Process
 import android.text.TextUtils
-import android.util.Log
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.scwang.smart.refresh.footer.ClassicsFooter
@@ -13,18 +13,13 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.BuildConfig
 import com.zh.common.R
-import com.zh.common.di.ClientModule
-import com.zh.common.utils.GlideManager
-import com.zh.common.utils.SpUtil
-import com.zh.common.utils.ToastUtils
 import com.zh.config.ZjConfig
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.unit.Subunits
-import timber.log.Timber
-import timber.log.Timber.DebugTree
 import java.util.*
 
 
+@SuppressLint("ResourceAsColor")
 abstract class BaseApplication : MultiDexApplication() {
 
     private var mActivityList: LinkedList<RxAppCompatActivity>? = null
@@ -32,7 +27,7 @@ abstract class BaseApplication : MultiDexApplication() {
 
     //让外部获取到BaseApplication
     companion object {
-        private  var mApplication: BaseApplication ?= null
+        private var mApplication: BaseApplication? = null
 
         @Synchronized
         fun getApplication(): BaseApplication = mApplication!!
@@ -45,16 +40,6 @@ abstract class BaseApplication : MultiDexApplication() {
         //初始化所有数据
         if (isAppMainProcess()) {
             onCreateMethod()
-            //统一域名设置与获取
-            //设Log日志输出
-            if (BuildConfig.DEBUG) {
-                Timber.plant(DebugTree())
-            } else {
-                Timber.plant(CrashReportingTree())
-            }
-            SpUtil.init(this)
-            //Toast实例
-            ToastUtils.init(applicationContext)
             //组件化实例化
             initARouter()
             //今日头条适配
@@ -85,15 +70,6 @@ abstract class BaseApplication : MultiDexApplication() {
     fun getActivityList(): LinkedList<RxAppCompatActivity>? {
         if (mActivityList == null) mActivityList = LinkedList<RxAppCompatActivity>()
         return mActivityList
-    }
-
-    /**
-     * 自定义tag - 同时关闭debug
-     */
-    private class CrashReportingTree : Timber.Tree() {
-        override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-            Log.d("baseCommon", "Log关闭了")
-        }
     }
 
     /**
@@ -142,8 +118,8 @@ abstract class BaseApplication : MultiDexApplication() {
     init {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-            layout.setPrimaryColorsId(R.color.colorPrimary, R.color.colorAccent) //全局设置主题颜色
-            MaterialHeader(context)
+            //全局设置主题颜色
+            MaterialHeader(context).setColorSchemeColors(R.color.colorPrimary, R.color.colorAccent)
         }
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->

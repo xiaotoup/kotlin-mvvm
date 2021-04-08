@@ -1,6 +1,8 @@
 package com.zh.common.di
 
 import android.content.Context
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseApplication
 import com.zh.common.base.BaseObserver
 import com.zh.common.exception.ApiException
@@ -8,8 +10,6 @@ import com.zh.common.exception.ResponseTransformer
 import com.zh.common.http.INetService
 import com.zh.common.http.OSSUploadUrlBean
 import com.zh.common.schedulers.SchedulerProvider
-import com.zh.common.utils.SpUtil
-import com.zh.common.utils.ToastUtils
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
@@ -55,7 +55,7 @@ class FileUploadModule {
         val clientModule =
             (ClientModule.instance.netRequest(INetService::class.java) as INetService)
         clientModule
-            .getOSSUploadUrl(suffix, contentType, SpUtil.getStringSF("sessionId"))
+            .getOSSUploadUrl(suffix, contentType, SPUtils.getInstance().getString("sessionId"))
             .compose(ResponseTransformer.handleResult())
             .compose(SchedulerProvider.instance.applySchedulers())
             .subscribe(object : BaseObserver<OSSUploadUrlBean>(impl, false) {
@@ -66,7 +66,7 @@ class FileUploadModule {
                 }
 
                 override fun onIError(e: ApiException) {
-                    ToastUtils.showMessage(e.message)
+                    ToastUtils.showShort(e.message)
                     callBack.onError(e)
                 }
             })

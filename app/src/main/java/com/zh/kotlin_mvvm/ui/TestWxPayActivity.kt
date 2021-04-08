@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.databinding.ViewDataBinding
+import com.blankj.utilcode.util.SPUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import com.zh.common.base.BaseActivity
-import com.zh.common.utils.SpUtil
-import com.zh.common.utils.ToastUtils.showMessage
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.viewmodel.TestWxPayViewModel
 import com.zh.kotlin_mvvm.utils.WxPaySuccessEvent
@@ -43,10 +43,10 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
             )
         }
 
-        SpUtil.setStringSF("appId", tvAppId.text.toString())
+        SPUtils.getInstance().put("appId", tvAppId.text.toString())
         tvAppId.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-                SpUtil.setStringSF("appId", tvAppId.text.toString())
+                SPUtils.getInstance().put("appId", tvAppId.text.toString())
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -67,9 +67,9 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
     @Subscribe
     fun onWxPaySuccessEvent(event: WxPaySuccessEvent) {
         when (event.errCode) {
-            0 -> showMessage("支付成功")
-            -1 -> showMessage("取消失败:" + event.errCode)
-            -2 -> showMessage("取消支付")
+            0 -> ToastUtils.showShort("支付成功")
+            -1 -> ToastUtils.showShort("取消失败:" + event.errCode)
+            -2 -> ToastUtils.showShort("取消支付")
         }
     }
 

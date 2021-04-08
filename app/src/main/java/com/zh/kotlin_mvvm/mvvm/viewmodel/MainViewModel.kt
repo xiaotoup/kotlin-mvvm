@@ -4,10 +4,10 @@ import android.content.Context
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
+import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.exception.ApiException
-import com.zh.common.utils.ToastUtils
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.model.MainModel
 import com.zh.kotlin_mvvm.net.bean.LoginBean
@@ -38,12 +38,12 @@ class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
 
             override fun onISuccess(message: String, response: LoginBean) {
                 sid.set(response.bussData)
-                ToastUtils.showMessage("code=${message}")
+                ToastUtils.showShort("code=${message}")
             }
 
             override fun onIError(e: ApiException) {
                 sid.set(e.message)
-                ToastUtils.showMessage("code=${e.message}")
+                ToastUtils.showShort("code=${e.message}")
             }
         })
     }

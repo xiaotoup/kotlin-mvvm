@@ -9,13 +9,13 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.SPUtils;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.zh.common.utils.SpUtil;
 import com.zh.kotlin_mvvm.R;
 import com.zh.kotlin_mvvm.ui.TestWxPayActivity;
 import com.zh.kotlin_mvvm.utils.WxPaySuccessEvent;
@@ -36,7 +36,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
         //弄成透明的
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         //接收到分享以及登录的intent传递handleIntent方法，处理结果
-        mWxapi = WXAPIFactory.createWXAPI(this, SpUtil.INSTANCE.getStringSF("appId"), false);
+        mWxapi = WXAPIFactory.createWXAPI(this, SPUtils.getInstance().getString("appId"), false);
         mWxapi.handleIntent(getIntent(), this);
     }
 

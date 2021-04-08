@@ -3,9 +3,11 @@ package com.zh.kotlin_mvvm.ui
 import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
-import com.zh.common.utils.ToastUtils
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
@@ -20,7 +22,9 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
     override val onBindVariableId = 0
 
     override fun initView(savedInstanceState: Bundle?) {
-        ToastUtils.showMessage("启动了")
+        ToastUtils.showShort("启动了")
+        val message = "{\"code\":200, \"message\":\"提示内容\",\"data\":{\"content\":\"哈哈哈哈\"}}"
+        LogUtils.w("okhttp", message)
     }
 
     override fun initData() {

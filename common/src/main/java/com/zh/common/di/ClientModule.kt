@@ -1,9 +1,9 @@
 package com.zh.common.di
 
+import android.os.Environment
+import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseApplication
 import com.zh.common.http.RequestIntercept
-import com.zh.common.utils.LogUtil
-import com.zh.common.utils.SpUtil
 import okhttp3.Cache
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -13,7 +13,10 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
 import java.net.Proxy
 import java.util.concurrent.TimeUnit
 
@@ -31,7 +34,7 @@ class ClientModule private constructor() {
         private var mOkHttpClient: OkHttpClient? = null
 
         val instance: ClientModule by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-            LogUtil.d("--okhttp--", "网络实例化成功")
+            LogUtils.d("--okhttp--", "网络实例化成功")
             ClientModule()
         }
     }
@@ -161,7 +164,7 @@ class ClientModule private constructor() {
      * 提供缓存地址
      */
     private fun provideCacheFile(): File {
-        return SpUtil.cacheFile
+        return cacheFile
     }
 
     /**
@@ -204,5 +207,76 @@ class ClientModule private constructor() {
             .cache(cache) //设置缓存
             .addNetworkInterceptor(intercept)
         return builder.build()
+    }
+
+    /**
+     * 返回缓存文件夹
+     */
+    private val cacheFile: File
+        get() = if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
+            var file: File? = null
+            file = BaseApplication.getApplication().externalCacheDir //获取系统管理的sd卡缓存文件
+            if (file == null) { //如果获取的为空,就是用自己定义的缓存文件夹做缓存路径
+                file = File(cacheFilePath)
+                if (!file.exists()) {
+                    file.mkdirs()
+                }
+            }
+            file
+        } else {
+            BaseApplication.getApplication().cacheDir!!
+        }
+
+    /**
+     * 获取自定义缓存文件地址
+     *
+     * @return
+     */
+   private val cacheFilePath: String
+        get() {
+            val packageName = BaseApplication.getApplication().packageName
+            return "/mnt/sdcard/$packageName"
+        }
+
+    /**
+     * 使用递归获取目录文件大小
+     *
+     * @param dir
+     * @return
+     */
+    fun getDirSize(dir: File?): Long {
+        if (dir == null) return 0
+        if (!dir.isDirectory) return 0
+        var dirSize: Long = 0
+        val files = dir.listFiles()
+        for (file in files) {
+            if (file.isFile) {
+                dirSize += file.length()
+            } else if (file.isDirectory) {
+                dirSize += file.length()
+                dirSize += getDirSize(file) // 递归调用继续统计
+            }
+        }
+        return dirSize
+    }
+
+    /**
+     * 使用递归删除文件夹
+     *
+     * @param dir
+     * @return
+     */
+    fun deleteDir(dir: File?): Boolean {
+        if (dir == null) return false
+        if (!dir.isDirectory) return false
+        val files = dir.listFiles()
+        for (file in files) {
+            if (file.isFile) {
+                file.delete()
+            } else if (file.isDirectory) {
+                deleteDir(file) // 递归调用继续删除
+            }
+        }
+        return true
     }
 }

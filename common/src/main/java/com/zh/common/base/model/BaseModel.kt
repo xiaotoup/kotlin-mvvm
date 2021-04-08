@@ -1,11 +1,11 @@
 package com.zh.common.base.model
 
+import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.bean.BaseResponse
 import com.zh.common.di.ClientModule
 import com.zh.common.exception.ResponseTransformer
 import com.zh.common.schedulers.SchedulerProvider
-import com.zh.common.utils.LogUtil
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -23,7 +23,7 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     //添加网络请求到CompositeDisposable
     private fun addSubscribe(disposable: Disposable) {
         mCompositeDisposable.also {
-            LogUtil.d("--okhttp--", "disposable is add")
+            LogUtils.d("--okhttp--", "disposable is add")
             it.add(disposable)
         }
     }
@@ -31,7 +31,7 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     override fun onCleared() {
         //解除网络请求
         mCompositeDisposable.also {
-            LogUtil.d("--okhttp--", "disposable is clear")
+            LogUtils.d("--okhttp--", "disposable is clear")
             mCompositeDisposable.clear()
         }
     }

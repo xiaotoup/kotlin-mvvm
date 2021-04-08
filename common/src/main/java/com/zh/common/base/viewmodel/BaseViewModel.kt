@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
+import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseApplication
 import com.zh.common.base.model.BaseModel
-import com.zh.common.utils.LogUtil
 
 /**
  * @auth xiaohua
@@ -49,7 +49,7 @@ open class BaseViewModel<MODEL : BaseModel<*>?>(model: MODEL) :
 
     override fun onCleared() {
         super.onCleared()
-        LogUtil.d("--okhttp--", "onCleared----")
+        LogUtils.d("--okhttp--", "onCleared----")
     }
 }
 

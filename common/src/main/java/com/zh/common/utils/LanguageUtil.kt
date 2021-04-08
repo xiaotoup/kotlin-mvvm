@@ -5,6 +5,7 @@ import android.content.Context
 import android.os.Build
 import android.os.LocaleList
 import android.text.TextUtils
+import com.blankj.utilcode.util.SPUtils
 import com.zh.config.ZjConfig
 import java.util.*
 
@@ -19,7 +20,7 @@ class LanguageUtil {
      */
     fun changeAppLanguage(context: Context, locale: Locale, persistence: Boolean) {
         var locale = locale
-        if (TextUtils.isEmpty(SpUtil.getStringSF(ZjConfig.LANGUAGE))) {
+        if (TextUtils.isEmpty(SPUtils.getInstance().getString(ZjConfig.LANGUAGE))) {
             locale = Locale.ENGLISH
             saveLanguageSetting(locale)
         }
@@ -64,30 +65,30 @@ class LanguageUtil {
                 type = ZjConfig.lag_es
             }
         }
-        type?.let { SpUtil.setStringSF(ZjConfig.LANGUAGE, it) }
+        type?.let { SPUtils.getInstance().put(ZjConfig.LANGUAGE, it) }
     }
 
     fun getLanguageSetting(): Locale {
         when {
-            SpUtil.getStringSF(ZjConfig.LANGUAGE).equals(ZjConfig.lag_zh_CN) -> {
+            SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_zh_CN) -> {
                 return Locale.SIMPLIFIED_CHINESE
             }
-            SpUtil.getStringSF(ZjConfig.LANGUAGE).equals(ZjConfig.lag_en) -> {
+            SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_en) -> {
                 return Locale.ENGLISH
             }
-            SpUtil.getStringSF(ZjConfig.LANGUAGE).equals(ZjConfig.lag_it_IT) -> {
+            SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_it_IT) -> {
                 return Locale.ITALY
             }
-            SpUtil.getStringSF(ZjConfig.LANGUAGE).equals(ZjConfig.lag_ge) -> {
+            SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_ge) -> {
                 return Locale.GERMAN
             }
-            SpUtil.getStringSF(ZjConfig.LANGUAGE).equals(ZjConfig.lag_gr) -> {
+            SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_gr) -> {
                 return Locale("el", "GR")
             }
-            SpUtil.getStringSF(ZjConfig.LANGUAGE).equals(ZjConfig.lag_fr) -> {
+            SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_fr) -> {
                 return Locale.FRANCE
             }
-            SpUtil.getStringSF(ZjConfig.LANGUAGE).equals(ZjConfig.lag_es) -> {
+            SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_es) -> {
                 return Locale("es", "ES")
             }
             else -> return Locale.ENGLISH

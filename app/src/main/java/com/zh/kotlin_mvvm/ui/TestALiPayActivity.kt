@@ -7,12 +7,11 @@ import android.os.Message
 import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ViewDataBinding
-import com.alipay.sdk.app.EnvUtils
 import com.alipay.sdk.app.PayTask
+import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
-import com.zh.common.utils.ToastUtils
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.bean.AliPlayResult
 import com.zh.kotlin_mvvm.bean.PayResult
@@ -78,9 +77,9 @@ class TestALiPayActivity(
                 }
                 val resultStatus: String = payResult.resultStatus
                 if (TextUtils.equals(resultStatus, "9000")) {
-                    ToastUtils.showMessage("支付成功")
+                    ToastUtils.showShort("支付成功")
                 } else {
-                    ToastUtils.showMessageLong("支付失败: $payResult")
+                    ToastUtils.showLong("支付失败: $payResult")
                 }
             }
         }

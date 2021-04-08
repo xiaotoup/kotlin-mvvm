@@ -14,10 +14,10 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
+import com.luck.picture.lib.tools.ScreenUtils
 import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
-import com.zh.common.utils.ScreenUtils
 import com.zh.config.ZjConfig
 import me.jessyan.autosize.internal.CustomAdapt
 
@@ -129,7 +129,10 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
         super.onStart()
         dialog?.let {
             it.window?.setLayout(
-                ScreenUtils.screenRealWidth - 2 * ScreenUtils.dip2px(marginWidth.toFloat()),
+                ScreenUtils.getScreenWidth(mContext) - 2 * ScreenUtils.dip2px(
+                    mContext,
+                    marginWidth.toFloat()
+                ),
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
         }
