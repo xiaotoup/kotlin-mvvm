@@ -17,7 +17,7 @@ import io.reactivex.disposables.Disposable
  */
 abstract class BaseObserverDialog<T> : Observer<T> {
     private var impl: BaseImpl
-    private val context: Context = ActivityUtils.getTopActivity().baseContext
+    private val context: Context = ActivityUtils.getTopActivity()
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoading = false //是否显示加载进度对话框
 

@@ -16,7 +16,7 @@ import io.reactivex.disposables.Disposable
  * 自定义Subscriber
  */
 abstract class BaseObserver<T> : Observer<T> {
-    private val context: Context = ActivityUtils.getTopActivity().baseContext
+    private val context: Context = ActivityUtils.getTopActivity()
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoading = false //是否显示加载进度对话框
     private var disposable: Disposable? = null
