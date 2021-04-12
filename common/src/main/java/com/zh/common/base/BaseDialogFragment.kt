@@ -11,6 +11,7 @@ import androidx.annotation.Nullable
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
@@ -161,6 +162,16 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     fun setBottomAnimation() {
         dialog?.window?.setGravity(Gravity.BOTTOM)
         dialog?.window?.setWindowAnimations(R.style.StyleBottomAnimation)
+    }
+
+    override fun show(manager: FragmentManager, tag: String?) {
+        try {
+            //防止连续点击add多个fragment
+            manager.beginTransaction().remove(this).commit()
+            super.show(manager, tag)
+        } catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     /**
