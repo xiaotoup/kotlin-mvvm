@@ -1,5 +1,7 @@
 package com.zh.common.base
 
+import android.content.Context
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -15,6 +17,7 @@ import io.reactivex.disposables.Disposable
  */
 abstract class BaseObserverDialog<T> : Observer<T> {
     private var impl: BaseImpl
+    private val context: Context = ActivityUtils.getTopActivity().baseContext
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoading = false //是否显示加载进度对话框
 
@@ -70,7 +73,7 @@ abstract class BaseObserverDialog<T> : Observer<T> {
 
     fun getLoadingDialog(): LoadingDialog? {
         if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(impl.context)
+            loadingDialog = LoadingDialog(context)
         }
         return loadingDialog
     }
@@ -80,7 +83,7 @@ abstract class BaseObserverDialog<T> : Observer<T> {
      */
     fun showLoading() {
         if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(impl.context)
+            loadingDialog = LoadingDialog(context)
         }
         loadingDialog!!.show()
     }

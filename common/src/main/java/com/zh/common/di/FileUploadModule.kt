@@ -45,7 +45,6 @@ class FileUploadModule {
      * @param callBack 回调
      */
     fun startUploadFile(
-        impl: Context,
         filePath: String,
         callBack: BaseObserver<OSSUploadUrlBean>
     ) {
@@ -58,10 +57,10 @@ class FileUploadModule {
             .getOSSUploadUrl(suffix, contentType, SPUtils.getInstance().getString("sessionId"))
             .compose(ResponseTransformer.handleResult())
             .compose(SchedulerProvider.instance.applySchedulers())
-            .subscribe(object : BaseObserver<OSSUploadUrlBean>(impl, false) {
+            .subscribe(object : BaseObserver<OSSUploadUrlBean>( false) {
                 override fun onISuccess(message: String, uploadUrlBean: OSSUploadUrlBean) {
                     if (uploadUrlBean?.bussData != null) {
-                        UploadFile(impl, filePath, contentType, uploadUrlBean, callBack)
+                        UploadFile(filePath, contentType, uploadUrlBean, callBack)
                     }
                 }
 
@@ -80,7 +79,6 @@ class FileUploadModule {
      * @param callBack
      */
     private fun UploadFile(
-        impl: Context,
         filePath: String,
         contentType: String,
         uploadUrlBean: OSSUploadUrlBean,
@@ -104,7 +102,7 @@ class FileUploadModule {
             clientModule
                 .upLoadFile(contentType, uploadUrl!!.substring(n + 1), requestFile)
                 .compose(SchedulerProvider.instance.applySchedulers())
-                .subscribe(object : BaseObserver<String>(impl, false) {
+                .subscribe(object : BaseObserver<String>(false) {
                     override fun onISuccess(message: String, response: String) {
                         callBack.onNext(uploadUrlBean)
                     }
@@ -123,7 +121,7 @@ class FileUploadModule {
             clientModule
                 .upLoadFile(contentType, uploadUrl.substring(n + 1), requestFile)
                 .compose(SchedulerProvider.instance.applySchedulers())
-                .subscribe(object : BaseObserver<String>(impl, false) {
+                .subscribe(object : BaseObserver<String>(false) {
                     override fun onISuccess(message: String, response: String) {
                         callBack.onNext(uploadUrlBean)
                     }

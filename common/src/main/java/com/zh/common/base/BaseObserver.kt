@@ -1,6 +1,7 @@
 package com.zh.common.base
 
 import android.content.Context
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -15,17 +16,12 @@ import io.reactivex.disposables.Disposable
  * 自定义Subscriber
  */
 abstract class BaseObserver<T> : Observer<T> {
-    private var context: Context
+    private val context: Context = ActivityUtils.getTopActivity().baseContext
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoading = false //是否显示加载进度对话框
     private var disposable: Disposable? = null
 
-    constructor(context: Context) {
-        this.context = context
-    }
-
-    constructor(context: Context, isShowLoading: Boolean) {
-        this.context = context
+    constructor(isShowLoading: Boolean) {
         this.isShowLoading = isShowLoading
         if (isShowLoading) getLoadingDialog()
     }

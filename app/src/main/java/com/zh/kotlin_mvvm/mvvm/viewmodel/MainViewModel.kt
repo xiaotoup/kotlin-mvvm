@@ -34,7 +34,7 @@ class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
     }
 
     fun doLogin(context: Context, map: Map<String, Any>) {
-        mModel.onLogin(map, object : BaseObserver<LoginBean>(context, true) {
+        mModel.onLogin(map, object : BaseObserver<LoginBean>(true) {
 
             override fun onISuccess(message: String, response: LoginBean) {
                 sid.set(response.bussData)
