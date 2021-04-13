@@ -69,29 +69,22 @@ abstract class BaseObserver<T> : Observer<T> {
 
     fun getDisposable() = disposable
 
-    private fun getLoadingDialog(): LoadingDialog? {
-        if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(context)
-        }
-        return loadingDialog
+    private fun getLoadingDialog(){
+        loadingDialog ?: also { loadingDialog = LoadingDialog(context) }
     }
 
     /**
      * 显示加载dialog
      */
     private fun showLoading() {
-        if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(context)
-        }
-        loadingDialog!!.show()
+        getLoadingDialog()
+        loadingDialog?.show()
     }
 
     /**
      * 结束dialog
      */
     private fun dismissLoading() {
-        if (loadingDialog != null && loadingDialog!!.isShowing) {
-            loadingDialog!!.dismiss()
-        }
+        loadingDialog?.let { if (it.isShowing) it.dismiss() }
     }
 }

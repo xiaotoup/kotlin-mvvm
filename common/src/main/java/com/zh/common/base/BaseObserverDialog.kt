@@ -71,29 +71,22 @@ abstract class BaseObserverDialog<T> : Observer<T> {
     protected abstract fun onISuccess(message: String, response: T)
     protected abstract fun onIError(e: ApiException)
 
-    fun getLoadingDialog(): LoadingDialog? {
-        if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(context)
-        }
-        return loadingDialog
+    private fun getLoadingDialog() {
+        loadingDialog ?: also { loadingDialog = LoadingDialog(context) }
     }
 
     /**
      * 显示加载dialog
      */
-    fun showLoading() {
-        if (loadingDialog == null) {
-            loadingDialog = LoadingDialog(context)
-        }
-        loadingDialog!!.show()
+    private fun showLoading() {
+        getLoadingDialog()
+        loadingDialog?.show()
     }
 
     /**
      * 结束dialog
      */
-    fun dismissLoading() {
-        if (loadingDialog != null && loadingDialog!!.isShowing) {
-            loadingDialog!!.dismiss()
-        }
+    private fun dismissLoading() {
+        loadingDialog?.let { if (it.isShowing) it.dismiss() }
     }
 }

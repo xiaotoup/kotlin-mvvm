@@ -29,6 +29,11 @@ abstract class BaseDialog : Dialog {
         setContentView(layoutId)
     }
 
+    constructor(context: Context, style: Int, layoutId: Int) : super(context, style) {
+        mContext = context
+        setContentView(layoutId)
+    }
+
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             dialogWindow?.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)

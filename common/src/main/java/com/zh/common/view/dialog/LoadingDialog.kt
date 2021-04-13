@@ -9,7 +9,8 @@ import com.zh.common.R
  * Time: 11:59
  * Describe: 加载
  */
-class LoadingDialog(context: Context) : BaseDialog(context, R.layout.viewstatus_loading) {
+class LoadingDialog(context: Context) :
+    BaseDialog(context, R.style.StyleDialogDimEnabled, R.layout.viewstatus_loading) {
     private val handler = MyHandler()
     private val myRunnable = MyRunnable(getContext(), this)
 
@@ -19,9 +20,5 @@ class LoadingDialog(context: Context) : BaseDialog(context, R.layout.viewstatus_
     fun dismissDelayed() {
         if (!isShowing) return
         handler.postDelayed(myRunnable, 100)
-    }
-
-    init {
-        dialogWindow!!.setDimAmount(0.0f) //设置灰度来达到去除半透明背景
     }
 }

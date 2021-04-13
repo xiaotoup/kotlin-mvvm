@@ -33,6 +33,11 @@
         <!--<item name="android:backgroundDimAmount">0.0</item>-->
     </style>
 
+    <style name="StyleDialogDimEnabled" parent="@style/StyleDialog">
+        <!-- 设置无遮罩层 -->
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
     <style name="StyleBottomAnimation" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/slide_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/slide_bottom_out</item>
