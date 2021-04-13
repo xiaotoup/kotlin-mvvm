@@ -4,7 +4,6 @@ import android.content.Context
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.viewmodel.BaseViewModel

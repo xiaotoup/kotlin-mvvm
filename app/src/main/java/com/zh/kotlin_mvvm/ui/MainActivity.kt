@@ -39,4 +39,8 @@ class MainActivity(
         )
         mViewModel?.doLogin(this, map);
     }
+
+    fun back(view: View){
+        finish()
+    }
 }
