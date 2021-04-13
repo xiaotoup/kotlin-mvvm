@@ -21,6 +21,8 @@ abstract class BaseObserver<T> : Observer<T> {
     private var isShowLoading = false //是否显示加载进度对话框
     private var disposable: Disposable? = null
 
+    constructor() : this(false)
+
     constructor(isShowLoading: Boolean) {
         this.isShowLoading = isShowLoading
         if (isShowLoading) getLoadingDialog()
@@ -69,7 +71,7 @@ abstract class BaseObserver<T> : Observer<T> {
 
     fun getDisposable() = disposable
 
-    private fun getLoadingDialog(){
+    private fun getLoadingDialog() {
         loadingDialog ?: also { loadingDialog = LoadingDialog(context) }
     }
 
