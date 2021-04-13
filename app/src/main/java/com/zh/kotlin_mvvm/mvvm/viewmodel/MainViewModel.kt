@@ -11,6 +11,7 @@ import com.zh.common.exception.ApiException
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.model.MainModel
 import com.zh.kotlin_mvvm.net.bean.LoginBean
+import io.reactivex.disposables.Disposable
 
 class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
 
@@ -33,7 +34,7 @@ class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
                  DialogInterface.OnClickListener { p0, p1 -> p0?.dismiss() }).create().show()*/
     }
 
-    fun doLogin(context: Context, map: Map<String, Any>) {
+    fun doLogin(map: Map<String, Any>) {
         mModel.onLogin(map, object : BaseObserver<LoginBean>(true) {
 
             override fun onISuccess(message: String, response: LoginBean) {

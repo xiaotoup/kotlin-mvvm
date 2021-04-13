@@ -37,7 +37,7 @@ class MainActivity(
             "pwd" to "123456",
             "loginType" to "PASSWORD"
         )
-        mViewModel?.doLogin(this, map);
+        mViewModel?.doLogin(map);
     }
 
     fun back(view: View){
