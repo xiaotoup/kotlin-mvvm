@@ -15,6 +15,11 @@ import com.zh.common.view.listener.INetCallbackView;
 
 import java.util.List;
 
+/**
+ * @auth xiaohua
+ * @time 2021/4/13 - 15:58
+ * @desc 自定义RecyclerView，含有：空数据、错误、无网络默认页面
+ */
 public class XRecyclerView extends FrameLayout implements INetCallbackView {
 
     private RecyclerView mRecyclerView;
