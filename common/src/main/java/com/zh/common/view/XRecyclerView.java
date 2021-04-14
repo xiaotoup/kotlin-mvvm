@@ -51,20 +51,12 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
         addView(mRecyclerView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         //初始化LoadingView
         mLoadingView = new XLoadingView(context);
-        mLoadingView.setVisibility(GONE);
-        addView(mLoadingView);
         //初始化EmptyView
         mEmptyView = new XEmptyView(context);
-        mEmptyView.setVisibility(GONE);
-        addView(mEmptyView);
         //初始化ErrView
         mErrView = new XErrView(context);
-        mErrView.setVisibility(GONE);
-        addView(mErrView);
         //初始化NoNetView
         mNoNetView = new XNoNetView(context);
-        mNoNetView.setVisibility(GONE);
-        addView(mNoNetView);
         mErrView.setOnRefreshClickListener(() -> {
             if (mOnRefreshListener != null) mOnRefreshListener.onRefreshClick();
         });
