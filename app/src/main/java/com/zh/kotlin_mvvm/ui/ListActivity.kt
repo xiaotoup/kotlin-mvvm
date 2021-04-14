@@ -1,17 +1,20 @@
 package com.zh.kotlin_mvvm.ui
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
+import com.zh.common.view.XRecyclerView
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.adapter.ListAdapter
 import com.zh.kotlin_mvvm.bean.ListBean
+import com.zh.kotlin_mvvm.mvvm.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_list.*
 
 /**
@@ -20,15 +23,15 @@ import kotlinx.android.synthetic.main.activity_list.*
  * @desc DataBinding 与 recyclerView适配器 绑定的示例
  */
 @Route(path = ZjConfig.ListActivity)
-class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
+class ListActivity : BaseActivity<ViewDataBinding, ListViewModel>() {
 
     override val layoutRes = R.layout.activity_list
-    override val viewModel: NormalViewModel = NormalViewModel()
+    override val viewModel: ListViewModel = ListViewModel()
     override val onBindVariableId = 0
     override val navigationBarColor: Int = R.color.colorPrimary
-    override val statusBarColor: Int =  R.color.colorPrimary
+    override val statusBarColor: Int = R.color.colorPrimary
 
-    private var list: MutableList<ListBean> = mutableListOf<ListBean>()
+    private var list: MutableList<ListBean> = mutableListOf()
     private val mAdapter by lazy {
         ListAdapter()
     }
@@ -37,14 +40,17 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         for (i in 0..20) {
             list.add(ListBean(i, "$i item"))
         }
-        recyclerView.adapter = mAdapter
+        recyclerView.setQuickAdapter(mAdapter)
+
+        mViewModel?.mModel?.getINetService()
     }
 
     override fun initData() {
         for (i in list.indices) {
             println("$i ${list[i].title}")
         }
-        mAdapter.setNewInstance(list)
+        recyclerView.setNewInstance(list)
+        viewModel.onDoNet(recyclerView)
         /**
          * 高阶函数
          */
@@ -83,6 +89,5 @@ class ListActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mAdapter.unbind()
     }
 }

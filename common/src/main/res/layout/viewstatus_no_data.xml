@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ffffff">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <com.zh.common.view.ShadowContainer
-        app:containerCornerRadius="10dp"
-        app:containerDeltaLength="2dp"
-        app:containerShadowColor="#50e2e2e2"
-        app:containerShadowRadius="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+    <LinearLayout
+        android:id="@+id/vs_le_root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/vs_le_root"
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/viewstatus_no_data_bg" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/r10_white_bg"
-            android:gravity="center"
-            android:minWidth="90dp"
-            android:orientation="vertical"
-            android:padding="8dp">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/viewstatus_no_data_bg" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="8dp"
-                android:text="@string/no_data"
-                android:textColor="#aeaeae"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </com.zh.common.view.ShadowContainer>
-</ScrollView>
+            android:layout_marginTop="8dp"
+            android:text="@string/no_data"
+            android:textColor="#aeaeae"
+            android:textSize="14sp" />
+    </LinearLayout>
+</merge>

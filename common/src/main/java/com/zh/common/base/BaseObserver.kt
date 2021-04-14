@@ -9,6 +9,7 @@ import com.zh.common.base.bean.BaseResponse
 import com.zh.common.exception.ApiException
 import com.zh.common.exception.ERROR
 import com.zh.common.view.dialog.LoadingDialog
+import com.zh.common.view.listener.INetCallbackView
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -20,6 +21,7 @@ abstract class BaseObserver<T> : Observer<T> {
     private var loadingDialog: LoadingDialog? = null
     private var isShowLoading = false //是否显示加载进度对话框
     private var disposable: Disposable? = null
+    private var iNetCallback: INetCallbackView? = null
 
     constructor() : this(false)
 
@@ -28,17 +30,29 @@ abstract class BaseObserver<T> : Observer<T> {
         if (isShowLoading) getLoadingDialog()
     }
 
+    constructor(iNetCallback: INetCallbackView) {
+        this.iNetCallback = iNetCallback
+    }
+
     override fun onSubscribe(d: Disposable) {
         LogUtils.d("ThomasDebug", "BaseObserver : Http is start")
         disposable = d
 
         if (!NetworkUtils.isConnected()) {
             ToastUtils.showShort("网络异常")
+            d.dispose()
             onComplete() //一定要手动调用
+
+            //显示无网络的页面
+            iNetCallback?.onNoNetWork()
+            return
         }
 
         // 显示进度条
         if (isShowLoading) showLoading()
+
+        //显示加载中的页面
+        iNetCallback?.onLoadingView(true)
     }
 
     override fun onNext(response: T) {
@@ -54,8 +68,8 @@ abstract class BaseObserver<T> : Observer<T> {
             onIError(ApiException(e, ERROR.UNKNOWN))
         }
 
-        //关闭等待进度条
-        if (isShowLoading) dismissLoading()
+        //显示错误的页面
+        iNetCallback?.onFailure(e.message)
     }
 
     override fun onComplete() {
@@ -63,6 +77,9 @@ abstract class BaseObserver<T> : Observer<T> {
 
         //关闭等待进度条
         if (isShowLoading) dismissLoading()
+
+        //关闭加载中的页面
+        iNetCallback?.onLoadingView(false)
     }
 
 
@@ -79,14 +96,22 @@ abstract class BaseObserver<T> : Observer<T> {
      * 显示加载dialog
      */
     private fun showLoading() {
-        getLoadingDialog()
-        loadingDialog?.show()
+        try {
+            getLoadingDialog()
+            loadingDialog?.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     /**
      * 结束dialog
      */
     private fun dismissLoading() {
-        loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        try {
+            loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

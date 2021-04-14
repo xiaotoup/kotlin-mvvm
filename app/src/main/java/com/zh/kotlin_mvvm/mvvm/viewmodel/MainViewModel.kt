@@ -8,6 +8,8 @@ import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.exception.ApiException
+import com.zh.common.view.XRecyclerView
+import com.zh.common.view.listener.INetCallbackView
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.mvvm.model.MainModel
 import com.zh.kotlin_mvvm.net.bean.LoginBean

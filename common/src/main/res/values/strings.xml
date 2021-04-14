@@ -14,4 +14,5 @@
     <string name="load_failed">加载失败</string>
     <string name="no_data">没有数据</string>
     <string name="no_network">没有网络</string>
+    <string name="click_again">点击重试</string>
 </resources>

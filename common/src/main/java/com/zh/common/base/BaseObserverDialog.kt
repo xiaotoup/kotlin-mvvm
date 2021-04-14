@@ -37,7 +37,9 @@ abstract class BaseObserverDialog<T> : Observer<T> {
 
         if (!NetworkUtils.isConnected()) {
             ToastUtils.showShort("网络异常")
+            d.dispose()
             onComplete() //一定要手动调用
+            return
         }
 
         // 显示进度条
@@ -79,14 +81,22 @@ abstract class BaseObserverDialog<T> : Observer<T> {
      * 显示加载dialog
      */
     private fun showLoading() {
-        getLoadingDialog()
-        loadingDialog?.show()
+        try {
+            getLoadingDialog()
+            loadingDialog?.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     /**
      * 结束dialog
      */
     private fun dismissLoading() {
-        loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        try {
+            loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

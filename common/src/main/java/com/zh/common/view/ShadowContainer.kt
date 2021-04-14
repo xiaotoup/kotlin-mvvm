@@ -107,8 +107,7 @@ class ShadowContainer @JvmOverloads constructor(
         val widthMode = MeasureSpec.getMode(widthMeasureSpec)
         val heightMode = MeasureSpec.getMode(heightMeasureSpec)
         val child = getChildAt(0)
-        val layoutParams =
-            child.layoutParams as com.zh.common.view.LayoutParams
+        val layoutParams = child.layoutParams as SLayoutParams
         val childBottomMargin =
             (Math.max(deltaLength, layoutParams.bottomMargin.toFloat()) + 1).toInt()
         val childLeftMargin =
@@ -180,18 +179,15 @@ class ShadowContainer @JvmOverloads constructor(
     }
 
     override fun generateDefaultLayoutParams(): LayoutParams {
-        return com.zh.common.view.LayoutParams(
-            LayoutParams.WRAP_CONTENT,
-            LayoutParams.WRAP_CONTENT
-        )
+        return SLayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
     }
 
     override fun generateLayoutParams(p: LayoutParams): LayoutParams {
-        return com.zh.common.view.LayoutParams(p)
+        return SLayoutParams(p)
     }
 
     override fun generateLayoutParams(attrs: AttributeSet): LayoutParams {
-        return com.zh.common.view.LayoutParams(context, attrs)
+        return SLayoutParams(context, attrs)
     }
 
     override fun onLayout(
@@ -233,4 +229,11 @@ class ShadowContainer @JvmOverloads constructor(
         mShadowPaint.color = shadowColor
         mShadowPaint.setShadowLayer(shadowRadius, dx, dy, shadowColor)
     }
+}
+
+class SLayoutParams : ViewGroup.MarginLayoutParams {
+    constructor(c: Context?, attrs: AttributeSet?) : super(c, attrs) {}
+    constructor(width: Int, height: Int) : super(width, height) {}
+    constructor(source: ViewGroup.MarginLayoutParams?) : super(source) {}
+    constructor(source: ViewGroup.LayoutParams?) : super(source) {}
 }

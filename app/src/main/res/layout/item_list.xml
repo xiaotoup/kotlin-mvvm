@@ -1,24 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical">
 
-    <data>
-
-        <variable
-            name="bean"
-            type="com.zh.kotlin_mvvm.bean.ListBean" />
-    </data>
-
-    <LinearLayout
+    <TextView
+        android:id="@+id/tvTitle"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:text="@{bean.title}" />
-    </LinearLayout>
-</layout>
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp" />
+</LinearLayout>
