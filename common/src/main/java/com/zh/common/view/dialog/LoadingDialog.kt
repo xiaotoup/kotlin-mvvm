@@ -10,7 +10,7 @@ import com.zh.common.R
  * Describe: 加载
  */
 class LoadingDialog(context: Context) :
-    BaseDialog(context, R.style.StyleDialogDimEnabled, R.layout.viewstatus_loading) {
+    BaseDialog(context, R.style.StyleDialogDimEnabled, R.layout.dialog_loading) {
     private val handler = MyHandler()
     private val myRunnable = MyRunnable(getContext(), this)
 

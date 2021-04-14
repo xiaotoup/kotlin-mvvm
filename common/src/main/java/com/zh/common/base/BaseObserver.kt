@@ -35,22 +35,19 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onSubscribe(d: Disposable) {
-        LogUtils.d("ThomasDebug", "BaseObserver : Http is start")
-        disposable = d
+        LogUtils.d("BaseObserver", "onSubscribe Http is start")
 
         if (!NetworkUtils.isConnected()) {
             ToastUtils.showShort("网络异常")
             d.dispose()
-            onComplete() //一定要手动调用
-
             //显示无网络的页面
             iNetCallback?.onNoNetWork()
+            onComplete() //一定要手动调用
             return
         }
-
+        disposable = d
         // 显示进度条
         if (isShowLoading) showLoading()
-
         //显示加载中的页面
         iNetCallback?.onLoadingView(true)
     }
@@ -67,17 +64,15 @@ abstract class BaseObserver<T> : Observer<T> {
         } else {
             onIError(ApiException(e, ERROR.UNKNOWN))
         }
-
         //显示错误的页面
         iNetCallback?.onFailure(e.message)
+        onComplete()
     }
 
     override fun onComplete() {
         LogUtils.d("BaseObserver", "onCompleted : Http is complete")
-
         //关闭等待进度条
         if (isShowLoading) dismissLoading()
-
         //关闭加载中的页面
         iNetCallback?.onLoadingView(false)
     }

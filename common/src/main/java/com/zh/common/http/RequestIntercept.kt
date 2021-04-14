@@ -24,7 +24,6 @@ import java.nio.charset.Charset
 class RequestIntercept : Interceptor {
     private val tag = "--okhttp--"
 
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         var request: Request = chain.request()
         val requestBuffer = Buffer()
@@ -100,7 +99,6 @@ class RequestIntercept : Interceptor {
                 bodyString = clone.readString(charset)
             }
 
-//        Timber.tag(tag).w(jsonFormat(bodyString));
             LogUtils.w(tag, bodyString)
 
             //sessionId失效，去登录
