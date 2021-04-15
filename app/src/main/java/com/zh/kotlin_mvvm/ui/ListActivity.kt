@@ -41,8 +41,6 @@ class ListActivity : BaseActivity<ViewDataBinding, ListViewModel>() {
             list.add(ListBean(i, "$i item"))
         }
         recyclerView.setQuickAdapter(mAdapter)
-
-        mViewModel?.mModel?.getINetService()
     }
 
     override fun initData() {
