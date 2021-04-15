@@ -13,7 +13,7 @@ import com.zh.common.base.model.BaseModel
  * @time 2020/10/8 - 10:02
  * @desc ViewModel基类
  */
-open class BaseViewModel<MODEL : BaseModel<*>?>(model: MODEL) :
+open class BaseViewModel<MODEL : BaseModel<*>>(model: MODEL) :
     AndroidViewModel(BaseApplication.getApplication()), IBaseViewModel {
 
     val mModel: MODEL = model
