@@ -34,7 +34,7 @@ class ClientModule private constructor() {
         private var mOkHttpClient: OkHttpClient? = null
 
         val instance: ClientModule by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-            LogUtils.d("--okhttp--", "网络实例化成功")
+            LogUtils.dTag("--okhttp--", "网络实例化成功")
             ClientModule()
         }
     }

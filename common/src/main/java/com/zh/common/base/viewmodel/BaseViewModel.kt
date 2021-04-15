@@ -49,7 +49,7 @@ open class BaseViewModel<MODEL : BaseModel<*>?>(model: MODEL) :
 
     override fun onCleared() {
         super.onCleared()
-        LogUtils.d("--okhttp--", "onCleared----")
+        LogUtils.dTag("--okhttp--", "onCleared----")
     }
 }
 

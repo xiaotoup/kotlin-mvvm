@@ -35,7 +35,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onSubscribe(d: Disposable) {
-        LogUtils.d("BaseObserver", "onSubscribe Http is start")
+        LogUtils.dTag("BaseObserver", "onSubscribe Http is start")
 
         if (!NetworkUtils.isConnected()) {
             ToastUtils.showShort("网络异常")
@@ -58,7 +58,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-        LogUtils.d("BaseObserver", "onError : " + e.message)
+        LogUtils.dTag("BaseObserver", "onError : " + e.message)
         if (e is ApiException) {
             onIError(e)
         } else {
@@ -70,7 +70,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onComplete() {
-        LogUtils.d("BaseObserver", "onCompleted : Http is complete")
+        LogUtils.dTag("BaseObserver", "onCompleted : Http is complete")
         //关闭等待进度条
         if (isShowLoading) dismissLoading()
         //关闭加载中的页面

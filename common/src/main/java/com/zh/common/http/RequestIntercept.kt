@@ -30,7 +30,7 @@ class RequestIntercept : Interceptor {
         if (request.body != null) {
             request.body?.writeTo(requestBuffer)
         } else {
-            LogUtils.w(tag, "request.body() == null")
+            LogUtils.wTag(tag, "request.body() == null")
         }
 
         //添加sessionId - 除去登录接口
@@ -40,7 +40,7 @@ class RequestIntercept : Interceptor {
         }
 
         //打印url信息
-        LogUtils.w(
+        LogUtils.wTag(
             tag,
             "Sending Request -> %s %s on %n Params --->  %s%n Connection ---> %s%n Headers ---> %s"
             , request.method
@@ -53,7 +53,7 @@ class RequestIntercept : Interceptor {
         val originalResponse = chain.proceed(request)
         val t2 = System.nanoTime()
         //打印响应时间
-        LogUtils.w(
+        LogUtils.wTag(
             tag,
             "Received response -> %s %s %s in %.1fms%n%s"
             , request.method
@@ -99,7 +99,7 @@ class RequestIntercept : Interceptor {
                 bodyString = clone.readString(charset)
             }
 
-            LogUtils.w(tag, bodyString)
+            LogUtils.wTag(tag, bodyString)
 
             //sessionId失效，去登录
             try {

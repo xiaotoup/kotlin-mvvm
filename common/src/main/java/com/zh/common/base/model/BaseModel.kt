@@ -23,7 +23,7 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     //添加网络请求到CompositeDisposable
     private fun addSubscribe(disposable: Disposable) {
         mCompositeDisposable.also {
-            LogUtils.d("--okhttp--", "disposable is add")
+            LogUtils.dTag("--okhttp--", "disposable is add")
             it.add(disposable)
         }
     }
@@ -31,7 +31,7 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     override fun onCleared() {
         //解除网络请求
         mCompositeDisposable.also {
-            LogUtils.d("--okhttp--", "disposable is clear")
+            LogUtils.dTag("--okhttp--", "disposable is clear")
             mCompositeDisposable.clear()
         }
     }

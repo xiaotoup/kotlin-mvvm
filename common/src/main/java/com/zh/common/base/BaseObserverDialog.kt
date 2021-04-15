@@ -32,7 +32,7 @@ abstract class BaseObserverDialog<T> : Observer<T> {
     }
 
     override fun onSubscribe(d: Disposable) {
-        LogUtils.d("ThomasDebug", "BaseObserver : Http is start")
+        LogUtils.dTag("ThomasDebug", "BaseObserver : Http is start")
         impl.disposable.add(d)
 
         if (!NetworkUtils.isConnected()) {
@@ -52,7 +52,7 @@ abstract class BaseObserverDialog<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-        LogUtils.d("BaseObserver", "onError : " + e.message)
+        LogUtils.dTag("BaseObserver", "onError : " + e.message)
         if (e is ApiException) {
             onIError(e)
         } else {
@@ -64,7 +64,7 @@ abstract class BaseObserverDialog<T> : Observer<T> {
     }
 
     override fun onComplete() {
-        LogUtils.d("BaseObserver", "onCompleted : Http is complete")
+        LogUtils.dTag("BaseObserver", "onCompleted : Http is complete")
 
         //关闭等待进度条
         if (isShowLoading) dismissLoading()
