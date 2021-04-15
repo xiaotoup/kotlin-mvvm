@@ -34,8 +34,6 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     lateinit var binding: BINDING
     private var mViewModel: VM? = null
     private var viewModelId = 0
-    private val minDelayTime = 500 // 两次点击间隔不能少于500ms
-    private var lastClickTime: Long = 0
     private var rootView: View? = null
     private lateinit var mContext: Context
 
@@ -273,17 +271,4 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
      * @return the boolean
      */
     override fun immersionBarEnabled(): Boolean = true
-
-    /**
-     * 防连点
-     */
-    fun isFastClick(): Boolean {
-        var flag = true
-        val currentClickTime = System.currentTimeMillis()
-        if (currentClickTime - lastClickTime >= minDelayTime) {
-            flag = false
-        }
-        lastClickTime = currentClickTime
-        return flag
-    }
 }

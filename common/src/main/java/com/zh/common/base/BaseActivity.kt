@@ -27,15 +27,13 @@ import me.jessyan.autosize.internal.CustomAdapt
  * @time 2020/10/7 - 15:21
  * @desc Activity基类，MVVM架构
  */
-abstract class BaseActivity<BINDING : ViewDataBinding, VM: BaseViewModel<*>> :
+abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     RxAppCompatActivity(), CustomAdapt {
 
     lateinit var binding: BINDING
     var mViewModel: VM? = null
     private var viewModelId = 0
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
-    private val minDelayTime = 500 // 两次点击间隔不能少于500ms
-    private var lastClickTime: Long = 0
     private var mApplication: BaseApplication? = null
 
     //默认状态栏和导航栏颜色
@@ -220,18 +218,5 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM: BaseViewModel<*>> :
             return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
         }
         return false
-    }
-
-    /**
-     * 防连点
-     */
-    fun isFastClick(): Boolean {
-        var flag = true
-        val currentClickTime = System.currentTimeMillis()
-        if (currentClickTime - lastClickTime >= minDelayTime) {
-            flag = false
-        }
-        lastClickTime = currentClickTime
-        return flag
     }
 }

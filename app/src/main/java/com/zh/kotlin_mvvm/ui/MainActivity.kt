@@ -4,9 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.NetworkUtils
-import com.blankj.utilcode.util.TimeUtils
 import com.zh.common.base.BaseActivity
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.BR
@@ -40,7 +37,7 @@ class MainActivity(
         mViewModel?.doLogin(map);
     }
 
-    fun back(view: View){
+    fun back(view: View) {
         finish()
     }
 }
