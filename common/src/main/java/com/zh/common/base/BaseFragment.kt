@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.gyf.immersionbar.ImmersionBar
+import com.gyf.immersionbar.OnKeyboardListener
 import com.trello.rxlifecycle2.components.support.RxFragment
 import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
@@ -53,6 +54,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
             //导航栏为淡色navigationBarDarkIcon要设置为true
             navigationBarDarkIcon(setNavigationBarColor.contains(navigationBarColor)) //导航栏图标是深色，不写默认为亮色
             keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
+            setOnKeyboardListener(keyboardListener)//键盘显示监听
             fitsSystemWindows(fitsSystemWindows)
             init()
         }
@@ -142,6 +144,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     open val statusBarColor: Int = defaultStatusBarColor
     open val navigationBarColor: Int = defaultNavigationBarColor
     open val fitsSystemWindows: Boolean = true
+    open val keyboardListener: OnKeyboardListener? = null
 
     override fun onResume() {
         super.onResume()

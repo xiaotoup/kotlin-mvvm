@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.gyf.immersionbar.OnKeyboardListener
 import com.zh.common.base.BaseActivity
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.BR
