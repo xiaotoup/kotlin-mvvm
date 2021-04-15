@@ -27,7 +27,7 @@ import me.jessyan.autosize.internal.CustomAdapt
  * @time 2020/10/7 - 15:21
  * @desc Activity基类，MVVM架构
  */
-abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
+abstract class BaseActivity<BINDING : ViewDataBinding, VM: BaseViewModel<*>> :
     RxAppCompatActivity(), CustomAdapt {
 
     lateinit var binding: BINDING
@@ -67,7 +67,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
         //让ViewModel拥有View的生命周期感应
         mViewModel?.let { lifecycle.addObserver(it) }
         //支持LiveData绑定xml，数据改变，UI自动会更新
-        binding.lifecycleOwner = this
+        binding?.lifecycleOwner = this
     }
 
     @get:LayoutRes

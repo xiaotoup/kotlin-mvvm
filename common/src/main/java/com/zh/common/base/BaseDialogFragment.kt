@@ -119,7 +119,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
         //让ViewModel拥有View的生命周期感应
         mViewModel?.let { lifecycle.addObserver(it) }
         //支持LiveData绑定xml，数据改变，UI自动会更新
-        binding.lifecycleOwner = this
+        binding?.lifecycleOwner = this
     }
 
     //今日头条适配方案
