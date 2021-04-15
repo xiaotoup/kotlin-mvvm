@@ -44,7 +44,7 @@ open class BaseViewModel<MODEL : BaseModel<*>>(model: MODEL) :
     }
 
     override fun onDestroy() {
-        mModel?.onCleared()
+        mModel.onCleared()
     }
 
     override fun onCleared() {
