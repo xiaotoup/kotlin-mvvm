@@ -1,6 +1,7 @@
 package com.zh.common.base
 
 import android.content.Context
+import android.util.Log
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
@@ -35,8 +36,6 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onSubscribe(d: Disposable) {
-        LogUtils.dTag("BaseObserver", "onSubscribe Http is start")
-
         if (!NetworkUtils.isConnected()) {
             ToastUtils.showShort("网络异常")
             d.dispose()
@@ -58,7 +57,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onError(e: Throwable) {
-        LogUtils.dTag("BaseObserver", "onError : " + e.message)
+        Log.e("--okhttp--", "onError : " + e.message)
         if (e is ApiException) {
             onIError(e)
         } else {
@@ -70,13 +69,11 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     override fun onComplete() {
-        LogUtils.dTag("BaseObserver", "onCompleted : Http is complete")
         //关闭等待进度条
         if (isShowLoading) dismissLoading()
         //关闭加载中的页面
         iNetCallback?.onLoadingView(false)
     }
-
 
     protected abstract fun onISuccess(message: String, response: T)
     protected abstract fun onIError(e: ApiException)

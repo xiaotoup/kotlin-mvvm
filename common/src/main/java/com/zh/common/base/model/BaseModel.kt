@@ -1,5 +1,6 @@
 package com.zh.common.base.model
 
+import android.util.Log
 import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.bean.BaseResponse
@@ -23,7 +24,7 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     //添加网络请求到CompositeDisposable
     private fun addSubscribe(disposable: Disposable) {
         mCompositeDisposable.also {
-            LogUtils.dTag("--okhttp--", "disposable is add")
+            Log.e("--okhttp--", "disposable is add")
             it.add(disposable)
         }
     }
@@ -31,7 +32,7 @@ abstract class BaseModel<T>(service: Class<*>) : IBaseModel {
     override fun onCleared() {
         //解除网络请求
         mCompositeDisposable.also {
-            LogUtils.dTag("--okhttp--", "disposable is clear")
+            Log.e("--okhttp--", "disposable is clear")
             mCompositeDisposable.clear()
         }
     }

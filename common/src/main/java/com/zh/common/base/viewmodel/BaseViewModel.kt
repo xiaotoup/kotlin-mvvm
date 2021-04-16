@@ -1,6 +1,7 @@
 package com.zh.common.base.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -45,11 +46,6 @@ open class BaseViewModel<MODEL : BaseModel<*>>(model: MODEL) :
 
     override fun onDestroy() {
         mModel.onCleared()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        LogUtils.dTag("--okhttp--", "onCleared----")
     }
 }
 

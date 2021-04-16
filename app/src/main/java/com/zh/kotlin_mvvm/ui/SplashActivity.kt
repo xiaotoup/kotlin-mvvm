@@ -2,9 +2,9 @@ package com.zh.kotlin_mvvm.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
@@ -46,5 +46,9 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         btnALiPay.setOnClickListener {
             startActivity(Intent(this, TestALiPayActivity::class.java))
         }
+    }
+
+    fun clickTest(view: View) {
+        startActivity(Intent(this, TestActivity::class.java))
     }
 }
