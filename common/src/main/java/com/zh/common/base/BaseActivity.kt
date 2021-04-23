@@ -88,6 +88,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
         ARouter.getInstance().build(url).navigation(this, type)
     }
 
+    //不使用路由跳转
     fun startActivityForResult(classActivity: Class<*>, type: Int) {
         if (DoubleUtils.isFastDoubleClick()) return
         startActivityForResult(Intent(this, classActivity), type)
@@ -104,6 +105,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
         ARouter.getInstance().build(url).with(bundle).navigation(this, type)
     }
 
+    //不使用路由跳转
     fun startActivityForResult(classActivity: Class<*>, bundle: Bundle, type: Int) {
         if (DoubleUtils.isFastDoubleClick()) return
         startActivityForResult(Intent(this, classActivity).putExtras(bundle), type)

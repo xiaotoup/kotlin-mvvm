@@ -73,6 +73,7 @@ interface JumpActivity : CustomAdapt {
         ARouter.getInstance().build(url).navigation()
     }
 
+    //不使用路由跳转
     fun startActivity(classActivity: Class<*>) {
         if (DoubleUtils.isFastDoubleClick()) return
         thisActivity?.startActivity(Intent(thisActivity, classActivity))
@@ -88,6 +89,7 @@ interface JumpActivity : CustomAdapt {
         ARouter.getInstance().build(url).with(bundle).navigation()
     }
 
+    //不使用路由跳转
     fun startActivity(classActivity: Class<*>, bundle: Bundle) {
         if (DoubleUtils.isFastDoubleClick()) return
         thisActivity?.startActivity(Intent(thisActivity, classActivity).putExtras(bundle))
@@ -105,6 +107,7 @@ interface JumpActivity : CustomAdapt {
             .navigation()
     }
 
+    //不使用路由跳转
     fun startActivityNewTask(classActivity: Class<*>) {
         if (DoubleUtils.isFastDoubleClick()) return
         thisActivity?.startActivity(
@@ -125,6 +128,7 @@ interface JumpActivity : CustomAdapt {
             .navigation()
     }
 
+    //不使用路由跳转
     fun startActivityNewTask(classActivity: Class<*>, bundle: Bundle) {
         if (DoubleUtils.isFastDoubleClick()) return
         thisActivity?.startActivity(

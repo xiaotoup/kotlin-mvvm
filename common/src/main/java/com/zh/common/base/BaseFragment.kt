@@ -148,6 +148,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
         startActivityForResult(intent, type)
     }
 
+    //不使用路由跳转
     fun startActivityForResult(classActivity: Class<*>, type: Int) {
         if (DoubleUtils.isFastDoubleClick()) return
         startActivityForResult(Intent(activity, classActivity), type)
@@ -166,6 +167,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
         startActivityForResult(intent, type)
     }
 
+    //不使用路由跳转
     fun startActivityForResult(classActivity: Class<*>, bundle: Bundle, type: Int) {
         if (DoubleUtils.isFastDoubleClick()) return
         startActivityForResult(Intent(activity, classActivity).putExtras(bundle), type)
