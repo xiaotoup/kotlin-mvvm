@@ -1,6 +1,5 @@
 package com.zh.kotlin_mvvm.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
@@ -41,14 +40,14 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
             TestDialog().show(supportFragmentManager, "s")
         }
         btnWxPay.setOnClickListener {
-            startActivity(Intent(this, TestWxPayActivity::class.java))
+            startActivity(TestWxPayActivity::class.java)
         }
         btnALiPay.setOnClickListener {
-            startActivity(Intent(this, TestALiPayActivity::class.java))
+            startActivity(TestALiPayActivity::class.java)
         }
     }
 
     fun clickTest(view: View) {
-        startActivity(Intent(this, TestActivity::class.java))
+        startActivity(TestActivity::class.java)
     }
 }

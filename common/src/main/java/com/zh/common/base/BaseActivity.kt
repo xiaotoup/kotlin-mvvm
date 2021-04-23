@@ -12,15 +12,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
-import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.OnKeyboardListener
+import com.luck.picture.lib.tools.DoubleUtils
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
-import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
+import com.zh.common.utils.JumpActivity
 import com.zh.common.utils.LanguageUtil
-import com.zh.config.ZjConfig
-import me.jessyan.autosize.internal.CustomAdapt
 
 
 /**
@@ -29,17 +26,13 @@ import me.jessyan.autosize.internal.CustomAdapt
  * @desc Activity基类，MVVM架构
  */
 abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
-    RxAppCompatActivity(), CustomAdapt {
+    RxAppCompatActivity(), JumpActivity {
 
     lateinit var binding: BINDING
     var mViewModel: VM? = null
     private var viewModelId = 0
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
     private var mApplication: BaseApplication? = null
-
-    //默认状态栏和导航栏颜色
-    private val defaultStatusBarColor = R.color.white
-    private val defaultNavigationBarColor = R.color.white
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,43 +68,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     abstract val onBindVariableId: Int
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData()
-
-    //今日头条适配方案
-    override fun isBaseOnWidth(): Boolean = true
-    override fun getSizeInDp(): Float = ZjConfig.screenWidth
-
-    //可以重写状态栏和导航栏颜色
-    // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white
-    open val statusBarColor: Int = defaultStatusBarColor
-    open val navigationBarColor: Int = defaultNavigationBarColor
-    open val fitsSystemWindows: Boolean = true
-    open val keyboardListener: OnKeyboardListener? = null
-
-    /**
-     * 沉侵式
-     */
-    private fun initImmersionBar() {
-        ImmersionBar.with(this).apply {
-            statusBarColor(statusBarColor) //状态栏颜色
-            navigationBarColor(navigationBarColor) //导航栏颜色
-            //状态栏为淡色statusBarDarkFont要设置为true
-            statusBarDarkFont(setStatusBarColor.contains(statusBarColor)) //状态栏字体是深色，不写默认为亮色
-            //导航栏为淡色navigationBarDarkIcon要设置为true
-            navigationBarDarkIcon(setNavigationBarColor.contains(navigationBarColor)) //导航栏图标是深色，不写默认为亮色
-            keyboardEnable(true) //解决软键盘与底部输入框冲突问题，默认为false
-            setOnKeyboardListener(keyboardListener)//键盘显示监听
-            fitsSystemWindows(fitsSystemWindows)
-            init()
-        }
-    }
-
-    /**
-     * 沉侵式颜色
-     */
-    private val setStatusBarColor: List<Int> =
-        listOf(R.color.white)
-    private val setNavigationBarColor: List<Int> =
-        listOf(R.color.white)
+    override val thisActivity = this
 
     override fun onDestroy() {
         super.onDestroy()
@@ -123,29 +80,17 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     /**
      * 页面跳转
      *
-     * @param url 对应组建的名称  (“/mine/setting”)
-     */
-    fun startActivity(url: String) {
-        ARouter.getInstance().build(url).navigation()
-    }
-
-    /**
-     * 页面跳转
-     *
      * @param url 对应组建的名称 (“/mine/setting”)
      * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
      */
     fun startActivityForResult(url: String, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
         ARouter.getInstance().build(url).navigation(this, type)
     }
 
-    /**
-     * 携带数据的页面跳转
-     *
-     * @param url 对应组建的名称  (“/mine/setting”)
-     */
-    fun startActivity(url: String, bundle: Bundle) {
-        ARouter.getInstance().build(url).with(bundle).navigation()
+    fun startActivityForResult(classActivity: Class<*>, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(this, classActivity), type)
     }
 
     /**
@@ -155,29 +100,13 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
      * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
      */
     fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
         ARouter.getInstance().build(url).with(bundle).navigation(this, type)
     }
 
-    /**
-     * 页面跳转 - 清楚该类之前的所有activity
-     *
-     * @param url 对应组建的名称  (“/mine/setting”)
-     */
-    fun startActivityNewTask(url: String) {
-        ARouter.getInstance().build(url)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            .navigation()
-    }
-
-    /**
-     * 携带数据的页面跳转 - 清楚该类之前的所有activity
-     *
-     * @param url 对应组建的名称  (“/mine/setting”)
-     */
-    fun startActivityNewTask(url: String, bundle: Bundle) {
-        ARouter.getInstance().build(url).with(bundle)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            .navigation()
+    fun startActivityForResult(classActivity: Class<*>, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(this, classActivity).putExtras(bundle), type)
     }
 
     /**
