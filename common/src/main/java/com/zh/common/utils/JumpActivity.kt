@@ -46,7 +46,7 @@ interface JumpActivity : CustomAdapt {
     /**
      * 沉侵式
      */
-    fun initImmersionBar() {
+    fun initImmersionBars() {
         thisActivity?.let {
             ImmersionBar.with(it).apply {
                 statusBarColor(statusBarColor) //状态栏颜色

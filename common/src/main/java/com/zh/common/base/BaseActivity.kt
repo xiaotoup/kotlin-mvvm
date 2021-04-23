@@ -43,7 +43,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
             if (!isNotAdd) mApplication?.getActivityList()?.add(this)
         }
         initViewDataBinding()
-        initImmersionBar()
+        initImmersionBars()
         //初始化组件
         ARouter.getInstance().inject(this)
         initView(savedInstanceState)

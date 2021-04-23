@@ -39,7 +39,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     private val mImmersionProxy = ImmersionProxy(this)
 
     override fun initImmersionBar() {
-        initImmersionBar()
+        initImmersionBars()
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
