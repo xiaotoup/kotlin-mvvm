@@ -15,16 +15,17 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
-import com.luck.picture.lib.tools.ScreenUtils
+import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
-import com.zh.config.ZjConfig
-import me.jessyan.autosize.internal.CustomAdapt
+import com.zh.common.utils.JumpActivity
 
 
 abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
-    DialogFragment(), CustomAdapt {
+    DialogFragment(), JumpActivity {
 
     private val TAG = "BaseDialogFragment"
     lateinit var binding: BINDING
@@ -40,6 +41,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     abstract val onBindVariableId: Int
     abstract fun initView(savedInstanceState: Bundle?, view: View)
     abstract fun initData()
+    override val thisActivity = activity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -122,16 +124,11 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
         binding?.lifecycleOwner = this
     }
 
-    //今日头条适配方案
-    override fun isBaseOnWidth(): Boolean = true
-    override fun getSizeInDp(): Float = ZjConfig.screenWidth
-
     override fun onStart() {
         super.onStart()
         dialog?.let {
             it.window?.setLayout(
-                ScreenUtils.getScreenWidth(mContext) - 2 * ScreenUtils.dip2px(
-                    mContext,
+                ScreenUtils.getScreenWidth() - 2 * SizeUtils.dp2px(
                     marginWidth.toFloat()
                 ),
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -169,7 +166,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
             //防止连续点击add多个fragment
             manager.beginTransaction().remove(this).commit()
             super.show(manager, tag)
-        } catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -177,53 +174,38 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     /**
      * 页面跳转
      *
-     * @param url 对应组建的名称  (“/mine/setting”)
+     * @param url 对应组建的名称 (“/mine/setting”)
+     * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
      */
-    fun startActivity(url: String) {
-        ARouter.getInstance().build(url).navigation()
+    fun startActivityForResult(url: String, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        val intent = Intent(context, getDestination(url))
+        startActivityForResult(intent, type)
+    }
+
+    //不使用路由跳转
+    fun startActivityForResult(classActivity: Class<*>, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(activity, classActivity), type)
     }
 
     /**
      * 携带数据的页面跳转
      *
      * @param url 对应组建的名称  (“/mine/setting”)
-     */
-    fun startActivity(url: String, bundle: Bundle) {
-        ARouter.getInstance().build(url).with(bundle).navigation()
-    }
-
-    /**
-     * 携带数据的页面跳转
-     *
-     * @param url 对应组建的名称  (“/mine/setting”)
-     * 第二个参数则是RequestCode
+     * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
      */
     fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
         val intent = Intent(context, getDestination(url))
         intent.putExtras(bundle)
         startActivityForResult(intent, type)
     }
 
-    /**
-     * 页面跳转 - 清楚该类之前的所有activity
-     *
-     * @param url 对应组建的名称  (“/mine/setting”)
-     */
-    fun startActivityNewTask(url: String) {
-        ARouter.getInstance().build(url)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            .navigation()
-    }
-
-    /**
-     * 携带数据的页面跳转 - 清楚该类之前的所有activity
-     *
-     * @param url 对应组建的名称  (“/mine/setting”)
-     */
-    fun startActivityNewTask(url: String, bundle: Bundle) {
-        ARouter.getInstance().build(url).with(bundle)
-            .withFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            .navigation()
+    //不使用路由跳转
+    fun startActivityForResult(classActivity: Class<*>, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(activity, classActivity).putExtras(bundle), type)
     }
 
     /**
