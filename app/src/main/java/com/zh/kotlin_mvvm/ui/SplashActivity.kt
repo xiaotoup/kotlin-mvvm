@@ -18,8 +18,6 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override val viewModel: NormalViewModel = NormalViewModel()
 
-    override val onBindVariableId = 0
-
     override fun initView(savedInstanceState: Bundle?) {
         ToastUtils.showShort("启动了")
         val message = "{\"code\":200, \"message\":\"提示内容\",\"data\":{\"content\":\"哈哈哈哈\"}}"

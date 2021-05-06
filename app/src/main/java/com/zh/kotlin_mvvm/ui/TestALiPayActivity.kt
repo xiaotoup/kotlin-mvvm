@@ -20,8 +20,7 @@ import kotlinx.android.synthetic.main.activity_test_a_li_pay.*
 
 class TestALiPayActivity(
     override val layoutRes: Int = R.layout.activity_test_a_li_pay,
-    override val viewModel: NormalViewModel = NormalViewModel(),
-    override val onBindVariableId: Int = 0
+    override val viewModel: NormalViewModel = NormalViewModel()
 ) : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     private val SDK_PAY_FLAG = 117

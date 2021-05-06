@@ -36,9 +36,9 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
 
     @get:LayoutRes
     abstract val layoutRes: Int
-    abstract val marginWidth: Int//diaog到两边的距离,设置一边的距离
     abstract val viewModel: VM
-    abstract val onBindVariableId: Int
+    abstract val marginWidth: Int//dialog到两边的距离,设置一边的距离即可
+    open val onBindVariableId: Int = 0
     abstract fun initView(savedInstanceState: Bundle?, view: View)
     abstract fun initData()
 

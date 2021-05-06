@@ -104,7 +104,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     @get:LayoutRes
     abstract val layoutRes: Int
     abstract val viewModel: VM
-    abstract val onBindVariableId: Int
+    open val onBindVariableId: Int = 0
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData()
 

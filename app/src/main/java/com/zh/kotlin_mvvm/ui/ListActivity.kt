@@ -27,7 +27,6 @@ class ListActivity : BaseActivity<ViewDataBinding, ListViewModel>() {
 
     override val layoutRes = R.layout.activity_list
     override val viewModel: ListViewModel = ListViewModel()
-    override val onBindVariableId = 0
     override val navigationBarColor: Int = R.color.colorPrimary
     override val statusBarColor: Int = R.color.colorPrimary
 

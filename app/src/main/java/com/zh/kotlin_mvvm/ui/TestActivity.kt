@@ -14,8 +14,7 @@ import kotlin.concurrent.thread
 
 class TestActivity(
     override val layoutRes: Int = R.layout.activity_test,
-    override val viewModel: NormalViewModel = NormalViewModel(),
-    override val onBindVariableId: Int = 0
+    override val viewModel: NormalViewModel = NormalViewModel()
 ) : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {

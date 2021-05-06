@@ -20,7 +20,6 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
 
     override val layoutRes: Int = R.layout.activity_test_wx_pay
     override val viewModel: TestWxPayViewModel = TestWxPayViewModel()
-    override val onBindVariableId: Int = 0
 
     private var msgApi: IWXAPI? = null
 
