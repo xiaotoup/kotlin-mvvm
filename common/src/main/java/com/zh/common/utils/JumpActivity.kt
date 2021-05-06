@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.ActivityUtils
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.OnKeyboardListener
 import com.luck.picture.lib.tools.DoubleUtils
@@ -17,8 +18,6 @@ import me.jessyan.autosize.internal.CustomAdapt
  * @desc 管理跳转页面、标题颜色
  */
 interface JumpActivity : CustomAdapt {
-
-    val thisActivity: FragmentActivity?
 
     //今日头条适配方案
     override fun isBaseOnWidth(): Boolean = true
@@ -47,7 +46,7 @@ interface JumpActivity : CustomAdapt {
      * 沉侵式
      */
     fun initImmersionBars() {
-        thisActivity?.let {
+        ActivityUtils.getTopActivity().let {
             ImmersionBar.with(it).apply {
                 statusBarColor(statusBarColor) //状态栏颜色
                 navigationBarColor(navigationBarColor) //导航栏颜色
@@ -76,7 +75,7 @@ interface JumpActivity : CustomAdapt {
     //不使用路由跳转
     fun startActivity(classActivity: Class<*>) {
         if (DoubleUtils.isFastDoubleClick()) return
-        thisActivity?.startActivity(Intent(thisActivity, classActivity))
+        ActivityUtils.getTopActivity().startActivity(Intent(ActivityUtils.getTopActivity(), classActivity))
     }
 
     /**
@@ -92,7 +91,7 @@ interface JumpActivity : CustomAdapt {
     //不使用路由跳转
     fun startActivity(classActivity: Class<*>, bundle: Bundle) {
         if (DoubleUtils.isFastDoubleClick()) return
-        thisActivity?.startActivity(Intent(thisActivity, classActivity).putExtras(bundle))
+        ActivityUtils.getTopActivity().startActivity(Intent(ActivityUtils.getTopActivity(), classActivity).putExtras(bundle))
     }
 
     /**
@@ -110,8 +109,8 @@ interface JumpActivity : CustomAdapt {
     //不使用路由跳转
     fun startActivityNewTask(classActivity: Class<*>) {
         if (DoubleUtils.isFastDoubleClick()) return
-        thisActivity?.startActivity(
-            Intent(thisActivity, classActivity)
+        ActivityUtils.getTopActivity().startActivity(
+            Intent(ActivityUtils.getTopActivity(), classActivity)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }
@@ -131,8 +130,8 @@ interface JumpActivity : CustomAdapt {
     //不使用路由跳转
     fun startActivityNewTask(classActivity: Class<*>, bundle: Bundle) {
         if (DoubleUtils.isFastDoubleClick()) return
-        thisActivity?.startActivity(
-            Intent(thisActivity, classActivity)
+        ActivityUtils.getTopActivity().startActivity(
+            Intent(ActivityUtils.getTopActivity(), classActivity)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtras(bundle)
         )

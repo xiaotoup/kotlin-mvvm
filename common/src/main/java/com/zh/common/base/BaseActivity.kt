@@ -68,7 +68,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     abstract val onBindVariableId: Int
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData()
-    override val thisActivity = this
 
     override fun onDestroy() {
         super.onDestroy()

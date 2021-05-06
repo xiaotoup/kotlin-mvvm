@@ -107,7 +107,6 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     abstract val onBindVariableId: Int
     abstract fun initView(savedInstanceState: Bundle?)
     abstract fun initData()
-    override val thisActivity = activity
 
     open fun getRootView(): View? = rootView
 

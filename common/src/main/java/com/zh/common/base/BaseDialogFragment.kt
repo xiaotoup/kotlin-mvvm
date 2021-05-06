@@ -41,7 +41,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     abstract val onBindVariableId: Int
     abstract fun initView(savedInstanceState: Bundle?, view: View)
     abstract fun initData()
-    override val thisActivity = activity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
