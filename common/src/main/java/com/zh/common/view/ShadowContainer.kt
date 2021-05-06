@@ -213,15 +213,15 @@ class ShadowContainer @JvmOverloads constructor(
     init {
         val a = context.obtainStyledAttributes(attrs, R.styleable.ShadowContainer)
         val shadowColor =
-            a.getColor(R.styleable.ShadowContainer_containerShadowColor, Color.RED)
+            a.getColor(R.styleable.ShadowContainer_sc_containerShadowColor, Color.RED)
         //        int shadowColor = Color.RED;
         val shadowRadius =
-            a.getDimension(R.styleable.ShadowContainer_containerShadowRadius, 0f)
-        deltaLength = a.getDimension(R.styleable.ShadowContainer_containerDeltaLength, 0f)
-        cornerRadius = a.getDimension(R.styleable.ShadowContainer_containerCornerRadius, 0f)
-        val dx = a.getDimension(R.styleable.ShadowContainer_deltaX, 0f)
-        val dy = a.getDimension(R.styleable.ShadowContainer_deltaY, 0f)
-        drawShadow = a.getBoolean(R.styleable.ShadowContainer_enable, true)
+            a.getDimension(R.styleable.ShadowContainer_sc_containerShadowRadius, 0f)
+        deltaLength = a.getDimension(R.styleable.ShadowContainer_sc_containerDeltaLength, 0f)
+        cornerRadius = a.getDimension(R.styleable.ShadowContainer_sc_containerCornerRadius, 0f)
+        val dx = a.getDimension(R.styleable.ShadowContainer_sc_deltaX, 0f)
+        val dy = a.getDimension(R.styleable.ShadowContainer_sc_deltaY, 0f)
+        drawShadow = a.getBoolean(R.styleable.ShadowContainer_sc_enable, true)
         a.recycle()
         mShadowPaint = Paint()
         mShadowPaint.style = Paint.Style.FILL
