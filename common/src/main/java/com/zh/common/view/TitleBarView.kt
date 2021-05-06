@@ -155,6 +155,7 @@ class TitleBarView @JvmOverloads constructor(
             mLeftTextView?.apply {
                 this.text = mLeftString
                 this.visibility = View.VISIBLE
+                this.setOnClickListener { (getContext() as Activity).finish() }
             }
             if (typedArray.hasValue(R.styleable.TitleBarView_tb_leftTextColor)) {
                 setLeftTextColor(mLeftColor)
