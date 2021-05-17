@@ -77,10 +77,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //在OnCreate方法中调用下面方法，然后再使用线程，就能在uncaughtException方法中捕获到异常
-        if (isAdded) {
-            initView(savedInstanceState)
-            initData()
-        }
+        initView(savedInstanceState)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -106,7 +103,6 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
     abstract val viewModel: VM
     open val onBindVariableId: Int = 0
     abstract fun initView(savedInstanceState: Bundle?)
-    abstract fun initData()
 
     open fun getRootView(): View? = rootView
 

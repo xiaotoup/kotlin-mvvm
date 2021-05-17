@@ -47,7 +47,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
         //初始化组件
         ARouter.getInstance().inject(this)
         initView(savedInstanceState)
-        initData()
     }
 
     private fun initViewDataBinding() {
@@ -67,7 +66,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     abstract val viewModel: VM
     open val onBindVariableId: Int = 0
     abstract fun initView(savedInstanceState: Bundle?)
-    abstract fun initData()
 
     override fun onDestroy() {
         super.onDestroy()

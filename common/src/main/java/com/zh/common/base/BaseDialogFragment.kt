@@ -40,7 +40,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     abstract val marginWidth: Int//dialog到两边的距离,设置一边的距离即可
     open val onBindVariableId: Int = 0
     abstract fun initView(savedInstanceState: Bundle?, view: View)
-    abstract fun initData()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -86,10 +85,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
         super.onViewCreated(view, savedInstanceState)
         //在OnCreate方法中调用下面方法，然后再使用线程，就能在uncaughtException方法中捕获到异常
         isCancelable = true
-        if (isAdded) {
-            initView(savedInstanceState, view)
-            initData()
-        }
+        initView(savedInstanceState, view)
     }
 
     /**

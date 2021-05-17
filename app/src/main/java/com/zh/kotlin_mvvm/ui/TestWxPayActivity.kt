@@ -27,9 +27,7 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
         EventBus.getDefault().register(this)
         msgApi = WXAPIFactory.createWXAPI(this, null)
         msgApi?.registerApp(tvAppId.text.toString())
-    }
-
-    override fun initData() {
+        
         btnPay.setOnClickListener {
             viewModel.wxPay(
                 tvAppId.text.toString(),
@@ -56,6 +54,9 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
 
             }
         })
+    }
+
+    override fun initData() {
     }
 
     /**

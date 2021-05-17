@@ -25,7 +25,7 @@ android {
         multiDexEnabled true
     }
     flavorDimensions "default"
-    productFlavors {
+    /*productFlavors {
         yaode {
             manifestPlaceholders = [
                     package_name: "com.yaode",
@@ -40,7 +40,7 @@ android {
             storeFile file('yaode.jks')
             storePassword 'mdwl@yaode'
         }
-    }
+    }*/
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -48,7 +48,7 @@ android {
     buildFeatures {
         dataBinding = true
     }
-    buildTypes {
+    /*buildTypes {
         debug {
             minifyEnabled false
             buildConfigField "boolean", "LOG_DEBUG", "true"
@@ -60,7 +60,7 @@ android {
             buildConfigField "boolean", "LOG_DEBUG", "true"
             signingConfig signingConfigs.config
         }
-    }
+    }*/
     kotlinOptions {
         jvmTarget = '1.8'
     }
