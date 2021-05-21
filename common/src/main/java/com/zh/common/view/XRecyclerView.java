@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.blankj.utilcode.util.ActivityUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zh.common.R;
 import com.zh.common.base.adapter.BaseZQuickAdapter;
@@ -118,11 +117,11 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
         mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_animation_fall_down));
     }
 
-    public void openItemDefaultAnimator(int animationId) {
+    public void openItemAnimator(int animationId) {
         mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, animationId));
     }
 
-    public void closeItemDefaultAnimator(){
+    public void closeItemAnimator() {
         mRecyclerView.setLayoutAnimation(null);
     }
 
