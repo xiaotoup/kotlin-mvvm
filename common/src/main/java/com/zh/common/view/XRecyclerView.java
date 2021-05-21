@@ -2,6 +2,8 @@ package com.zh.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -9,7 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.zh.common.R;
 import com.zh.common.base.adapter.BaseZQuickAdapter;
 import com.zh.common.view.listener.INetCallbackView;
 
@@ -22,6 +26,7 @@ import java.util.List;
  */
 public class XRecyclerView extends FrameLayout implements INetCallbackView {
 
+    private Context mContext;
     private RecyclerView mRecyclerView;
     private XLoadingView mLoadingView;
     private XEmptyView mEmptyView;
@@ -44,10 +49,12 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     }
 
     private void init(Context context) {
+        mContext = context;
         //初始化RecyclerView
         mRecyclerView = new RecyclerView(context);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.setOverScrollMode(2);
+        openItemDefaultAnimator();
         addView(mRecyclerView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         //初始化LoadingView
         mLoadingView = new XLoadingView(context);
@@ -104,6 +111,21 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
+    /**
+     * 开启 RecyclerView 的 layoutAnimation动画
+     */
+    public void openItemDefaultAnimator() {
+        mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_animation_fall_down));
+    }
+
+    public void openItemDefaultAnimator(int animationId) {
+        mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, animationId));
+    }
+
+    public void closeItemDefaultAnimator(){
+        mRecyclerView.setLayoutAnimation(null);
+    }
+
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
     }
@@ -111,7 +133,7 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     @Override
     public void onLoadingView(boolean show) {
         if (mBaseQuickAdapter != null) {
-            mBaseQuickAdapter.setEmptyView(show ? mLoadingView : null);
+            mBaseQuickAdapter.setEmptyView(show ? mLoadingView : new View(mContext));
         }
     }
 

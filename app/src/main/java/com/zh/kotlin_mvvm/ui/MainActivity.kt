@@ -5,7 +5,6 @@ import android.view.View
 import androidx.databinding.ObservableField
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ScreenUtils
-import com.gyf.immersionbar.OnKeyboardListener
 import com.zh.common.base.BaseActivity
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.BR
@@ -24,10 +23,11 @@ class MainActivity(
 
     override fun initView(savedInstanceState: Bundle?) {
         binding.activity = this
+        initData()
     }
 
-    override fun initData() {
-ScreenUtils.getAppScreenWidth()
+    fun initData() {
+        ScreenUtils.getAppScreenWidth()
     }
 
     fun netLogin(view: View) {

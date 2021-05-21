@@ -37,9 +37,6 @@ class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
             .createAgentWeb() //
             .ready()
             .go(null)
-    }
-
-    override fun initData() {
         settings
     }
 

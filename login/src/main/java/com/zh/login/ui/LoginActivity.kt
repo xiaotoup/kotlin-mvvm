@@ -24,10 +24,6 @@ class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         get() = 0
 
     override fun initView(savedInstanceState: Bundle?) {
-
-    }
-
-    override fun initData() {
         var afterY = 0
         appBarLayout.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {

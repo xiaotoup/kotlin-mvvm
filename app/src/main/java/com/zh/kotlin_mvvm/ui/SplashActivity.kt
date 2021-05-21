@@ -22,9 +22,10 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         ToastUtils.showShort("启动了")
         val message = "{\"code\":200, \"message\":\"提示内容\",\"data\":{\"content\":\"哈哈哈哈\"}}"
         LogUtils.wTag("okhttp", message)
+        initData()
     }
 
-    override fun initData() {
+    fun initData() {
         btnToLogin.setOnClickListener {
             startActivity(ZjConfig.MainActivity)
         }

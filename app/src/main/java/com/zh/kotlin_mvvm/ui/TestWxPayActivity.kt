@@ -54,9 +54,10 @@ class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
 
             }
         })
+        initData()
     }
 
-    override fun initData() {
+    fun initData() {
     }
 
     /**

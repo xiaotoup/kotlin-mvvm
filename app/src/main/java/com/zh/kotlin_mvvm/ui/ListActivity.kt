@@ -3,13 +3,9 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
-import com.zh.common.base.viewmodel.NormalViewModel
-import com.zh.common.view.XRecyclerView
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.adapter.ListAdapter
@@ -40,9 +36,10 @@ class ListActivity : BaseActivity<ViewDataBinding, ListViewModel>() {
             list.add(ListBean(i, "$i item"))
         }
         recyclerView.setQuickAdapter(mAdapter)
+        initData()
     }
 
-    override fun initData() {
+    fun initData() {
         for (i in list.indices) {
             println("$i ${list[i].title}")
         }

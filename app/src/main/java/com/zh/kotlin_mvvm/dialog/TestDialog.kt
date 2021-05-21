@@ -15,9 +15,6 @@ class TestDialog : BaseDialogFragment<ViewDataBinding, NormalViewModel>() {
     override val marginWidth: Int = 30
 
     override fun initView(savedInstanceState: Bundle?, view: View) {
-    }
-
-    override fun initData() {
         val m = Properties()
     }
 }

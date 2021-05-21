@@ -28,9 +28,10 @@ class TestALiPayActivity(
     override fun initView(savedInstanceState: Bundle?) {
         //支付宝沙箱，正式环境得去掉
 //        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+        initData()
     }
 
-    override fun initData() {
+    fun initData() {
         btnPay.setOnClickListener {
             goAliPay()
         }

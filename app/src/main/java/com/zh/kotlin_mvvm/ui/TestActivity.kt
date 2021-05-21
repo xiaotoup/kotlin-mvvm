@@ -35,9 +35,10 @@ class TestActivity(
         }
         LogUtils.a("3333333333333333-" + Thread.currentThread().name)*/
 //      test()
+        initData()
     }
 
-    override fun initData() {
+    fun initData() {
 //        thread()
     }
 
