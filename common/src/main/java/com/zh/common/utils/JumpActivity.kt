@@ -2,9 +2,9 @@ package com.zh.common.utils
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.FragmentActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.OnKeyboardListener
 import com.luck.picture.lib.tools.DoubleUtils
@@ -33,6 +33,10 @@ interface JumpActivity : CustomAdapt {
     //默认状态栏和导航栏颜色
     private val defaultStatusBarColor: Int get() = R.color.white
     private val defaultNavigationBarColor: Int get() = R.color.white
+
+    //权限同意与拒绝
+    fun onGrantedPermission() {}
+    fun onDeniedPermission() {}
 
     /**
      * 沉侵式颜色
@@ -75,7 +79,8 @@ interface JumpActivity : CustomAdapt {
     //不使用路由跳转
     fun startActivity(classActivity: Class<*>) {
         if (DoubleUtils.isFastDoubleClick()) return
-        ActivityUtils.getTopActivity().startActivity(Intent(ActivityUtils.getTopActivity(), classActivity))
+        ActivityUtils.getTopActivity()
+            .startActivity(Intent(ActivityUtils.getTopActivity(), classActivity))
     }
 
     /**
@@ -91,7 +96,8 @@ interface JumpActivity : CustomAdapt {
     //不使用路由跳转
     fun startActivity(classActivity: Class<*>, bundle: Bundle) {
         if (DoubleUtils.isFastDoubleClick()) return
-        ActivityUtils.getTopActivity().startActivity(Intent(ActivityUtils.getTopActivity(), classActivity).putExtras(bundle))
+        ActivityUtils.getTopActivity()
+            .startActivity(Intent(ActivityUtils.getTopActivity(), classActivity).putExtras(bundle))
     }
 
     /**
@@ -135,5 +141,22 @@ interface JumpActivity : CustomAdapt {
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                 .putExtras(bundle)
         )
+    }
+
+    /**
+     * 请求权限
+     * @param permission 在PermissionConfig里有列出，传入即可
+     */
+    fun requestPermission(permission: List<String>) {
+        PermissionUtils.permission(permission.toString())
+            .callback(object : PermissionUtils.SimpleCallback {
+                override fun onGranted() {//同意
+                    onGrantedPermission()
+                }
+
+                override fun onDenied() {//拒绝
+                    onDeniedPermission()
+                }
+            }).request()
     }
 }
