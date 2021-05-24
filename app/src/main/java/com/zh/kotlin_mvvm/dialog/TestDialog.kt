@@ -10,7 +10,6 @@ import com.zh.kotlin_mvvm.R
 class TestDialog(
     override val layoutRes: Int = R.layout.dialog_test,
     override val viewModel: NormalViewModel = NormalViewModel(),
-    override val onBindVariableId: Int = 0,
     override val marginWidth: Int = 30,
 ) : BaseDialogFragment<ViewDataBinding, NormalViewModel>() {
 
