@@ -1,6 +1,5 @@
 package com.zh.common.base
 
-import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.os.Process
@@ -13,14 +12,12 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.BuildConfig
 import com.zh.common.R
-import com.zh.common.utils.LanguageUtil
 import com.zh.config.ZjConfig
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.unit.Subunits
 import java.util.*
 
 
-@SuppressLint("ResourceAsColor")
 abstract class BaseApplication : MultiDexApplication() {
 
     private var mActivityList: LinkedList<RxAppCompatActivity>? = null
