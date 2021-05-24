@@ -13,12 +13,11 @@ import okio.Buffer
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
-import java.io.IOException
 import java.nio.charset.Charset
 
 /**
  * @author :  zh
- * @description :
+ * @description : 自定义拦截器
  * @date : 2019/5/6.
  */
 class RequestIntercept : Interceptor {

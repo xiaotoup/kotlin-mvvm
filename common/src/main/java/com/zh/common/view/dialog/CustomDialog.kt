@@ -17,13 +17,13 @@ import com.zh.common.R
  * 自定义警告对话框
  */
 class CustomDialog : Dialog {
-    constructor(context: Context) : super(context) {}
-    constructor(context: Context, theme: Int) : super(context, theme) {}
+    constructor(context: Context) : this(context, 0)
+    constructor(context: Context, theme: Int) : super(context, theme)
     constructor(
         context: Context,
         cancelable: Boolean,
         cancelListener: DialogInterface.OnCancelListener
-    ) : super(context, cancelable, cancelListener) {}
+    ) : super(context, cancelable, cancelListener)
 
     class Builder(//上下文
         private val context: Context
@@ -96,22 +96,6 @@ class CustomDialog : Dialog {
             return this
         }
 
-        /**
-         * 设置"确定"点击事件和文字
-         *
-         * @param positiveButtonText 文字字符串
-         * @param listener
-         * @return
-         */
-        fun setPositiveButton(
-            positiveButtonText: String,
-            listener: DialogInterface.OnClickListener
-        ): Builder {
-            positiveBtnText = positiveButtonText
-            positiveButtonClickListener = listener
-            return this
-        }
-
         fun setPositiveBtnTextColor(color: Int): Builder {
             positiveBtnTextColor = color
             return this
@@ -128,13 +112,32 @@ class CustomDialog : Dialog {
          * @param positiveButtonText 文字资源id
          * @return
          */
+
+        fun setPositiveButton(
+            positiveButtonText: String,
+            listener: DialogInterface.OnClickListener
+        ): Builder {
+            positiveBtnText = positiveButtonText
+            positiveButtonClickListener = listener
+            return this
+        }
+
+        fun setPositiveButton(positiveButtonText: String): Builder {
+            positiveBtnText = positiveButtonText
+            return this
+        }
+
         fun setPositiveButton(
             positiveButtonText: Int,
             listener: DialogInterface.OnClickListener
         ): Builder {
-            positiveBtnText = context
-                .getText(positiveButtonText) as String
+            positiveBtnText = context.getText(positiveButtonText) as String
             positiveButtonClickListener = listener
+            return this
+        }
+
+        fun setPositiveButton(positiveButtonText: Int): Builder {
+            positiveBtnText = context.getText(positiveButtonText) as String
             return this
         }
 
@@ -154,19 +157,22 @@ class CustomDialog : Dialog {
             return this
         }
 
-        /**
-         * 设置"取消"点击事件和文字
-         *
-         * @param negativeButtonText 文字资源id
-         * @param listener
-         * @return
-         */
+        fun setNegativeButton(negativeButtonText: String): Builder {
+            negativeBtnText = negativeButtonText
+            return this
+        }
+
         fun setNegativeButton(
             negativeButtonText: Int,
             listener: DialogInterface.OnClickListener
         ): Builder {
             negativeBtnText = context.getText(negativeButtonText) as String
             negativeButtonClickListener = listener
+            return this
+        }
+
+        fun setNegativeButton(negativeButtonText: Int): Builder {
+            negativeBtnText = context.getText(negativeButtonText) as String
             return this
         }
 
@@ -237,7 +243,7 @@ class CustomDialog : Dialog {
             }
 
             // 设置内容
-            var tvMessage: TextView? =null
+            var tvMessage: TextView? = null
             if (message != null) {
                 tvMessage = layout.findViewById<View>(R.id.tvMessage) as TextView
                 if (contentSpannableString != null) {
@@ -255,7 +261,7 @@ class CustomDialog : Dialog {
                     )
                 )
             }
-            if (message.isNullOrEmpty()){
+            if (message.isNullOrEmpty()) {
                 tvMessage = layout.findViewById<View>(R.id.tvMessage) as TextView
                 tvMessage.visibility = View.GONE
             }
@@ -271,11 +277,22 @@ class CustomDialog : Dialog {
                             DialogInterface.BUTTON_POSITIVE
                         )
                     }
+                } else {
+                    textView.setOnClickListener {
+                        dialog.dismiss()
+                    }
                 }
 
                 //确定按钮文字颜色
                 if (positiveBtnTextColor != 0) {
-                    positiveBtnTextColor?.let { textView.setTextColor(ContextCompat.getColor(context, it)) }
+                    positiveBtnTextColor?.let {
+                        textView.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                it
+                            )
+                        )
+                    }
                 }
             } else {
                 // 没有设置"确认"按钮文字，隐藏
@@ -293,11 +310,22 @@ class CustomDialog : Dialog {
                             DialogInterface.BUTTON_NEGATIVE
                         )
                     }
+                } else {
+                    textView.setOnClickListener {
+                        dialog.dismiss()
+                    }
                 }
 
                 //取消按钮文字颜色
                 if (negativeBtnTextColor != 0) {
-                    negativeBtnTextColor?.let { textView.setTextColor(ContextCompat.getColor(context,it)) }
+                    negativeBtnTextColor?.let {
+                        textView.setTextColor(
+                            ContextCompat.getColor(
+                                context,
+                                it
+                            )
+                        )
+                    }
                 }
             } else {
                 // 没有设置"取消"按钮文字，隐藏
@@ -306,6 +334,5 @@ class CustomDialog : Dialog {
             dialog.setContentView(layout)
             return dialog
         }
-
     }
 }
