@@ -11,24 +11,24 @@ object PermissionConfig {
      * 存储权限
      */
     val sdcard = listOf(
-        "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.READ_EXTERNAL_STORAGE"
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
     )
 
     /**
      * 存储权限 与 相机权限
      */
     val sdcard_camera = listOf(
-        "android.permission.WRITE_EXTERNAL_STORAGE",
-        "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.CAMERA"
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE,
+        android.Manifest.permission.CAMERA
     )
 
     /**
      * 相机权限
      */
     val camera = listOf(
-        "android.permission.CAMERA"
+        android.Manifest.permission.CAMERA
     )
 
     /**
@@ -37,15 +37,15 @@ object PermissionConfig {
     val location = if (Build.VERSION.SDK_INT < 29) {
         //定位权限、蓝牙权限 10以下的系统
         listOf(
-            "android.permission.ACCESS_COARSE_LOCATION",
-            "android.permission.ACCESS_FINE_LOCATION"
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION
         )
     } else {
         //定位权限、蓝牙权限 10以上的系统
         listOf(
-            "android.permission.ACCESS_COARSE_LOCATION",
-            "android.permission.ACCESS_FINE_LOCATION",
-            "android.permission.ACCESS_BACKGROUND_LOCATION"
+            android.Manifest.permission.ACCESS_COARSE_LOCATION,
+            android.Manifest.permission.ACCESS_FINE_LOCATION,
+            android.Manifest.permission.ACCESS_BACKGROUND_LOCATION
         )
     }
 
@@ -53,20 +53,20 @@ object PermissionConfig {
      * 打电话权限
      */
     val callPhone = listOf(
-        "android.permission.CALL_PHONE"
+        android.Manifest.permission.CALL_PHONE
     )
 
     /**
      * 发短信权限
      */
     val sendSms = listOf(
-        "android.permission.SEND_SMS"
+        android.Manifest.permission.SEND_SMS
     )
 
     /**
      * 通讯录权限
      */
     val contacts = listOf(
-        "android.permission.READ_CONTACTS"
+        android.Manifest.permission.READ_CONTACTS
     )
 }

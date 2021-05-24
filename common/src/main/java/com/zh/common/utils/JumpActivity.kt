@@ -3,6 +3,7 @@ package com.zh.common.utils
 import android.content.Intent
 import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.gyf.immersionbar.ImmersionBar
@@ -35,8 +36,8 @@ interface JumpActivity : CustomAdapt {
     private val defaultNavigationBarColor: Int get() = R.color.white
 
     //权限同意与拒绝
-    fun onGrantedPermission() {}
-    fun onDeniedPermission() {}
+    fun onPermissionGranted() {}
+    fun onPermissionDenied() {}
 
     /**
      * 沉侵式颜色
@@ -145,17 +146,17 @@ interface JumpActivity : CustomAdapt {
 
     /**
      * 请求权限
-     * @param permission 在PermissionConfig里有列出，传入即可
+     * @param permission 在PermissionConfig里有示例列出, 复制传入
      */
-    fun requestPermission(permission: List<String>) {
-        PermissionUtils.permission(permission.toString())
+    fun requestPermission(@PermissionConstants.Permission vararg permission: String) {
+        PermissionUtils.permission(*permission)
             .callback(object : PermissionUtils.SimpleCallback {
                 override fun onGranted() {//同意
-                    onGrantedPermission()
+                    onPermissionGranted()
                 }
 
                 override fun onDenied() {//拒绝
-                    onDeniedPermission()
+                    onPermissionDenied()
                 }
             }).request()
     }

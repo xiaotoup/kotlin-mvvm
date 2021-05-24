@@ -112,7 +112,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
         mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
-        binding?.let { binding.setVariable(viewModelId, mViewModel) }
+        binding?.setVariable(viewModelId, mViewModel)
         //让ViewModel拥有View的生命周期感应
         mViewModel?.let { lifecycle.addObserver(it) }
         //支持LiveData绑定xml，数据改变，UI自动会更新
@@ -146,7 +146,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
 
     override fun onDestroy() {
         super.onDestroy()
-        binding?.let { it.unbind() }
+        binding?.unbind()
         mViewModel?.let { lifecycle.removeObserver(it) }
         dialog?.dismiss()
     }

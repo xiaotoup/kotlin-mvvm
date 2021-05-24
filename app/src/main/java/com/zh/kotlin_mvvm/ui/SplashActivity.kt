@@ -1,5 +1,6 @@
 package com.zh.kotlin_mvvm.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
@@ -25,7 +26,8 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         initData()
     }
 
-    fun initData() {
+    @SuppressLint("WrongConstant")
+    private fun initData() {
         btnToLogin.setOnClickListener {
             startActivity(ZjConfig.MainActivity)
         }
@@ -42,8 +44,16 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
             startActivity(TestWxPayActivity::class.java)
         }
         btnALiPay.setOnClickListener {
-            startActivity(TestALiPayActivity::class.java)
+            requestPermission(
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            )
         }
+    }
+
+    override fun onPermissionGranted() {
+        super.onPermissionGranted()
+        startActivity(TestALiPayActivity::class.java)
     }
 
     fun clickTest(view: View) {
