@@ -21,7 +21,7 @@ class LanguageUtil {
     fun changeAppLanguage(context: Context, locale: Locale, persistence: Boolean) {
         var locale = locale
         if (TextUtils.isEmpty(SPUtils.getInstance().getString(ZjConfig.LANGUAGE))) {
-            locale = Locale.ENGLISH
+            locale = Locale.SIMPLIFIED_CHINESE
             saveLanguageSetting(locale)
         }
         val resources = context.applicationContext.resources
@@ -91,7 +91,7 @@ class LanguageUtil {
             SPUtils.getInstance().getString(ZjConfig.LANGUAGE).equals(ZjConfig.lag_es) -> {
                 return Locale("es", "ES")
             }
-            else -> return Locale.ENGLISH
+            else -> return Locale.SIMPLIFIED_CHINESE
         }
     }
 

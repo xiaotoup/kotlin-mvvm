@@ -83,7 +83,6 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     kapt "com.android.databinding:compiler:$compiler_version"
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-    implementation 'org.greenrobot:eventbus:3.1.1'
 
     if (isNeedHomeModule.toBoolean()) {
         implementation project(path: ':home')

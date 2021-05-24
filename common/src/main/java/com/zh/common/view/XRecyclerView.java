@@ -117,13 +117,234 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
         mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_animation_fall_down));
     }
 
+    /**
+     * 添加自定义动画
+     */
     public void openItemAnimator(int animationId) {
         mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, animationId));
     }
 
+    /**
+     * 清除动画
+     */
     public void closeItemAnimator() {
         mRecyclerView.setLayoutAnimation(null);
     }
+
+    /**
+     * 开启 RecyclerView 滑动
+     */
+    public void openNestedScrolling() {
+        mRecyclerView.setNestedScrollingEnabled(true);
+        mRecyclerView.setFocusableInTouchMode(true);
+    }
+
+    /**
+     * 禁止 RecyclerView 滑动
+     */
+    public void closeNestedScrolling() {
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setFocusableInTouchMode(false);
+    }
+
+    /********************************** Loading面设置 start **********************************/
+    /**
+     * 设置Loading页面文字和图标
+     */
+    public void setLoadingViewText(String desc) {
+        if (mLoadingView != null) {
+            mLoadingView.setTextDesc(desc);
+        }
+    }
+
+    /**
+     * 设置Loading页面文字大小
+     */
+    public void setLoadingTextSize(float desc) {
+        if (mLoadingView != null) {
+            mLoadingView.setTextSize(desc);
+        }
+    }
+
+    /**
+     * 设置Loading页面文字颜色
+     */
+    public void setLoadingTextColor(int color) {
+        if (mLoadingView != null) {
+            mLoadingView.setTextColor(color);
+        }
+    }
+
+    /********************************** 空页面设置 start **********************************/
+    /**
+     * 设置空页面文字和图标
+     */
+    public void setEmptyViewTextImage(String desc, int resId) {
+        if (mEmptyView != null) {
+            mEmptyView.setTextDesc(desc);
+            mEmptyView.setImage(resId);
+        }
+    }
+
+    /**
+     * 设置空页面文字
+     */
+    public void setEmptyViewText(String desc) {
+        if (mEmptyView != null) {
+            mEmptyView.setTextDesc(desc);
+        }
+    }
+
+    /**
+     * 设置空页面文字大小
+     */
+    public void setEmptyTextSize(float desc) {
+        if (mEmptyView != null) {
+            mEmptyView.setTextSize(desc);
+        }
+    }
+
+    /**
+     * 设置空页面文字颜色
+     */
+    public void setEmptyTextColor(int color) {
+        if (mEmptyView != null) {
+            mEmptyView.setTextColor(color);
+        }
+    }
+
+    /**
+     * 设置空页面图标
+     */
+    public void setEmptyViewImage(int resId) {
+        if (mEmptyView != null) {
+            mEmptyView.setImage(resId);
+        }
+    }
+
+    /**
+     * 设置空页面图片大小
+     */
+    public void setEmptyImageSize(int width, int height) {
+        if (mEmptyView != null) {
+            mEmptyView.setImageSize(width, height);
+        }
+    }
+
+    /********************************** 空页面设置 end **********************************/
+    /**
+     * 设置错误页面文字和图标
+     */
+    public void setErrViewTextImage(String desc, int resId) {
+        if (mErrView != null) {
+            mErrView.setTextDesc(desc);
+            mErrView.setImage(resId);
+        }
+    }
+
+    /**
+     * 设置错误页面文字
+     */
+    public void setErrViewText(String desc) {
+        if (mErrView != null) {
+            mErrView.setTextDesc(desc);
+        }
+    }
+
+    /**
+     * 设置错误页面文字大小
+     */
+    public void setErrTextSize(float desc) {
+        if (mErrView != null) {
+            mErrView.setTextSize(desc);
+        }
+    }
+
+    /**
+     * 设置错误页面文字颜色
+     */
+    public void setErrTextColor(int color) {
+        if (mErrView != null) {
+            mErrView.setTextColor(color);
+        }
+    }
+
+    /**
+     * 设置错误页面图标
+     */
+    public void setErrViewImage(int resId) {
+        if (mErrView != null) {
+            mErrView.setImage(resId);
+        }
+    }
+
+    /**
+     * 设置错误页面图片大小
+     */
+    public void seErrImageSize(int width, int height) {
+        if (mErrView != null) {
+            mErrView.setImageSize(width, height);
+        }
+    }
+
+    /********************************** 错误页面设置 end **********************************/
+
+    /**
+     * 设置无网络页面文字和图标
+     */
+    public void setNoNetViewTextImage(String desc, int resId) {
+        if (mNoNetView != null) {
+            mNoNetView.setTextDesc(desc);
+            mNoNetView.setImage(resId);
+        }
+    }
+
+    /**
+     * 设置无网络页面文字
+     */
+    public void setNoNetViewText(String desc) {
+        if (mNoNetView != null) {
+            mNoNetView.setTextDesc(desc);
+        }
+    }
+
+    /**
+     * 设置无网络页面文字大小
+     */
+    public void setNoNetTextSize(float desc) {
+        if (mNoNetView != null) {
+            mNoNetView.setTextSize(desc);
+        }
+    }
+
+    /**
+     * 设置无网络页面文字颜色
+     */
+    public void setNoNetTextColor(int color) {
+        if (mNoNetView != null) {
+            mNoNetView.setTextColor(color);
+        }
+    }
+
+    /**
+     * 设置无网络页面图标
+     */
+    public void setNoNetViewImage(int resId) {
+        if (mNoNetView != null) {
+            mNoNetView.setImage(resId);
+        }
+    }
+
+    /**
+     * 设置无网络页面图片大小
+     */
+    public void seNoNetImageSize(int width, int height) {
+        if (mNoNetView != null) {
+            mNoNetView.setImageSize(width, height);
+        }
+    }
+
+    /********************************** 自定义页面设置 end **********************************/
 
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
@@ -137,7 +358,7 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     }
 
     @Override
-    public void onFailure(@org.jetbrains.annotations.Nullable String errMsg) {
+    public void onFailure(String errMsg) {
         if (mBaseQuickAdapter != null) {
             mBaseQuickAdapter.setEmptyView(mErrView);
         }
@@ -156,5 +377,14 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
 
     public void setOnRefreshListener(OnRefreshListener listener) {
         mOnRefreshListener = listener;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        closeItemAnimator();
+        if (mBaseQuickAdapter != null) {
+            mBaseQuickAdapter.removeEmptyView();
+        }
     }
 }

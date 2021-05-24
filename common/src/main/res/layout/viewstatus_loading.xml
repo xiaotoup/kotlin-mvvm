@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/vs_le_root"
@@ -8,15 +9,15 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ProgressBar
-            style="@android:style/Widget.ProgressBar.Inverse"
+        <com.zh.common.view.QMUILoadingView
+            android:id="@+id/loading_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateDrawable="@drawable/progressbar"
-            android:indeterminateDuration="1400"
-            android:max="100" />
+            app:loading_view_size="35dp"
+            app:loading_view_color="#aeaeae"/>
 
         <TextView
+            android:id="@+id/tv_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

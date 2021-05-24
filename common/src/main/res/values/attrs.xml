@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ShadowContainer">
-        <attr name="sc_containerShadowColor" format="color"/>
-        <attr name="sc_containerShadowRadius" format="dimension"/>
-        <attr name="sc_containerDeltaLength" format="dimension"/>
-        <attr name="sc_containerCornerRadius" format="dimension"/>
-        <attr name="sc_deltaX" format="dimension"/>
-        <attr name="sc_deltaY" format="dimension"/>
-        <attr name="sc_enable" format="boolean"/>
+        <attr name="sc_containerShadowColor" format="color" />
+        <attr name="sc_containerShadowRadius" format="dimension" />
+        <attr name="sc_containerDeltaLength" format="dimension" />
+        <attr name="sc_containerCornerRadius" format="dimension" />
+        <attr name="sc_deltaX" format="dimension" />
+        <attr name="sc_deltaY" format="dimension" />
+        <attr name="sc_enable" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="LoadingView">
+        <attr name="loading_view_color" format="color" />
+        <attr name="loading_view_size" format="dimension" />
     </declare-styleable>
 </resources>

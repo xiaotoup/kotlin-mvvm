@@ -13,6 +13,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.BuildConfig
 import com.zh.common.R
+import com.zh.common.utils.LanguageUtil
 import com.zh.config.ZjConfig
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.unit.Subunits
@@ -118,8 +119,9 @@ abstract class BaseApplication : MultiDexApplication() {
     init {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
-            //全局设置主题颜色
-            MaterialHeader(context).setColorSchemeColors(R.color.colorPrimary, R.color.colorAccent)
+            MaterialHeader(context).setColorSchemeResources(
+                R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark
+            )
         }
         //设置全局的Footer构建器
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->

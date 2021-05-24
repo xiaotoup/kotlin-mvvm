@@ -11,6 +11,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import com.alibaba.android.arouter.launcher.ARouter
+import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
 import io.reactivex.disposables.CompositeDisposable
 
@@ -81,6 +82,7 @@ abstract class BaseDialog : Dialog {
      * @param url 对应组建的名称  (“/mine/setting”)
      */
     fun startActivity(url: String) {
+        if (DoubleUtils.isFastDoubleClick()) return
         ARouter.getInstance().build(url).navigation()
     }
 
@@ -90,6 +92,7 @@ abstract class BaseDialog : Dialog {
      * @param url 对应组建的名称  (“/mine/setting”)
      */
     fun startActivity(url: String, bundle: Bundle) {
+        if (DoubleUtils.isFastDoubleClick()) return
         ARouter.getInstance().build(url).with(bundle).navigation()
     }
 
