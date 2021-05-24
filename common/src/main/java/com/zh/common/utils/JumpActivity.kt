@@ -3,7 +3,6 @@ package com.zh.common.utils
 import android.content.Intent
 import android.os.Bundle
 import com.alibaba.android.arouter.launcher.ARouter
-import com.blankj.utilcode.constant.PermissionConstants
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.PermissionUtils
 import com.gyf.immersionbar.ImmersionBar
@@ -146,10 +145,10 @@ interface JumpActivity : CustomAdapt {
 
     /**
      * 请求权限
-     * @param permission 在PermissionConfig里有示例列出, 复制传入
+     * @param permission 在PermissionConfig里有示例列出
      */
-    fun requestPermission(@PermissionConstants.Permission vararg permission: String) {
-        PermissionUtils.permission(*permission)
+    fun requestPermission(permission: List<String>) {
+        PermissionUtils.permission(*permission.toTypedArray())
             .callback(object : PermissionUtils.SimpleCallback {
                 override fun onGranted() {//同意
                     onPermissionGranted()

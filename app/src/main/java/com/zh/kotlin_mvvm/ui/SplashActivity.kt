@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
+import com.zh.config.PermissionConfig
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
@@ -26,7 +27,6 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         initData()
     }
 
-    @SuppressLint("WrongConstant")
     private fun initData() {
         btnToLogin.setOnClickListener {
             startActivity(ZjConfig.MainActivity)
@@ -44,10 +44,7 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
             startActivity(TestWxPayActivity::class.java)
         }
         btnALiPay.setOnClickListener {
-            requestPermission(
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            )
+            requestPermission(PermissionConfig.camera)
         }
     }
 
