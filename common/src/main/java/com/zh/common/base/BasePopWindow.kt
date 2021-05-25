@@ -1,6 +1,7 @@
 package com.zh.common.base
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -31,8 +32,17 @@ open class BasePopWindow(private val mContext: Context) {
     /**
      * 设置 PopupWindow 布局
      */
+    open fun createView(view: View, width: Int, height: Int): BasePopWindow {
+        contentView = view
+        setLayout(width, height)
+        return this
+    }
+
+    /**
+     * 设置 PopupWindow 布局
+     */
     open fun createView(layoutId: Int): BasePopWindow {
-        contentView = LayoutInflater.from(mContext).inflate(layoutId, null)
+        contentView = LayoutInflater.from(mContext).inflate(layoutId, null, false)
         setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         return this
     }
@@ -41,16 +51,7 @@ open class BasePopWindow(private val mContext: Context) {
      * 设置 PopupWindow 布局
      */
     open fun createView(layoutId: Int, width: Int, height: Int): BasePopWindow {
-        contentView = LayoutInflater.from(mContext).inflate(layoutId, null)
-        setLayout(width, height)
-        return this
-    }
-
-    /**
-     * 设置 PopupWindow 布局
-     */
-    open fun createView(view: View, width: Int, height: Int): BasePopWindow {
-        contentView = view
+        contentView = LayoutInflater.from(mContext).inflate(layoutId, null, false)
         setLayout(width, height)
         return this
     }
@@ -113,10 +114,9 @@ open class BasePopWindow(private val mContext: Context) {
      */
     fun setBackgroundAlpha(bgAlpha: Float) {
         try {
-            val lp: WindowManager.LayoutParams =
-                ActivityUtils.getTopActivity().window.attributes
-            lp.alpha = bgAlpha;
-            ActivityUtils.getTopActivity().window.attributes = lp;
+            val lp: WindowManager.LayoutParams = ActivityUtils.getTopActivity().window.attributes
+            lp.alpha = bgAlpha
+            ActivityUtils.getTopActivity().window.attributes = lp
         } catch (e: Exception) {
             Log.e(tag, "lateinit property contentView has not been initialized")
             e.printStackTrace()

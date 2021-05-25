@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseActivity
@@ -50,8 +51,8 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         }
         btnPopupWindow.setOnClickListener {
             BasePopWindow(this)
-                .createView(R.layout.layout_pop, SizeUtils.dp2px(200f), SizeUtils.dp2px(300f))
-                .showAsDropDown(btnPopupWindow, -10, 10, Gravity.RIGHT)
+                .createView(R.layout.layout_pop, ScreenUtils.getScreenWidth(), SizeUtils.dp2px(400f))
+                .showAsDropDown(btnPopupWindow, -10, 10)
         }
     }
 
