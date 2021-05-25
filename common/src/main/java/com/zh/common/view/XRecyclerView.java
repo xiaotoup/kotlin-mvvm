@@ -2,7 +2,6 @@ package com.zh.common.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 
@@ -33,6 +32,8 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     private XNoNetView mNoNetView;
     private OnRefreshListener mOnRefreshListener;
     private BaseQuickAdapter mBaseQuickAdapter;
+    private boolean isOpenAnimator = true;
+    private int animationId = R.anim.layout_animation_fall_down;
 
     public XRecyclerView(@NonNull Context context) {
         this(context, null);
@@ -75,9 +76,11 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     public void setNewInstance(List dataList) {
         if (mBaseQuickAdapter == null) return;
         if (dataList != null && dataList.size() > 0) {
+            openItemDefaultAnimator();
             mBaseQuickAdapter.setNewInstance(dataList);
-        } else {
-            mBaseQuickAdapter.setEmptyView(mEmptyView);
+        }
+        if (mBaseQuickAdapter.getData().size() <= 0) {
+            setOnEmpty();
         }
     }
 
@@ -85,10 +88,11 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     public void addData(List dataList) {
         if (mBaseQuickAdapter == null) return;
         if (dataList != null && dataList.size() > 0) {
+            openItemDefaultAnimator();
             mBaseQuickAdapter.addData(dataList);
         }
         if (mBaseQuickAdapter.getData().size() <= 0) {
-            mBaseQuickAdapter.setEmptyView(mEmptyView);
+            setOnEmpty();
         }
     }
 
@@ -114,20 +118,24 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
      * 开启 RecyclerView 的 layoutAnimation动画
      */
     public void openItemDefaultAnimator() {
-        mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, R.anim.layout_animation_fall_down));
+        if (isOpenAnimator) {
+            mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, animationId));
+        }
     }
 
     /**
      * 添加自定义动画
      */
     public void openItemAnimator(int animationId) {
-        mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, animationId));
+        this.animationId = animationId;
+        openItemDefaultAnimator();
     }
 
     /**
      * 清除动画
      */
     public void closeItemAnimator() {
+        isOpenAnimator = false;
         mRecyclerView.setLayoutAnimation(null);
     }
 
@@ -353,13 +361,20 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     @Override
     public void onLoadingView(boolean show) {
         if (mBaseQuickAdapter != null) {
-            mBaseQuickAdapter.setEmptyView(show ? mLoadingView : new View(mContext));
+            if (show) {
+                mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
+                mBaseQuickAdapter.setEmptyView(mLoadingView);
+            } else {
+                mRecyclerView.getLayoutParams().height = LayoutParams.WRAP_CONTENT;
+                mBaseQuickAdapter.removeEmptyView();
+            }
         }
     }
 
     @Override
     public void onFailure(String errMsg) {
         if (mBaseQuickAdapter != null) {
+            mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
             mBaseQuickAdapter.setEmptyView(mErrView);
         }
     }
@@ -367,8 +382,14 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     @Override
     public void onNoNetWork() {
         if (mBaseQuickAdapter != null) {
+            mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
             mBaseQuickAdapter.setEmptyView(mNoNetView);
         }
+    }
+
+    public void setOnEmpty() {
+        mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
+        mBaseQuickAdapter.setEmptyView(mEmptyView);
     }
 
     public interface OnRefreshListener {

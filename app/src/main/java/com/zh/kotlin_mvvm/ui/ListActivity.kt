@@ -1,8 +1,11 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
@@ -26,25 +29,28 @@ class ListActivity : BaseActivity<ViewDataBinding, ListViewModel>() {
     override val navigationBarColor: Int = R.color.colorPrimary
     override val statusBarColor: Int = R.color.colorPrimary
 
-    private var list: MutableList<ListBean> = mutableListOf()
+    private var listData: MutableList<ListBean> = mutableListOf()
     private val mAdapter by lazy {
         ListAdapter()
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        for (i in 0..20) {
-            list.add(ListBean(i, "$i item"))
+        for (i in 0..5) {
+            listData.add(ListBean(i, "$i item"))
         }
         recyclerView.setQuickAdapter(mAdapter)
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            ToastUtils.showShort("$position")
+        }
         initData()
     }
 
     fun initData() {
-        for (i in list.indices) {
-            println("$i ${list[i].title}")
+        for (i in listData.indices) {
+            println("$i ${listData[i].title}")
         }
-        recyclerView.setNewInstance(list)
-        viewModel.onDoNet(recyclerView)
+        recyclerView.setNewInstance(listData)
+        viewModel.onDoNet(recyclerView, listData)
         /**
          * 高阶函数
          */
@@ -68,15 +74,16 @@ class ListActivity : BaseActivity<ViewDataBinding, ListViewModel>() {
         val nList = listNew.flatMap { it }.forEach(::println)
         //求和 reduce 返回值必须是 acc类型
 
-        refreshLayout.autoRefresh()
-        refreshLayout.autoLoadMore()
         refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
-                refreshLayout.finishLoadMore(2000)
+                refreshLayout.finishLoadMore(1500)
             }
 
             override fun onRefresh(refreshLayout: RefreshLayout) {
-                refreshLayout.finishRefresh(2000)
+                listData.clear()
+                mAdapter.notifyDataSetChanged()
+                viewModel.onDoNet(recyclerView, listData)
+                refreshLayout.finishRefresh(1500)
             }
         })
     }

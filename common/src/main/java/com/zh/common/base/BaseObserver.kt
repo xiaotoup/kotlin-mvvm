@@ -39,9 +39,9 @@ abstract class BaseObserver<T> : Observer<T> {
         if (!NetworkUtils.isConnected()) {
             ToastUtils.showShort("网络异常")
             d.dispose()
+            onComplete() //一定要手动调用
             //显示无网络的页面
             iNetCallback?.onNoNetWork()
-            onComplete() //一定要手动调用
             return
         }
         disposable = d
@@ -58,14 +58,14 @@ abstract class BaseObserver<T> : Observer<T> {
 
     override fun onError(e: Throwable) {
         Log.e("--okhttp--", "onError : " + e.message)
+        onComplete()
+        //显示错误的页面
+        iNetCallback?.onFailure(e.message)
         if (e is ApiException) {
             onIError(e)
         } else {
             onIError(ApiException(e, ERROR.UNKNOWN))
         }
-        //显示错误的页面
-        iNetCallback?.onFailure(e.message)
-        onComplete()
     }
 
     override fun onComplete() {

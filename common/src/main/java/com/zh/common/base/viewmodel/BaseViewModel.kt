@@ -17,6 +17,8 @@ import com.zh.common.base.model.BaseModel
 open class BaseViewModel<MODEL : BaseModel<*>>(model: MODEL) :
     AndroidViewModel(BaseApplication.getApplication()), IBaseViewModel {
 
+    var pageIndex = 1
+    var pageSize = 10
     val mModel: MODEL = model
     val mAppContext: Context = getApplication<BaseApplication>().applicationContext
 
