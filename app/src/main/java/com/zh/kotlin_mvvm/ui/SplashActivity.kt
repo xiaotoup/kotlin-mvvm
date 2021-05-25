@@ -1,11 +1,14 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseActivity
+import com.zh.common.base.BasePopWindow
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.config.PermissionConfig
 import com.zh.config.ZjConfig
@@ -44,6 +47,11 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         }
         btnALiPay.setOnClickListener {
             requestPermission(PermissionConfig.camera)
+        }
+        btnPopupWindow.setOnClickListener {
+            BasePopWindow(this)
+                .createView(R.layout.layout_pop, SizeUtils.dp2px(200f), SizeUtils.dp2px(300f))
+                .showAsDropDown(btnPopupWindow, -10, 10, Gravity.RIGHT)
         }
     }
 

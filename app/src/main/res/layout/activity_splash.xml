@@ -54,6 +54,13 @@
             android:text="支付宝支付" />
 
         <Button
+            android:id="@+id/btnPopupWindow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="PopupWindow" />
+
+        <Button
             android:id="@+id/btnTest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

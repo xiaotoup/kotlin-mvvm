@@ -113,12 +113,10 @@ open class BasePopWindow(private val mContext: Context) {
      */
     fun setBackgroundAlpha(bgAlpha: Float) {
         try {
-            contentView.postDelayed({
-                val lp: WindowManager.LayoutParams =
-                    ActivityUtils.getTopActivity().window.attributes
-                lp.alpha = bgAlpha;
-                ActivityUtils.getTopActivity().window.attributes = lp;
-            }, 500)
+            val lp: WindowManager.LayoutParams =
+                ActivityUtils.getTopActivity().window.attributes
+            lp.alpha = bgAlpha;
+            ActivityUtils.getTopActivity().window.attributes = lp;
         } catch (e: Exception) {
             Log.e(tag, "lateinit property contentView has not been initialized")
             e.printStackTrace()
@@ -150,14 +148,14 @@ open class BasePopWindow(private val mContext: Context) {
             isOutsideTouchable = true//点击外部消失
             setBackgroundAlpha(0.6f)
             setOnDismissListener {
-                setBackgroundAlpha(0f)
-                setOnDismissListener()
+                setBackgroundAlpha(1f)
+                setDismissListener()
             }
         }
     }
 
     open fun loadData(view: View) {}
-    open fun setOnDismissListener() {}
+    open fun setDismissListener() {}
     open fun getPopupWindow(): PopupWindow = popWindow
     open fun isShowing(): Boolean = popWindow.isShowing
 }
