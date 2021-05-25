@@ -1,6 +1,5 @@
 package com.zh.kotlin_mvvm.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
