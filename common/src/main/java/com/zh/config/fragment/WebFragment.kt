@@ -10,7 +10,6 @@ import android.widget.LinearLayout
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.ViewDataBinding
 import com.just.agentweb.AgentWeb
-import com.zh.common.BR
 import com.zh.common.R
 import com.zh.common.base.BaseFragment
 import com.zh.common.base.viewmodel.NormalViewModel
@@ -19,14 +18,13 @@ import kotlinx.android.synthetic.main.fragment_web.*
 /**
  * 解决NestedScrollView嵌套WebView问题
  */
-class WebFragment : BaseFragment<ViewDataBinding, NormalViewModel>() {
+class WebFragment(
+    override val layoutRes: Int = R.layout.fragment_web,
+    override val viewModel: NormalViewModel = NormalViewModel()
+) : BaseFragment<ViewDataBinding, NormalViewModel>() {
 
     private var mAgentWeb: AgentWeb? = null
     private var mScrollView: NestedScrollView? = null
-
-    override val layoutRes = R.layout.fragment_web
-    override val viewModel = NormalViewModel()
-    override val onBindVariableId = BR.viewModel
 
     override fun initView(savedInstanceState: Bundle?) {
         mAgentWeb = AgentWeb.with(this) //传入Activity
