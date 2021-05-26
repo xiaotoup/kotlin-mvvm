@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.zh.common">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,6 +24,7 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.4" />
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />

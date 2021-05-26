@@ -49,6 +49,9 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
         btnALiPay.setOnClickListener {
             requestPermission(PermissionConfig.camera)
         }
+        btnPicture.setOnClickListener {
+            startActivity(PictureActivity::class.java)
+        }
         btnPopupWindow.setOnClickListener {
             BasePopWindow(this)
                 .createView(R.layout.layout_pop, ScreenUtils.getScreenWidth(), SizeUtils.dp2px(400f))

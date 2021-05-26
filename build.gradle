@@ -6,6 +6,7 @@ buildscript {
     ext.compiler_version = '4.0.2'
     repositories {
         google()
+        mavenCentral()
         jcenter()
         maven { url "https://jitpack.io" }
     }
@@ -26,6 +27,7 @@ allprojects {
             dirs 'libs'
         }
         google()
+        mavenCentral()
         jcenter()
         maven { url "https://jitpack.io" }
     }

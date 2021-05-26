@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
 
 /**
@@ -95,7 +96,10 @@ class TitleBarView @JvmOverloads constructor(
             mLeftImage?.apply {
                 this.setImageDrawable(mLeftDrawable)
                 this.visibility = View.VISIBLE
-                this.setOnClickListener { (getContext() as Activity).finish() }
+                this.setOnClickListener {
+                    if (DoubleUtils.isFastDoubleClick()) return@setOnClickListener
+                    (getContext() as Activity).finish()
+                }
             }
         } else {
             mLeftImage?.visibility = View.GONE
@@ -155,7 +159,10 @@ class TitleBarView @JvmOverloads constructor(
             mLeftTextView?.apply {
                 this.text = mLeftString
                 this.visibility = View.VISIBLE
-                this.setOnClickListener { (getContext() as Activity).finish() }
+                this.setOnClickListener {
+                    if (DoubleUtils.isFastDoubleClick()) return@setOnClickListener
+                    (getContext() as Activity).finish()
+                }
             }
             if (typedArray.hasValue(R.styleable.TitleBarView_tb_leftTextColor)) {
                 setLeftTextColor(mLeftColor)

@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
 
 /**

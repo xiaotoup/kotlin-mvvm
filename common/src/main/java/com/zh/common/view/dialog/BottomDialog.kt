@@ -4,19 +4,19 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
-import android.util.TypedValue
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.blankj.utilcode.util.SizeUtils
+import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
 
 /**
  * Created by pc on 2018/4/21.
  * 仿ios弹框
  */
-class BottomDialog(context: Context, theme: Int) :
-    Dialog(context, theme) {
+class BottomDialog(context: Context, theme: Int) : Dialog(context, theme) {
     //重新设置属性
     private fun setDialog() {
         val dialogWindow = this.window
@@ -31,9 +31,8 @@ class BottomDialog(context: Context, theme: Int) :
         }
     }
 
-    class Builder(//上下文
-        private val context: Context
-    ) {
+    //上下文
+    class Builder(private val context: Context) {
         private var title: String? = null//标题
         private var contentList: Array<String>? = null//内容
         private var positiveClickListener: DialogInterface.OnClickListener? = null//点击内容按钮监听
@@ -66,23 +65,23 @@ class BottomDialog(context: Context, theme: Int) :
         /**
          * 设置对话框内容
          *
-         * @param contentlist 内容字符串数组
+         * @param contentList 内容字符串数组
          * @return
          */
-        fun setContentList(contentlist: Array<String>): Builder {
-            contentList = contentlist
+        fun setContentList(contentList: Array<String>): Builder {
+            this.contentList = contentList
             return this
         }
 
         /**
          * 设置对话框内容
          *
-         * @param contentlist 内容资源id数组
+         * @param contentList 内容资源id数组
          * @return
          */
-        fun setContentList(contentlist: IntArray): Builder {
-            for (i in contentlist.indices) {
-                contentList!![i] = context.getText(contentlist[i]) as String
+        fun setContentList(contentList: IntArray): Builder {
+            for (i in contentList.indices) {
+                this.contentList!![i] = context.getText(contentList[i]) as String
             }
             return this
         }
@@ -114,7 +113,7 @@ class BottomDialog(context: Context, theme: Int) :
          *
          * @return
          */
-        fun setPositivePoitionItem(listener: DialogInterface.OnClickListener): Builder {
+        fun setPositivePositionItem(listener: DialogInterface.OnClickListener): Builder {
             positiveClickListener = listener
             return this
         }
@@ -132,7 +131,7 @@ class BottomDialog(context: Context, theme: Int) :
             if (title != null) {
                 //设置标题
                 val botTitle = layout.findViewById<TextView>(R.id.botTitle)
-                val botTitleLine =  layout.findViewById<View>(R.id.botTitleLine)
+                val botTitleLine = layout.findViewById<View>(R.id.botTitleLine)
                 botTitle.apply {
                     this.text = title
                     this.visibility = View.VISIBLE
@@ -155,7 +154,9 @@ class BottomDialog(context: Context, theme: Int) :
                 }
             }
             //关闭dialog
-            botCancel.setOnClickListener { dialog.dismiss() }
+            botCancel.setOnClickListener {
+                dialog.dismiss()
+            }
             dialog.setContentView(layout)
             return dialog
         }
@@ -181,13 +182,13 @@ class BottomDialog(context: Context, theme: Int) :
                 val textView = TextView(context)
                 val lp = LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
-                    dp2px(45, context)
+                    SizeUtils.dp2px(45f)
                 )
                 textView.apply {
                     this.layoutParams = lp
                     this.gravity = Gravity.CENTER
                     this.setTextColor(Color.parseColor("#02B5F9"))
-                    this.setTextSize(TypedValue.COMPLEX_UNIT_PX, dp2px(14, context).toFloat())
+                    this.textSize = 14f
                     this.text = contentList!![i]
                     this.id = i
                 }
@@ -203,7 +204,7 @@ class BottomDialog(context: Context, theme: Int) :
                     val botLine = View(context)
                     val lineLp = LinearLayout.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        dp2px(1, context)
+                        SizeUtils.dp2px(0.5f)
                     )
                     botLine.layoutParams = lineLp
                     botLine.setBackgroundColor(Color.parseColor("#e1e1e1"))
@@ -217,14 +218,6 @@ class BottomDialog(context: Context, theme: Int) :
                     dialog.dismiss()
                 }
             }
-        }
-
-        //dp转换成像素
-        private fun dp2px(value: Int, context: Context): Int {
-            return TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                value.toFloat(), context.resources.displayMetrics
-            ).toInt()
         }
     }
 
