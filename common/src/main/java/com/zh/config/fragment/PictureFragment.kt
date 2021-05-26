@@ -44,6 +44,9 @@ class PictureFragment(
     private val margin = SizeUtils.dp2px(5f)
     private val mAdapter by lazy { PictureAdapter() }
 
+    var deleteImg = R.mipmap.delete_black//删除按钮
+    var takeImg = R.mipmap.iv_take_photo//选择图片按钮
+    var needShowTake = true//是否需要显示选择图片按钮
     var maxSelectNum = 9 //最大选择数量,默认9张
     var isEnableCrop: Boolean = false//是否开启裁剪,默认关闭
     var circleDimmedLayer: Boolean = false//是否开启圆形裁剪
@@ -224,6 +227,7 @@ class PictureFragment(
 
             //点击删除
             val ivDelete: ImageView = holder.getView(R.id.ivDelete)
+            ivDelete.setImageResource(deleteImg)
             ivDelete.setOnClickListener {
                 selectList.removeAt(holder.layoutPosition)
                 notifyItemRemoved(holder.layoutPosition)
@@ -233,7 +237,7 @@ class PictureFragment(
             if (isShowAdd && selectList.size == holder.layoutPosition) {
                 ivDelete.visibility = View.GONE
                 ivImage.scaleType = ImageView.ScaleType.FIT_XY
-                GlideManager.loadUrl(R.mipmap.iv_take_photo, ivImage)
+                ivImage.setImageResource(takeImg)
             } else {
                 ivDelete.visibility = View.VISIBLE
             }
@@ -246,6 +250,7 @@ class PictureFragment(
                 false
             }
 
+            //点击事件
             holder.itemView.setOnClickListener {
                 mOnItemClickListener?.onItemClick(
                     this@PictureAdapter,
@@ -257,7 +262,7 @@ class PictureFragment(
 
         override fun getItemCount(): Int {
             var mCount = 0
-            if (selectList.size < 9) {
+            if (needShowTake && selectList.size < maxSelectNum) {
                 isShowAdd = true
                 mCount = selectList.size + 1
             } else {
