@@ -17,6 +17,7 @@ class PictureActivity(
 
     override fun initView(savedInstanceState: Bundle?) {
         pictureFragment = supportFragmentManager.findFragmentByTag("pictureF") as PictureFragment
+
         button9.setOnClickListener {
             pictureFragment.showSelectDialog()
         }

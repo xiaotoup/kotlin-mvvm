@@ -41,10 +41,18 @@ class PictureFragment(
 ) : BaseFragment<ViewDataBinding, NormalViewModel>() {
 
     private var isShowAdd = true //是否显示添加图片按钮
-    private var maxSelectNum = 9 //最多选择数量
-    private var mimeType = PictureMimeType.ofImage()//媒体类型
     private val margin = SizeUtils.dp2px(5f)
     private val mAdapter by lazy { PictureAdapter() }
+
+    var maxSelectNum = 9 //最大选择数量,默认9张
+    var isEnableCrop: Boolean = false//是否开启裁剪,默认关闭
+    var circleDimmedLayer: Boolean = false//是否开启圆形裁剪
+    var isShowCamera: Boolean = true//列表是否显示拍照按钮,默认开启
+    var selectionMode: Int = PictureConfig.MULTIPLE//单选or多选,默认多选
+    var maxVideoSelectNum: Int = 9//视频最大选择数量,默认9个
+    var videoMaxSecond: Int = 60//查询多少秒以内的视频, 默认60s
+    var recordVideoSecond: Int = 60//录制视频秒数, 默认60s
+    var mimeType: Int = PictureMimeType.ofImage()//媒体类型,默认图片
 
     /**
      * 获取选择的图片
@@ -85,25 +93,8 @@ class PictureFragment(
 
     /**
      * 打开相册
-     * @param isEnableCrop 是否开启裁剪,默认关闭
-     * @param circleDimmedLayer 是否开启圆形裁剪
-     * @param maxSelectNum 最大选择数量,默认9张
-     * @param isShowCamera 列表是否显示拍照按钮,默认开启
-     * @param selectionMode 单选or多选,默认多选
-     * @param maxVideoSelectNum 视频最大选择数量,默认9个
-     * @param videoMaxSecond 查询多少秒以内的视频, 默认60s
-     * @param recordVideoSecond 录制视频秒数, 默认60s
-     * @param mimeType 媒体类型,默认图片
      */
-    private fun openPicture(
-        isEnableCrop: Boolean = false, circleDimmedLayer: Boolean = false,
-        maxSelectNum: Int = 9, isShowCamera: Boolean = true,
-        selectionMode: Int = PictureConfig.MULTIPLE, maxVideoSelectNum: Int = 9,
-        videoMaxSecond: Int = 60, recordVideoSecond: Int = 60,
-        mimeType: Int = PictureMimeType.ofImage()
-    ) {
-        this.mimeType = mimeType
-        this.maxSelectNum = maxSelectNum
+    private fun openPicture() {
         PictureSelector.create(this)
             .openGallery(mimeType)//相册 媒体类型 PictureMimeType.ofAll()、ofImage()、ofVideo()、ofAudio()
             .imageEngine(GlideEngine.createGlideEngine()) // 请参考Demo GlideEngine.java
@@ -143,10 +134,8 @@ class PictureFragment(
 
     /**
      * 单独使用相机
-     * @param isEnableCrop 是否开启裁剪,默认关闭
-     * @param circleDimmedLayer 是否开启圆形裁剪
      */
-    private fun openCamera(isEnableCrop: Boolean = false, circleDimmedLayer: Boolean = false) {
+    private fun openCamera() {
         PictureSelector.create(this)
             .openCamera(PictureMimeType.ofImage())//单独使用相机 媒体类型 PictureMimeType.ofImage()、ofVideo()
             .imageEngine(GlideEngine.createGlideEngine()) // 请参考Demo GlideEngine.java
