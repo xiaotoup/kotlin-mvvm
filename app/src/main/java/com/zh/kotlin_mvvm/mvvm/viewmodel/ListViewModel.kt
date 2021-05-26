@@ -16,10 +16,12 @@ class ListViewModel : BaseViewModel<MainModel>(MainModel()) {
             }
 
             override fun onIError(e: ApiException) {
-                list.clear()
+//                list.clear()
+                val lis = mutableListOf<ListBean>()
                 for (i in 0..10) {
-                    list.add(ListBean(i + 10, "${i + 10} data"))
+                    lis.add(ListBean(i + 10, "${i + 10} data"))
                 }
+                list.addAll(lis)
                 recyclerView.setNewInstance(list)
             }
         })

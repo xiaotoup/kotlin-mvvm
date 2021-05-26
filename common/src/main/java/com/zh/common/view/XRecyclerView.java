@@ -77,7 +77,11 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
         if (mBaseQuickAdapter == null) return;
         if (dataList != null && dataList.size() > 0) {
             openItemDefaultAnimator();
-            mBaseQuickAdapter.setNewInstance(dataList);
+            if (dataList == mBaseQuickAdapter.getData()) {
+                mBaseQuickAdapter.notifyDataSetChanged();
+            } else {
+                mBaseQuickAdapter.setNewInstance(dataList);
+            }
         }
         if (mBaseQuickAdapter.getData().size() <= 0) {
             setOnEmpty();
@@ -361,6 +365,7 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     @Override
     public void onLoadingView(boolean show) {
         if (mBaseQuickAdapter != null) {
+            mBaseQuickAdapter.notifyDataSetChanged();
             if (show) {
                 mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
                 mBaseQuickAdapter.setEmptyView(mLoadingView);
@@ -374,6 +379,7 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     @Override
     public void onFailure(String errMsg) {
         if (mBaseQuickAdapter != null) {
+            mBaseQuickAdapter.notifyDataSetChanged();
             mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
             mBaseQuickAdapter.setEmptyView(mErrView);
         }
@@ -382,12 +388,14 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
     @Override
     public void onNoNetWork() {
         if (mBaseQuickAdapter != null) {
+            mBaseQuickAdapter.notifyDataSetChanged();
             mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
             mBaseQuickAdapter.setEmptyView(mNoNetView);
         }
     }
 
     public void setOnEmpty() {
+        mBaseQuickAdapter.notifyDataSetChanged();
         mRecyclerView.getLayoutParams().height = LayoutParams.MATCH_PARENT;
         mBaseQuickAdapter.setEmptyView(mEmptyView);
     }
