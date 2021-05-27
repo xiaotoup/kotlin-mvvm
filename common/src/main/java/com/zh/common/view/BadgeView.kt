@@ -74,10 +74,6 @@ class BadgeView @JvmOverloads constructor(
                 textHeight = measureText().height().toFloat()
                 viewWidth = textWidth + paddingLeftRight * 2
                 viewHeight = textHeight + paddingTopBottom * 2
-                if (it.length == 1) {
-                    viewWidth = if (viewWidth > viewHeight) viewWidth else viewHeight
-                    viewHeight = if (viewWidth > viewHeight) viewWidth else viewHeight
-                }
             }
         } else {
             //不显示数据，显示红点的情况
