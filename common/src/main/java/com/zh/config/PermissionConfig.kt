@@ -69,4 +69,13 @@ object PermissionConfig {
     val contacts = listOf(
         android.Manifest.permission.READ_CONTACTS
     )
+
+    /**
+     * 录音权限
+     */
+    val audio = listOf(
+        android.Manifest.permission.RECORD_AUDIO,
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
 }

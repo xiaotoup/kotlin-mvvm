@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.PhoneUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.kotlin_mvvm.R
+import kotlinx.android.synthetic.main.activity_test.*
 import kotlinx.coroutines.*
 import kotlin.concurrent.thread
 
@@ -18,6 +17,21 @@ class TestActivity(
 ) : BaseActivity<ViewDataBinding, NormalViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {
+        button11.setOnClickListener {
+            bgv.setNumber(bgv.getNumber() + 1)
+        }
+        button12.setOnClickListener {
+            bgv.setNumber(bgv.getNumber() - 1)
+        }
+        button13.setOnClickListener {
+            if (button13.text.equals("有数字")){
+                bgv.setShowNumber(false)
+                button13.text = "无数字"
+            } else {
+                bgv.setShowNumber(true)
+                button13.text = "有数字"
+            }
+        }
 
         GlobalScope.apply {
             val launch = launch {
@@ -27,13 +41,13 @@ class TestActivity(
                 }
             }
         }
-       /* GlobalScope.launch {
-            LogUtils.a("111111111111111-" + Thread.currentThread().name)
-            delay(2000)
-            LogUtils.a("222222222222222-" + Thread.currentThread().name)
-//            testJoin()
-        }
-        LogUtils.a("3333333333333333-" + Thread.currentThread().name)*/
+        /* GlobalScope.launch {
+             LogUtils.a("111111111111111-" + Thread.currentThread().name)
+             delay(2000)
+             LogUtils.a("222222222222222-" + Thread.currentThread().name)
+ //            testJoin()
+         }
+         LogUtils.a("3333333333333333-" + Thread.currentThread().name)*/
 //      test()
         initData()
     }

@@ -159,4 +159,14 @@ interface JumpActivity : CustomAdapt {
                 }
             }).request()
     }
+
+    /**
+     * 请求权限
+     * @param permission 在PermissionConfig里有示例列出
+     * @param callBack 回调
+     */
+    fun requestPermission(permission: List<String>, callBack: PermissionUtils.SimpleCallback) {
+        PermissionUtils.permission(*permission.toTypedArray())
+            .callback(callBack).request()
+    }
 }

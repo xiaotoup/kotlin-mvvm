@@ -1,13 +1,13 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
 import com.zh.common.base.viewmodel.NormalViewModel
@@ -47,21 +47,29 @@ class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
             startActivity(TestWxPayActivity::class.java)
         }
         btnALiPay.setOnClickListener {
-            requestPermission(PermissionConfig.camera)
+            startActivity(TestALiPayActivity::class.java)
         }
         btnPicture.setOnClickListener {
             startActivity(PictureActivity::class.java)
         }
         btnPopupWindow.setOnClickListener {
+            if (DoubleUtils.isFastDoubleClick()) return@setOnClickListener
             BasePopWindow(this)
-                .createView(R.layout.layout_pop, ScreenUtils.getScreenWidth(), SizeUtils.dp2px(400f))
+                .createView(
+                    R.layout.layout_pop,
+                    ScreenUtils.getScreenWidth(),
+                    SizeUtils.dp2px(400f)
+                )
                 .showAsDropDown(btnPopupWindow, -10, 10)
+        }
+        btnAudio.setOnClickListener {
+            requestPermission(PermissionConfig.audio)
         }
     }
 
     override fun onPermissionGranted() {
         super.onPermissionGranted()
-        startActivity(TestALiPayActivity::class.java)
+        startActivity(AudioActivity::class.java)
     }
 
     fun clickTest(view: View) {

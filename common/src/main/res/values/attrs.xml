@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--阴影-->
     <declare-styleable name="ShadowContainer">
         <attr name="sc_containerShadowColor" format="color" />
         <attr name="sc_containerShadowRadius" format="dimension" />
@@ -9,8 +10,21 @@
         <attr name="sc_deltaY" format="dimension" />
         <attr name="sc_enable" format="boolean" />
     </declare-styleable>
+    <!--LoadingDialog-->
     <declare-styleable name="LoadingView">
         <attr name="loading_view_color" format="color" />
         <attr name="loading_view_size" format="dimension" />
+    </declare-styleable>
+    <!--角标:number默认最大99-->
+    <declare-styleable name="BadgeView">
+        <attr name="bv_show_number" format="boolean" />
+        <attr name="bv_no_text_width" format="dimension" />
+        <attr name="bv_max_number" format="integer" />
+        <attr name="bv_text" format="string" />
+        <attr name="bv_textSize" format="dimension" />
+        <attr name="bv_textColor" format="color" />
+        <attr name="bv_backgroundColor" format="color" />
+        <attr name="bv_padding_left_right" format="dimension" />
+        <attr name="bv_padding_top_bottom" format="dimension" />
     </declare-styleable>
 </resources>
