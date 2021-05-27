@@ -29,6 +29,8 @@ class BadgeView @JvmOverloads constructor(
 
     private var viewWidth = 0f
     private var viewHeight = 0f
+    private var textWidth = 0f
+    private var textHeight = 0f
 
     init {
         val typedArray =
@@ -65,26 +67,22 @@ class BadgeView @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        //当数据为空的时候，不显示任何东西
-        if (textString.equals("") || textString.equals("0")) {
-            viewWidth = 0f
-            viewHeight = 0f
-        } else {
-            //有数字的时候
-            if (isShowNumber) {
-                textString?.let {
-                    viewWidth = measureText().width() + paddingLeftRight * 2
-                    viewHeight = measureText().height() + paddingTopBottom * 2
-                    if (it.length == 1) {
-                        viewWidth = if (viewWidth > viewHeight) viewWidth else viewHeight
-                        viewHeight = if (viewWidth > viewHeight) viewWidth else viewHeight
-                    }
+        //有数字的时候
+        if (isShowNumber) {
+            textString?.let {
+                textWidth = measureText().width().toFloat()
+                textHeight = measureText().height().toFloat()
+                viewWidth = textWidth + paddingLeftRight * 2
+                viewHeight = textHeight + paddingTopBottom * 2
+                if (it.length == 1) {
+                    viewWidth = if (viewWidth > viewHeight) viewWidth else viewHeight
+                    viewHeight = if (viewWidth > viewHeight) viewWidth else viewHeight
                 }
-            } else {
-                //不显示数据，显示红点的情况
-                viewWidth = noTextWidth
-                viewHeight = noTextWidth
             }
+        } else {
+            //不显示数据，显示红点的情况
+            viewWidth = noTextWidth
+            viewHeight = noTextWidth
         }
         setMeasuredDimension(viewWidth.toInt(), viewHeight.toInt())
     }
@@ -108,8 +106,9 @@ class BadgeView @JvmOverloads constructor(
                     if (it.length == 1) {
                         //画圆
                         mPaint.color = backgroundColors
-                        rectF = RectF(0f, 0f, viewHeight, viewHeight)
-                        canvas?.drawCircle(viewHeight / 2, viewHeight / 2, viewHeight / 2, mPaint)
+                        val width = textHeight + paddingTopBottom * 2
+                        rectF = RectF(0f, 0f, width, width)
+                        canvas?.drawCircle(width / 2, width / 2, width / 2, mPaint)
                     } else {
                         //画椭圆
                         mPaint.color = backgroundColors

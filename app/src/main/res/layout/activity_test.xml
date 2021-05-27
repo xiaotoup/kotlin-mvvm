@@ -29,8 +29,8 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:bv_text="1"
-                app:bv_textSize="10sp"/>
+                app:bv_text="2"
+                app:bv_textSize="11sp"/>
 
             <Button
                 android:id="@+id/button11"
