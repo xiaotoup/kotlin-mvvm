@@ -108,7 +108,8 @@ class BadgeView @JvmOverloads constructor(
                         mPaint.color = backgroundColors
                         val width = textHeight + paddingTopBottom * 2
                         rectF = RectF(0f, 0f, width, width)
-                        canvas?.drawCircle(width / 2, width / 2, width / 2, mPaint)
+                        val radius = width / 2
+                        canvas?.drawCircle(radius, radius, radius, mPaint)
                     } else {
                         //画椭圆
                         mPaint.color = backgroundColors
