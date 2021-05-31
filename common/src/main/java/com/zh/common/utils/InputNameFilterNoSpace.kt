@@ -14,7 +14,7 @@ class InputNameFilterNoSpace : InputFilter {
 
     //限制表情符号 不限制空格
     private var pattern = Pattern.compile(
-        "[^\\u4E00-\\u9FA5|\\d|\\a-zA-Z|\\r\\n\\s,.?!，。？！…—&$=()-+/*{}[\\]]|\\s/g]"
+        "[^a-zA-Z_.()\\s\\u4E00-\\u9FA5]"
     )
 
     constructor() {}
