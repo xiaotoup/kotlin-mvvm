@@ -93,16 +93,12 @@ class TitleBarView @JvmOverloads constructor(
         //左边图片是否可见
         if (typedArray.hasValue(R.styleable.TitleBarView_tb_leftImageDrawable)) {
             mLeftDrawable = typedArray.getDrawable(R.styleable.TitleBarView_tb_leftImageDrawable)
-            mLeftImage?.apply {
-                this.setImageDrawable(mLeftDrawable)
-                this.visibility = View.VISIBLE
-                this.setOnClickListener {
-                    if (DoubleUtils.isFastDoubleClick()) return@setOnClickListener
-                    (getContext() as Activity).finish()
-                }
-            }
+            setLeftImage()
         } else {
             mLeftImage?.visibility = View.GONE
+            if (mLeftImage?.drawable?.current?.constantState != null) {
+                setLeftImage()
+            }
         }
 
         //右边图片是否可见
@@ -193,6 +189,17 @@ class TitleBarView @JvmOverloads constructor(
             setTitleBarBackground(mTitleBarBackground)
         }
         typedArray.recycle()
+    }
+
+    private fun setLeftImage(){
+        mLeftImage?.apply {
+            visibility = View.VISIBLE
+            setImageDrawable(mLeftDrawable)
+            setOnClickListener {
+                if (DoubleUtils.isFastDoubleClick()) return@setOnClickListener
+                (context as Activity).finish()
+            }
+        }
     }
 
     /**
