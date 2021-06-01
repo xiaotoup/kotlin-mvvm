@@ -18,7 +18,7 @@ class LoadingDialog(context: Context) :
     private val myRunnable = MyRunnable(getContext(), this)
 
     init {
-        setCancelable(false)
+        setCancelable(true)
         setCanceledOnTouchOutside(false)
     }
 
