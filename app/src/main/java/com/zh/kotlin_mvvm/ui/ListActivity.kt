@@ -3,6 +3,7 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils

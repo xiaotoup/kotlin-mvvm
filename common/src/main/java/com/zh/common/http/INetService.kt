@@ -2,6 +2,7 @@ package com.zh.common.http
 
 import com.zh.common.base.bean.BaseResponse
 import io.reactivex.Observable
+import kotlinx.coroutines.Deferred
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
@@ -45,4 +46,6 @@ interface INetService {
         @Url url: String,
         @Body description: RequestBody
     ): Observable<String>
+
+    fun  getd() : Deferred<BaseResponse<String>>
 }

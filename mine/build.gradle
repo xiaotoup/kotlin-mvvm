@@ -1,4 +1,4 @@
-if (!isNeedMineModule.toBoolean()) {
+if (singleModule.toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
@@ -12,7 +12,7 @@ android {
     buildToolsVersion rootProject.ext.android["buildToolsVersion"]
 
     defaultConfig {
-        if (!isNeedMineModule.toBoolean()) {
+        if (singleModule.toBoolean()) {
             applicationId "com.zh.module_mine"
         }
         minSdkVersion rootProject.ext.android["minSdkVersion"]

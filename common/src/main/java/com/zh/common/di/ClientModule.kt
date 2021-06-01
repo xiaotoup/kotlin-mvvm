@@ -13,10 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
-import java.io.InputStream
 import java.net.Proxy
 import java.util.concurrent.TimeUnit
 
@@ -232,7 +229,7 @@ class ClientModule private constructor() {
      *
      * @return
      */
-   private val cacheFilePath: String
+    private val cacheFilePath: String
         get() {
             val packageName = BaseApplication.getApplication().packageName
             return "/mnt/sdcard/$packageName"

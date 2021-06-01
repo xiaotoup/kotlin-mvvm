@@ -85,19 +85,11 @@ dependencies {
     kapt "com.android.databinding:compiler:$compiler_version"
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
-    if (isNeedHomeModule.toBoolean()) {
+    if (!singleModule.toBoolean()) {
         implementation project(path: ':home')
-    }
-    if (isNeedFoundModule.toBoolean()) {
         implementation project(path: ':found')
-    }
-    if (isNeedNewsModule.toBoolean()) {
         implementation project(path: ':news')
-    }
-    if (isNeedMineModule.toBoolean()) {
         implementation project(path: ':mine')
-    }
-    if (isNeedLoginModule.toBoolean()) {
         implementation project(path: ':login')
     }
 }
