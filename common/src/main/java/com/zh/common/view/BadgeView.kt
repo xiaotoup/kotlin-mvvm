@@ -135,10 +135,14 @@ class BadgeView @JvmOverloads constructor(
      * 设置数字
      */
     fun setNumber(number: Int) {
-        if (textString != null || number.toString().length == textString!!.length) {
-            invalidate()
-        } else {
+        if (textString == null){
             requestLayout()
+        } else {
+            if (textString != null || number.toString().length == textString!!.length) {
+                invalidate()
+            } else {
+                requestLayout()
+            }
         }
         if (number <= 0) {
             textString = "0"
