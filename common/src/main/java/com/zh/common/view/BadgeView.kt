@@ -19,7 +19,7 @@ class BadgeView @JvmOverloads constructor(
     private val mPaint: Paint = Paint()
     private var isShowNumber: Boolean//是否显示文字
     private var noTextWidth: Float//没有文字时候的红点宽度
-    private var textString: String? = "0"//文字
+    private var textString: String?//文字
     private var textColor: Int//文字颜色
     private var textSize: Float//文字大小
     private var backgroundColors: Int//背景色
@@ -56,6 +56,9 @@ class BadgeView @JvmOverloads constructor(
             SizeUtils.dp2px(3f).toFloat()
         )
         maxNumber = typedArray.getInt(R.styleable.BadgeView_bv_max_number, 99)
+        if (textString == null) {
+            textString = "0"
+        }
 
         //画笔设置
         mPaint.isAntiAlias = true
@@ -135,7 +138,7 @@ class BadgeView @JvmOverloads constructor(
      * 设置数字
      */
     fun setNumber(number: Int) {
-        if (textString == null){
+        if (textString == null) {
             requestLayout()
         } else {
             if (textString != null || number.toString().length == textString!!.length) {
