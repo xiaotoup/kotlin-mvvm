@@ -19,7 +19,7 @@ class BadgeView @JvmOverloads constructor(
     private val mPaint: Paint = Paint()
     private var isShowNumber: Boolean//是否显示文字
     private var noTextWidth: Float//没有文字时候的红点宽度
-    private var textString: String?//文字
+    private var textString: String? = "0"//文字
     private var textColor: Int//文字颜色
     private var textSize: Float//文字大小
     private var backgroundColors: Int//背景色
