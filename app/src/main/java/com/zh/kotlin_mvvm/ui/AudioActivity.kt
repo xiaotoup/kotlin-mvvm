@@ -1,24 +1,17 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.media.AudioFormat
-import android.media.AudioRecord
-import android.media.MediaRecorder
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import androidx.databinding.ViewDataBinding
 import com.zh.common.base.BaseActivity
+import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.kotlin_mvvm.R
 import kotlinx.android.synthetic.main.activity_audio.*
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
-import java.nio.file.Files.createFile
 
 class AudioActivity(
-    override val layoutRes: Int = R.layout.activity_audio
+    override val layoutRes: Int = R.layout.activity_audio,
+    override val viewModel: BaseViewModel = NormalViewModel()
 ) : BaseActivity<ViewDataBinding>() {
 
     // 采样率，现在能够保证在所有设备上使用的采样率是44100Hz, 但是其他的采样率（22050, 16000, 11025）在一些设备上也可以使用。

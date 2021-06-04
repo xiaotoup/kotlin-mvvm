@@ -11,6 +11,7 @@ import com.alipay.sdk.app.PayTask
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.zh.common.base.BaseActivity
+import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.bean.AliPlayResult
@@ -19,7 +20,8 @@ import kotlinx.android.synthetic.main.activity_test_a_li_pay.*
 
 
 class TestALiPayActivity(
-    override val layoutRes: Int = R.layout.activity_test_a_li_pay
+    override val layoutRes: Int = R.layout.activity_test_a_li_pay,
+    override val viewModel: BaseViewModel = NormalViewModel()
 ) : BaseActivity<ViewDataBinding>() {
 
     private val SDK_PAY_FLAG = 117

@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseActivity
+import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.kotlin_mvvm.R
 import kotlinx.android.synthetic.main.activity_test.*
@@ -12,7 +13,8 @@ import kotlinx.coroutines.*
 import kotlin.concurrent.thread
 
 class TestActivity(
-    override val layoutRes: Int = R.layout.activity_test
+    override val layoutRes: Int = R.layout.activity_test,
+    override val viewModel: BaseViewModel = BaseViewModel()
 ) : BaseActivity<ViewDataBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {

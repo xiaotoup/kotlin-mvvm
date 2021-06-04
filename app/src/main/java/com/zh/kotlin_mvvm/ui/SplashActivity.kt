@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
+import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.config.PermissionConfig
 import com.zh.config.ZjConfig
@@ -20,6 +21,9 @@ import kotlinx.android.synthetic.main.activity_splash.*
 class SplashActivity : BaseActivity<ViewDataBinding>() {
 
     override val layoutRes = R.layout.activity_splash
+
+    override val viewModel: BaseViewModel
+        get() = NormalViewModel()
 
     override fun initView(savedInstanceState: Bundle?) {
         ToastUtils.showShort("启动了")
