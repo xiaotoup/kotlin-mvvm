@@ -10,8 +10,7 @@ import kotlinx.android.synthetic.main.activity_picture.*
 
 class PictureActivity(
     override val layoutRes: Int = R.layout.activity_picture,
-    override val viewModel: NormalViewModel = NormalViewModel()
-) : BaseActivity<ViewDataBinding, NormalViewModel>() {
+) : BaseActivity<ViewDataBinding>() {
 
     private lateinit var pictureFragment: PictureFragment
 

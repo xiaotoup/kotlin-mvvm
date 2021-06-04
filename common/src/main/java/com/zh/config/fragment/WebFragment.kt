@@ -20,8 +20,7 @@ import kotlinx.android.synthetic.main.fragment_web.*
  */
 class WebFragment(
     override val layoutRes: Int = R.layout.fragment_web,
-    override val viewModel: NormalViewModel = NormalViewModel()
-) : BaseFragment<ViewDataBinding, NormalViewModel>() {
+) : BaseFragment<ViewDataBinding>() {
 
     private var mAgentWeb: AgentWeb? = null
     private var mScrollView: NestedScrollView? = null

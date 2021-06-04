@@ -13,12 +13,10 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 
 @Route(path = ZjConfig.LoginActivity)
-class LoginActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
+class LoginActivity : BaseActivity<ViewDataBinding>() {
 
     override val layoutRes: Int
         get() = R.layout.activity_login
-
-    override val viewModel: NormalViewModel = NormalViewModel()
 
     override val onBindVariableId: Int
         get() = 0

@@ -36,9 +36,8 @@ import java.util.*
  * 公用图片选择
  */
 class PictureFragment(
-    override val layoutRes: Int = R.layout.fragment_picture,
-    override val viewModel: NormalViewModel = NormalViewModel()
-) : BaseFragment<ViewDataBinding, NormalViewModel>() {
+    override val layoutRes: Int = R.layout.fragment_picture
+) : BaseFragment<ViewDataBinding>() {
 
     private var isShowAdd = true //是否显示添加图片按钮
     private val margin = SizeUtils.dp2px(5f)

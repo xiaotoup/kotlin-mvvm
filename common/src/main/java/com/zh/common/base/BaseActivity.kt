@@ -16,6 +16,7 @@ import com.luck.picture.lib.tools.DoubleUtils
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
+import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.utils.JumpActivity
 import com.zh.common.utils.LanguageUtil
 
@@ -24,11 +25,9 @@ import com.zh.common.utils.LanguageUtil
  * @time 2020/10/7 - 15:21
  * @desc Activity基类，MVVM架构
  */
-abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel> :
-    RxAppCompatActivity(), JumpActivity {
+abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), JumpActivity {
 
     lateinit var binding: BINDING
-    var mViewModel: VM? = null
     private var viewModelId = 0
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
     private var mApplication: BaseApplication? = null
@@ -50,7 +49,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel> :
 
     private fun initViewDataBinding() {
         if (layoutRes != 0) binding = DataBindingUtil.setContentView(this, layoutRes)
-        mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
+        val mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)
@@ -60,8 +59,8 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel> :
 
     @get:LayoutRes
     abstract val layoutRes: Int
-    abstract val viewModel: VM
-    open val onBindVariableId: Int = 0
+    open val viewModel: BaseViewModel = NormalViewModel()
+    open val onBindVariableId = 0
     abstract fun initView(savedInstanceState: Bundle?)
 
     override fun onDestroy() {

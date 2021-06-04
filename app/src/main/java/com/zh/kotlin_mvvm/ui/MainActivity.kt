@@ -6,6 +6,7 @@ import androidx.databinding.ObservableField
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ScreenUtils
 import com.zh.common.base.BaseActivity
+import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.BR
 import com.zh.kotlin_mvvm.R
@@ -15,10 +16,10 @@ import com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel
 @Route(path = ZjConfig.MainActivity)
 class MainActivity(
     override val layoutRes: Int = R.layout.activity_main,
-    override val viewModel: MainViewModel = MainViewModel(),
     override val onBindVariableId: Int = BR.viewModel
-) : BaseActivity<ActivityMainBinding, MainViewModel>() {
+) : BaseActivity<ActivityMainBinding>() {
 
+    override val viewModel = MainViewModel()
     var sid = ObservableField<String>("iiiii")
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class MainActivity(
             "pwd" to "123456",
             "loginType" to "PASSWORD"
         )
-        mViewModel?.doLogin(map);
+        viewModel.doLogin(map);
     }
 
     fun back(view: View) {

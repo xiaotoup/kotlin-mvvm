@@ -17,11 +17,9 @@ import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
 import kotlinx.android.synthetic.main.activity_splash.*
 
-class SplashActivity : BaseActivity<ViewDataBinding, NormalViewModel>() {
+class SplashActivity : BaseActivity<ViewDataBinding>() {
 
     override val layoutRes = R.layout.activity_splash
-
-    override val viewModel: NormalViewModel = NormalViewModel()
 
     override fun initView(savedInstanceState: Bundle?) {
         ToastUtils.showShort("启动了")

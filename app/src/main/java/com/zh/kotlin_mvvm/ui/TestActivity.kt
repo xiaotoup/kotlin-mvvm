@@ -12,9 +12,8 @@ import kotlinx.coroutines.*
 import kotlin.concurrent.thread
 
 class TestActivity(
-    override val layoutRes: Int = R.layout.activity_test,
-    override val viewModel: NormalViewModel = NormalViewModel()
-) : BaseActivity<ViewDataBinding, NormalViewModel>() {
+    override val layoutRes: Int = R.layout.activity_test
+) : BaseActivity<ViewDataBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         button11.setOnClickListener {

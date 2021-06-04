@@ -7,6 +7,8 @@ import com.blankj.utilcode.util.ToastUtils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
+import com.zh.common.base.viewmodel.BaseViewModel
+import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.adapter.ListAdapter
@@ -20,10 +22,10 @@ import kotlinx.android.synthetic.main.activity_list.*
  * @desc DataBinding 与 recyclerView适配器 绑定的示例
  */
 @Route(path = ZjConfig.ListActivity)
-class ListActivity(
-    override val layoutRes: Int = R.layout.activity_list,
-    override val viewModel: ListViewModel = ListViewModel()
-) : BaseActivity<ViewDataBinding, ListViewModel>() {
+class ListActivity(override val layoutRes: Int = R.layout.activity_list) :
+    BaseActivity<ViewDataBinding>() {
+
+    override val viewModel = ListViewModel()
 
     override val navigationBarColor: Int = R.color.colorPrimary
     override val statusBarColor: Int = R.color.colorPrimary

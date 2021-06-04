@@ -21,24 +21,24 @@ import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
+import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.utils.JumpActivity
 
 
-abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel> :
+abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
     DialogFragment(), JumpActivity {
 
     private val TAG = "BaseDialogFragment"
     lateinit var binding: BINDING
-    var mViewModel: VM? = null
     private var viewModelId = 0
     private var rootView: View? = null
     lateinit var mContext: Context
 
     @get:LayoutRes
     abstract val layoutRes: Int
-    abstract val viewModel: VM
     abstract val marginWidth: Int//dialog到两边的距离,设置一边的距离即可
-    open val onBindVariableId: Int = 0
+    open val viewModel: BaseViewModel = NormalViewModel()
+    open val onBindVariableId = 0
     abstract fun initView(savedInstanceState: Bundle?, view: View)
 
     override fun onAttach(context: Context) {
@@ -109,7 +109,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel>
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
             DataBindingUtil.inflate(inflater, layoutRes, container, false)
-        mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
+        val mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)

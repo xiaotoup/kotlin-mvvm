@@ -18,9 +18,8 @@ import java.io.IOException
 import java.nio.file.Files.createFile
 
 class AudioActivity(
-    override val layoutRes: Int = R.layout.activity_audio,
-    override val viewModel: NormalViewModel = NormalViewModel()
-) : BaseActivity<ViewDataBinding, NormalViewModel>() {
+    override val layoutRes: Int = R.layout.activity_audio
+) : BaseActivity<ViewDataBinding>() {
 
     // 采样率，现在能够保证在所有设备上使用的采样率是44100Hz, 但是其他的采样率（22050, 16000, 11025）在一些设备上也可以使用。
     public val SAMPLE_RATE_INHZ = 44100

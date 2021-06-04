@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.activity_test_wx_pay.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
-class TestWxPayActivity : BaseActivity<ViewDataBinding, TestWxPayViewModel>() {
+class TestWxPayActivity : BaseActivity<ViewDataBinding>() {
 
     override val layoutRes: Int = R.layout.activity_test_wx_pay
-    override val viewModel: TestWxPayViewModel = TestWxPayViewModel()
+    override val viewModel = TestWxPayViewModel()
 
     private var msgApi: IWXAPI? = null
 

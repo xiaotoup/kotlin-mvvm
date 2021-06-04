@@ -17,6 +17,7 @@ import com.luck.picture.lib.tools.DoubleUtils
 import com.trello.rxlifecycle2.components.support.RxFragment
 import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
+import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.immersion.ImmersionOwner
 import com.zh.common.immersion.ImmersionProxy
 import com.zh.common.utils.JumpActivity
@@ -26,11 +27,10 @@ import com.zh.common.utils.JumpActivity
  * @time 2020/10/7 - 15:21
  * @desc Fragment基类，MVVM架构
  */
-abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel> : RxFragment(),
+abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
     JumpActivity, ImmersionOwner {
 
     lateinit var binding: BINDING
-    private var mViewModel: VM? = null
     private var viewModelId = 0
     private var rootView: View? = null
     private lateinit var mContext: Context
@@ -88,7 +88,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel> : RxF
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
             DataBindingUtil.inflate(inflater, layoutRes, container, false)
-        mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
+        val mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)
@@ -98,8 +98,8 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel> : RxF
 
     @get:LayoutRes
     abstract val layoutRes: Int
-    abstract val viewModel: VM
-    open val onBindVariableId: Int = 0
+    open val viewModel: BaseViewModel = NormalViewModel()
+    open val onBindVariableId = 0
     abstract fun initView(savedInstanceState: Bundle?)
 
     open fun getRootView(): View? = rootView

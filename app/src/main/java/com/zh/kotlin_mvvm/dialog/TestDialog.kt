@@ -9,9 +9,8 @@ import com.zh.kotlin_mvvm.R
 
 class TestDialog(
     override val layoutRes: Int = R.layout.dialog_test,
-    override val viewModel: NormalViewModel = NormalViewModel(),
     override val marginWidth: Int = 30,
-) : BaseDialogFragment<ViewDataBinding, NormalViewModel>() {
+) : BaseDialogFragment<ViewDataBinding>() {
 
     override fun initView(savedInstanceState: Bundle?, view: View) {
 
