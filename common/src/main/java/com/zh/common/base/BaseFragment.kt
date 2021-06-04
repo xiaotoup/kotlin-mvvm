@@ -31,7 +31,6 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
     JumpActivity, ImmersionOwner {
 
     lateinit var binding: BINDING
-    private var viewModelId = 0
     private var rootView: View? = null
     private lateinit var mContext: Context
 
@@ -89,7 +88,6 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
         if (layoutRes != 0) binding =
             DataBindingUtil.inflate(inflater, layoutRes, container, false)
         val mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
-        viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
@@ -99,7 +97,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
     @get:LayoutRes
     abstract val layoutRes: Int
     open val viewModel: BaseViewModel = NormalViewModel()
-    open val onBindVariableId = 0
+    open val viewModelId = 0
     abstract fun initView(savedInstanceState: Bundle?)
 
     open fun getRootView(): View? = rootView

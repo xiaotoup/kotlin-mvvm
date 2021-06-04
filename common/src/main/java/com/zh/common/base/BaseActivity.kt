@@ -28,7 +28,6 @@ import com.zh.common.utils.LanguageUtil
 abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), JumpActivity {
 
     lateinit var binding: BINDING
-    private var viewModelId = 0
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
     private var mApplication: BaseApplication? = null
 
@@ -50,7 +49,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), 
     private fun initViewDataBinding() {
         if (layoutRes != 0) binding = DataBindingUtil.setContentView(this, layoutRes)
         val mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
-        viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
@@ -60,7 +58,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), 
     @get:LayoutRes
     abstract val layoutRes: Int
     open val viewModel: BaseViewModel = NormalViewModel()
-    open val onBindVariableId = 0
+    open val viewModelId = 0
     abstract fun initView(savedInstanceState: Bundle?)
 
     override fun onDestroy() {
