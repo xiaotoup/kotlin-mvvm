@@ -12,8 +12,7 @@ import com.zh.kotlin_mvvm.net.bean.LoginBean
 class ListViewModel : BaseViewModel() {
 
     fun onDoNet(recyclerView: XRecyclerView, list: MutableList<ListBean>) {
-        val iNetService = this.getINetService<INetService>(INetService::class.java)
-        doNetRequest(iNetService.login(
+        doNetRequest(apiService<INetService>().login(
             BaseMapToBody.convertMapToBody(
                 mapOf("ss" to "sa")
             )

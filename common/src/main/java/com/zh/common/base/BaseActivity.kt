@@ -19,7 +19,6 @@ import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.utils.JumpActivity
 import com.zh.common.utils.LanguageUtil
 
-
 /**
  * @auth xiaohua
  * @time 2020/10/7 - 15:21
@@ -33,7 +32,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel> :
     private var viewModelId = 0
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
     private var mApplication: BaseApplication? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

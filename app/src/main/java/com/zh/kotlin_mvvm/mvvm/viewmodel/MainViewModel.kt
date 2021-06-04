@@ -34,19 +34,18 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun doLogin(map: Map<String, Any>) {
-        doNetRequest(getINetService<INetService>(INetService::class.java).login(
-            BaseMapToBody.convertMapToBody(map)
-        ), object : BaseObserver<LoginBean>(true) {
+        doNetRequest(apiService<INetService>().login(BaseMapToBody.convertMapToBody(map)),
+            object : BaseObserver<LoginBean>(true) {
 
-            override fun onISuccess(message: String, response: LoginBean) {
-                sid.set(response.bussData)
-                ToastUtils.showShort("code=${message}")
-            }
+                override fun onISuccess(message: String, response: LoginBean) {
+                    sid.set(response.bussData)
+                    ToastUtils.showShort("code=${message}")
+                }
 
-            override fun onIError(e: ApiException) {
-                sid.set(e.message)
-                ToastUtils.showShort("code=${e.message}")
-            }
-        })
+                override fun onIError(e: ApiException) {
+                    sid.set(e.message)
+                    ToastUtils.showShort("code=${e.message}")
+                }
+            })
     }
 }

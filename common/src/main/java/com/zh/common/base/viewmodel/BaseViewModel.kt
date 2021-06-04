@@ -45,10 +45,10 @@ open class BaseViewModel : AndroidViewModel(BaseApplication.getApplication()) {
     }
 
     /**
-     * 同步调用
+     * 实例化网络请求
      */
-    fun <T> getINetService(service: Class<*>): T {
-        return ClientModule.instance.netRequest(service)
+    inline fun <reified T : Any> apiService(): T {
+        return ClientModule.instance.netRequest(T::class.java)
     }
 
     /**
