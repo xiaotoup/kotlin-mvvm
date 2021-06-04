@@ -47,9 +47,7 @@ open class BaseViewModel : AndroidViewModel(BaseApplication.getApplication()) {
     /**
      * 实例化网络请求
      */
-    inline fun <reified T : Any> apiService(): T {
-        return ClientModule.instance.netRequest(T::class.java)
-    }
+    inline fun <reified T : Any> apiService(): T = ClientModule.instance.netRequest(T::class.java)
 
     /**
      * 公用的网络请求发起的操作
