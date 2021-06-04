@@ -22,7 +22,7 @@ class LoginActivity : BaseActivity<ViewDataBinding>() {
     override val viewModel: BaseViewModel
         get() = NormalViewModel()
 
-    override val onBindVariableId: Int
+    override val viewModelId: Int
         get() = 0
 
     override fun initView(savedInstanceState: Bundle?) {

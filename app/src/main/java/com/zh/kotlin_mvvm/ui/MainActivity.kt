@@ -17,7 +17,7 @@ import com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel
 class MainActivity(
     override val layoutRes: Int = R.layout.activity_main,
     override val viewModel:MainViewModel = MainViewModel(),
-    override val onBindVariableId: Int = BR.viewModel
+    override val viewModelId: Int = BR.viewModel
 ) : BaseActivity<ActivityMainBinding>() {
 
     var sid = ObservableField<String>("iiiii")
