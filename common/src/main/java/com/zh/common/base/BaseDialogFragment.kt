@@ -24,7 +24,7 @@ import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.utils.JumpActivity
 
 
-abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
+abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel> :
     DialogFragment(), JumpActivity {
 
     private val TAG = "BaseDialogFragment"
@@ -108,13 +108,11 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
 
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
-            DataBindingUtil.inflate<BINDING>(inflater, layoutRes, container, false)
+            DataBindingUtil.inflate(inflater, layoutRes, container, false)
         mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)
-        //让ViewModel拥有View的生命周期感应
-        mViewModel?.let { lifecycle.addObserver(it) }
         //支持LiveData绑定xml，数据改变，UI自动会更新
         binding?.lifecycleOwner = this
     }
@@ -147,7 +145,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding, VM : BaseViewModel<
     override fun onDestroy() {
         super.onDestroy()
         binding?.unbind()
-        mViewModel?.let { lifecycle.removeObserver(it) }
         dialog?.dismiss()
     }
 

@@ -1,12 +1,9 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.Utils
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
@@ -23,13 +20,13 @@ import kotlinx.android.synthetic.main.activity_list.*
  * @desc DataBinding 与 recyclerView适配器 绑定的示例
  */
 @Route(path = ZjConfig.ListActivity)
-class ListActivity : BaseActivity<ViewDataBinding, ListViewModel>() {
-
-    override val layoutRes = R.layout.activity_list
+class ListActivity(
+    override val layoutRes: Int = R.layout.activity_list,
     override val viewModel: ListViewModel = ListViewModel()
+) : BaseActivity<ViewDataBinding, ListViewModel>() {
+
     override val navigationBarColor: Int = R.color.colorPrimary
     override val statusBarColor: Int = R.color.colorPrimary
-
     private var listData: MutableList<ListBean> = mutableListOf()
     private val mAdapter by lazy {
         ListAdapter()

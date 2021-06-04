@@ -1,53 +1,65 @@
 package com.zh.common.base.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleOwner
-import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseApplication
-import com.zh.common.base.model.BaseModel
+import com.zh.common.base.BaseObserver
+import com.zh.common.base.bean.BaseResponse
+import com.zh.common.di.ClientModule
+import com.zh.common.exception.ResponseTransformer
+import com.zh.common.schedulers.SchedulerProvider
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 /**
  * @auth xiaohua
  * @time 2020/10/8 - 10:02
  * @desc ViewModel基类
  */
-open class BaseViewModel<MODEL : BaseModel<*>>(model: MODEL) :
-    AndroidViewModel(BaseApplication.getApplication()), IBaseViewModel {
+open class BaseViewModel : AndroidViewModel(BaseApplication.getApplication()) {
 
     var pageIndex = 1
     var pageSize = 10
-    val mModel: MODEL = model
+    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    @SuppressLint("StaticFieldLeak")
     val mAppContext: Context = getApplication<BaseApplication>().applicationContext
 
-    override fun onAny(owner: LifecycleOwner?, event: Lifecycle.Event?) {
-
+    //添加网络请求到CompositeDisposable
+    private fun addSubscribe(disposable: Disposable) {
+        mCompositeDisposable.also {
+            Log.e("--okhttp--", "disposable is add")
+            it.add(disposable)
+        }
     }
 
-    override fun onCreate() {
-
+    override fun onCleared() {
+        //解除网络请求
+        mCompositeDisposable.also {
+            Log.e("--okhttp--", "disposable is clear")
+            mCompositeDisposable.clear()
+        }
     }
 
-    override fun onStart() {
-
+    /**
+     * 同步调用
+     */
+    fun <T> getINetService(service: Class<*>): T {
+        return ClientModule.instance.netRequest(service)
     }
 
-    override fun onResume() {
-
-    }
-
-    override fun onPause() {
-
-    }
-
-    override fun onStop() {
-
-    }
-
-    override fun onDestroy() {
-        mModel.onCleared()
+    /**
+     * 公用的网络请求发起的操作
+     */
+    fun <R> doNetRequest(observable: Observable<out BaseResponse<R>>, observer: BaseObserver<R>) {
+        val subscribeWith = observable
+            .compose(ResponseTransformer.handleResult())
+            .compose(SchedulerProvider.instance.applySchedulers())
+            .subscribeWith(observer)
+        subscribeWith.getDisposable()?.let { addSubscribe(it) }
     }
 }
 

@@ -26,7 +26,7 @@ import com.zh.common.utils.JumpActivity
  * @time 2020/10/7 - 15:21
  * @desc Fragment基类，MVVM架构
  */
-abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : RxFragment(),
+abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel> : RxFragment(),
     JumpActivity, ImmersionOwner {
 
     lateinit var binding: BINDING
@@ -87,13 +87,11 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
 
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
-            DataBindingUtil.inflate<BINDING>(inflater, layoutRes, container, false)
+            DataBindingUtil.inflate(inflater, layoutRes, container, false)
         mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)
-        //让ViewModel拥有View的生命周期感应
-        mViewModel?.let { lifecycle.addObserver(it) }
         //支持LiveData绑定xml，数据改变，UI自动会更新
         binding?.lifecycleOwner = this
     }
@@ -128,7 +126,6 @@ abstract class BaseFragment<BINDING : ViewDataBinding, VM : BaseViewModel<*>> : 
         super.onDestroy()
         mImmersionProxy.onDestroy()
         binding?.unbind()
-        mViewModel?.let { lifecycle.removeObserver(it) }
     }
 
     /**

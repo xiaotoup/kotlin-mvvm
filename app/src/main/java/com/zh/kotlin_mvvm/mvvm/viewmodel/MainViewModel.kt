@@ -1,21 +1,18 @@
 package com.zh.kotlin_mvvm.mvvm.viewmodel
 
-import android.content.Context
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import com.blankj.utilcode.util.ToastUtils
+import com.zh.common.base.BaseMapToBody
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.exception.ApiException
-import com.zh.common.view.XRecyclerView
-import com.zh.common.view.listener.INetCallbackView
 import com.zh.kotlin_mvvm.R
-import com.zh.kotlin_mvvm.mvvm.model.MainModel
+import com.zh.kotlin_mvvm.net.INetService
 import com.zh.kotlin_mvvm.net.bean.LoginBean
-import io.reactivex.disposables.Disposable
 
-class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
+class MainViewModel : BaseViewModel() {
 
     var sid: ObservableField<String> = ObservableField("")
     var imgUrl: ObservableInt = ObservableInt()
@@ -37,7 +34,9 @@ class MainViewModel : BaseViewModel<MainModel>(MainModel()) {
     }
 
     fun doLogin(map: Map<String, Any>) {
-        mModel.onLogin(map, object : BaseObserver<LoginBean>(true) {
+        doNetRequest(getINetService<INetService>(INetService::class.java).login(
+            BaseMapToBody.convertMapToBody(map)
+        ), object : BaseObserver<LoginBean>(true) {
 
             override fun onISuccess(message: String, response: LoginBean) {
                 sid.set(response.bussData)

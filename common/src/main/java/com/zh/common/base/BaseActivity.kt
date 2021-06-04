@@ -25,7 +25,7 @@ import com.zh.common.utils.LanguageUtil
  * @time 2020/10/7 - 15:21
  * @desc Activity基类，MVVM架构
  */
-abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
+abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel> :
     RxAppCompatActivity(), JumpActivity {
 
     lateinit var binding: BINDING
@@ -33,6 +33,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
     private var viewModelId = 0
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
     private var mApplication: BaseApplication? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +56,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
         viewModelId = onBindVariableId
         //允许设置变量的值而不反映
         binding?.setVariable(viewModelId, mViewModel)
-        //让ViewModel拥有View的生命周期感应
-        mViewModel?.let { lifecycle.addObserver(it) }
         //支持LiveData绑定xml，数据改变，UI自动会更新
         binding?.lifecycleOwner = this
     }
@@ -71,7 +70,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding, VM : BaseViewModel<*>> :
         super.onDestroy()
         synchronized(BaseActivity::class.java) { mApplication?.getActivityList()?.remove(this) }
         binding?.unbind()
-        mViewModel?.let { lifecycle.removeObserver(it) }
     }
 
     /**

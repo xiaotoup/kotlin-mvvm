@@ -3,9 +3,8 @@ package com.zh.kotlin_mvvm.mvvm.viewmodel
 import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.zh.common.base.viewmodel.BaseViewModel
-import com.zh.kotlin_mvvm.mvvm.model.MainModel
 
-class TestWxPayViewModel : BaseViewModel<MainModel>(MainModel()) {
+class TestWxPayViewModel : BaseViewModel() {
 
     fun wxPay(
         appId: String,

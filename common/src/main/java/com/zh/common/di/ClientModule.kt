@@ -4,6 +4,7 @@ import android.os.Environment
 import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseApplication
 import com.zh.common.http.RequestIntercept
+import com.zh.common.http.LocalCookieJar
 import okhttp3.Cache
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -199,9 +200,12 @@ class ClientModule private constructor() {
         intercept: Interceptor
     ): OkHttpClient {
         val builder = okHttpClient
+            .callTimeout(TOME_OUT.toLong(), TimeUnit.SECONDS)
             .connectTimeout(TOME_OUT.toLong(), TimeUnit.SECONDS)
             .readTimeout(TOME_OUT.toLong(), TimeUnit.SECONDS)
+            .writeTimeout(TOME_OUT.toLong(), TimeUnit.SECONDS)
             .cache(cache) //设置缓存
+            .cookieJar(LocalCookieJar())
             .addNetworkInterceptor(intercept)
         return builder.build()
     }
