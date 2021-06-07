@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zh.kotlin_mvvm">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
-
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -12,7 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.AudioActivity"></activity>
         <activity android:name=".ui.PictureActivity" />
         <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.TestALiPayActivity" />

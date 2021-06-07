@@ -64,14 +64,6 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
                 )
                 .showAsDropDown(btnPopupWindow, -10, 10)
         }
-        btnAudio.setOnClickListener {
-            requestPermission(PermissionConfig.audio)
-        }
-    }
-
-    override fun onPermissionGranted() {
-        super.onPermissionGranted()
-        startActivity(AudioActivity::class.java)
     }
 
     fun clickTest(view: View) {
