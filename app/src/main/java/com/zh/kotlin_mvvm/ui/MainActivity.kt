@@ -40,6 +40,15 @@ class MainActivity(
         viewModel.doLogin(map);
     }
 
+    fun netLogin2(view: View) {
+        val map = mapOf<String, Any>(
+            "mobile" to "13648394964",
+            "pwd" to "123456",
+            "loginType" to "PASSWORD"
+        )
+        viewModel.doLogin2(map);
+    }
+
     fun back(view: View) {
         finish()
     }

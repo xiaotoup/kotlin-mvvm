@@ -34,7 +34,26 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun doLogin(map: Map<String, Any>) {
-        doNetRequest(apiService<INetService>().login(BaseMapToBody.convertMapToBody(map)),
+        val apiService = apiService<INetService>()
+        doNetRequest(apiService.login(BaseMapToBody.convertMapToBody(map)),
+            object : BaseObserver<LoginBean>(true) {
+
+                override fun onISuccess(message: String, response: LoginBean) {
+                    sid.set(response.bussData)
+                    ToastUtils.showShort("code=${message}")
+                }
+
+                override fun onIError(e: ApiException) {
+                    sid.set(e.message)
+                    ToastUtils.showShort("code=${e.message}")
+                }
+            })
+    }
+
+    fun doLogin2(map: Map<String, Any>) {
+        val host = "https://www.baidu.com"
+        val apiService = apiService<INetService>(host)
+        doNetRequest(apiService.login(BaseMapToBody.convertMapToBody(map)),
             object : BaseObserver<LoginBean>(true) {
 
                 override fun onISuccess(message: String, response: LoginBean) {

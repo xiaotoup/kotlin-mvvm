@@ -1,9 +1,7 @@
 package com.zh.common.di
 
-import android.content.Context
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.zh.common.base.BaseApplication
 import com.zh.common.base.BaseObserver
 import com.zh.common.exception.ApiException
 import com.zh.common.exception.ResponseTransformer
@@ -20,10 +18,10 @@ import java.net.URLConnection
  * 1、获取阿里云de上传与下载链接
  * 2、获取链接再调起阿里云的接口上传文件或下载文件
  */
-class FileUploadModule {
+class FileUploadManager private constructor() {
 
-    fun provideFileUpload(): FileUploadModule {
-        return FileUploadModule()
+    companion object {
+        val instance by lazy { FileUploadManager() }
     }
 
     /**
@@ -51,16 +49,14 @@ class FileUploadModule {
         // TODO: 获取文件后缀名
         val suffix = getFileTypeForPath(filePath) //文件后缀
         val contentType = URLConnection.getFileNameMap().getContentTypeFor(filePath) //文件类型
-        val clientModule =
-            (ClientModule.instance.netRequest(INetService::class.java) as INetService)
-        clientModule
+        RetrofitManager.instance.apiService(INetService::class.java)
             .getOSSUploadUrl(suffix, contentType, SPUtils.getInstance().getString("sessionId"))
             .compose(ResponseTransformer.handleResult())
             .compose(SchedulerProvider.instance.applySchedulers())
-            .subscribe(object : BaseObserver<OSSUploadUrlBean>( false) {
+            .subscribe(object : BaseObserver<OSSUploadUrlBean>(false) {
                 override fun onISuccess(message: String, uploadUrlBean: OSSUploadUrlBean) {
                     if (uploadUrlBean?.bussData != null) {
-                        UploadFile(filePath, contentType, uploadUrlBean, callBack)
+                        uploadFile(filePath, contentType, uploadUrlBean, callBack)
                     }
                 }
 
@@ -78,7 +74,7 @@ class FileUploadModule {
      * @param uploadUrlBean
      * @param callBack
      */
-    private fun UploadFile(
+    private fun uploadFile(
         filePath: String,
         contentType: String,
         uploadUrlBean: OSSUploadUrlBean,
@@ -95,41 +91,17 @@ class FileUploadModule {
             c++
         }
         val baseUrl: String = uploadUrl!!.substring(0, n) //域名
-        //判断域名是否相同，相同则上传
-        if (baseUrl == BaseApplication.getApplication().mBaseUrl) {
-            val clientModule =
-                (ClientModule.instance.netRequest(INetService::class.java) as INetService)
-            clientModule
-                .upLoadFile(contentType, uploadUrl!!.substring(n + 1), requestFile)
-                .compose(SchedulerProvider.instance.applySchedulers())
-                .subscribe(object : BaseObserver<String>(false) {
-                    override fun onISuccess(message: String, response: String) {
-                        callBack.onNext(uploadUrlBean)
-                    }
+        RetrofitManager.instance.apiService(INetService::class.java, baseUrl)
+            .upLoadFile(contentType, uploadUrl.substring(n + 1), requestFile)
+            .compose(SchedulerProvider.instance.applySchedulers())
+            .subscribe(object : BaseObserver<String>(false) {
+                override fun onISuccess(message: String, response: String) {
+                    callBack.onNext(uploadUrlBean)
+                }
 
-                    override fun onIError(e: ApiException) {
-                        callBack.onError(e)
-                    }
-                })
-
-        } else {
-            //不同重新创建单例上传
-            val clientModule = ClientModule.instance.netRequestOther(
-                INetService::class.java,
-                baseUrl
-            ) as INetService
-            clientModule
-                .upLoadFile(contentType, uploadUrl.substring(n + 1), requestFile)
-                .compose(SchedulerProvider.instance.applySchedulers())
-                .subscribe(object : BaseObserver<String>(false) {
-                    override fun onISuccess(message: String, response: String) {
-                        callBack.onNext(uploadUrlBean)
-                    }
-
-                    override fun onIError(e: ApiException) {
-                        callBack.onError(e)
-                    }
-                })
-        }
+                override fun onIError(e: ApiException) {
+                    callBack.onError(e)
+                }
+            })
     }
 }
