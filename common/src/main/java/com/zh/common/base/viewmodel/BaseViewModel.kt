@@ -47,7 +47,7 @@ open class BaseViewModel : AndroidViewModel(BaseApplication.getApplication()) {
 
     /**
      * 实例化网络请求
-     * hostUrl 域名, 默认ZjConfig.base_url， 需要修改传入新的域名
+     * hostUrl 域名, 默认ZjConfig.base_url，需要修改传入新的域名（新的每次都传）
      */
     inline fun <reified T : Any> apiService(hostUrl: String = ZjConfig.base_url): T =
         RetrofitManager.instance.apiService(T::class.java, hostUrl)

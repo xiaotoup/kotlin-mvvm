@@ -43,7 +43,7 @@ class RetrofitManager private constructor() {
     /**
      * 获取发起Retrofit实列
      * @param clazz 网路请求的 Interface 类
-     * @param hostUrl 域名, 默认ZjConfig.base_url， 需要修改传入新的域名
+     * @param hostUrl 域名, 默认ZjConfig.base_url，需要修改传入新的域名（新的每次都传）
      */
     fun <T : Any> apiService(clazz: Class<T>, hostUrl: String = ZjConfig.base_url): T {
         val key = "${clazz.name}_$hostUrl"
