@@ -21,7 +21,7 @@ import java.net.URLConnection
 class FileUploadManager private constructor() {
 
     companion object {
-        val instance by lazy { FileUploadManager() }
+        val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { FileUploadManager() }
     }
 
     /**
@@ -51,7 +51,7 @@ class FileUploadManager private constructor() {
         val contentType = URLConnection.getFileNameMap().getContentTypeFor(filePath) //文件类型
         RetrofitManager.instance.apiService(INetService::class.java)
             .getOSSUploadUrl(suffix, contentType, SPUtils.getInstance().getString("sessionId"))
-            .compose(ResponseTransformer.handleResult())
+            .compose(ResponseTransformer.instance.handleResult())
             .compose(SchedulerProvider.instance.applySchedulers())
             .subscribe(object : BaseObserver<OSSUploadUrlBean>(false) {
                 override fun onISuccess(message: String, uploadUrlBean: OSSUploadUrlBean) {

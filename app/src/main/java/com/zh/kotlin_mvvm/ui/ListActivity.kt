@@ -1,9 +1,12 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.ViewDataBinding
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ToastUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import com.zh.common.base.BaseActivity
@@ -29,18 +32,18 @@ class ListActivity(
     override val navigationBarColor: Int = R.color.colorPrimary
     override val statusBarColor: Int = R.color.colorPrimary
     private var listData: MutableList<ListBean> = mutableListOf()
-    private val mAdapter by lazy {
-        ListAdapter()
-    }
+    private val mAdapter =  ListAdapter()
 
     override fun initView(savedInstanceState: Bundle?) {
         for (i in 0..5) {
             listData.add(ListBean(i, "$i item"))
         }
         recyclerView.setQuickAdapter(mAdapter)
-        mAdapter.setOnItemClickListener { adapter, view, position ->
-            ToastUtils.showShort("$position")
-        }
+        mAdapter.setOnItemClickListener(object : OnItemClickListener{
+            override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+                ToastUtils.showShort("$position")
+            }
+        })
         initData()
     }
 
@@ -49,12 +52,12 @@ class ListActivity(
             println("$i ${listData[i].title}")
         }
         recyclerView.setNewInstance(listData)
-        viewModel.onDoNet(recyclerView, listData)
+//        viewModel.onDoNet(recyclerView, listData)
         /**
          * 高阶函数
          */
         //1、forEach 便利
-        val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
+      /*  val list = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9)
         list.forEach(::println)
         val newList = arrayListOf<Int>()
         list.forEach { newList.add(it * 2) }
@@ -71,7 +74,7 @@ class ListActivity(
         //4、reduce ，fold，foldRight 倒叙, joinToString转换字符去
         val listNew = arrayOf(1..5, 2..3)
         val nList = listNew.flatMap { it }.forEach(::println)
-        //求和 reduce 返回值必须是 acc类型
+        //求和 reduce 返回值必须是 acc类型*/
 
         refreshLayout.setOnRefreshLoadMoreListener(object : OnRefreshLoadMoreListener {
             override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -85,9 +88,5 @@ class ListActivity(
                 refreshLayout.finishRefresh(1500)
             }
         })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 }

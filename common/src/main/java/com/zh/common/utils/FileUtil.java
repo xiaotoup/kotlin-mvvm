@@ -120,7 +120,7 @@ public class FileUtil {
         try {
             int sdkVersion = Build.VERSION.SDK_INT;
             if (sdkVersion >= 19) {
-                path = getPath(BaseApplication.Companion.getApplication(), uri);
+                path = getPath(BaseApplication.getInstance(), uri);
             } else {
                 path = getRealFilePath(uri);
             }
@@ -144,7 +144,7 @@ public class FileUtil {
         } else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
             data = uri.getPath();
         } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            Cursor cursor = BaseApplication.Companion.getApplication().getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            Cursor cursor = BaseApplication.Companion.getInstance().getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
             if (null != cursor) {
                 if (cursor.moveToFirst()) {
                     int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
@@ -161,7 +161,7 @@ public class FileUtil {
     public static Uri getUriFromPath(String path) {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                return FileProvider.getUriForFile(BaseApplication.Companion.getApplication(), BaseApplication.Companion.getApplication().getApplicationInfo().packageName + ".uikit.fileprovider", new File(path));
+                return FileProvider.getUriForFile(BaseApplication.getInstance(), BaseApplication.getInstance().getApplicationInfo().packageName + ".uikit.fileprovider", new File(path));
             } else {
                 return Uri.fromFile(new File(path));
             }

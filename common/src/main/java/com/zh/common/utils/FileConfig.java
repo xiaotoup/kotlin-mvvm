@@ -6,7 +6,7 @@ import com.zh.common.base.BaseApplication;
 
 public class FileConfig {
     public static String SD_CARD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
-    public static String APP_DIR = SD_CARD_PATH + "/" + BaseApplication.Companion.getApplication().getPackageName();
+    public static String APP_DIR = SD_CARD_PATH + "/" + BaseApplication.instance.getPackageName();
     public static String RECORD_DIR = APP_DIR + "/record/";
     public static String RECORD_DOWNLOAD_DIR = APP_DIR + "/record/download/";
     public static String VIDEO_DOWNLOAD_DIR = APP_DIR + "/video/download/";

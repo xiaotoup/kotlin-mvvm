@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable
  * @time 2020/10/8 - 10:02
  * @desc ViewModel基类
  */
-open class BaseViewModel : AndroidViewModel(BaseApplication.getApplication()) {
+open class BaseViewModel : AndroidViewModel(BaseApplication.instance) {
 
     var pageIndex = 1
     var pageSize = 10
@@ -59,7 +59,7 @@ open class BaseViewModel : AndroidViewModel(BaseApplication.getApplication()) {
      */
     fun <R> doNetRequest(observable: Observable<out BaseResponse<R>>, observer: BaseObserver<R>) {
         val subscribeWith = observable
-            .compose(ResponseTransformer.handleResult())
+            .compose(ResponseTransformer.instance.handleResult())
             .compose(SchedulerProvider.instance.applySchedulers())
             .subscribeWith(observer)
         subscribeWith.getDisposable()?.let { addSubscribe(it) }

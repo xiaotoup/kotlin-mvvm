@@ -34,7 +34,7 @@ class RetrofitManager private constructor() {
         //多个域名存储请求
         private val serviceMap: ConcurrentHashMap<String, in Any> = ConcurrentHashMap()
 
-        val instance: RetrofitManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+        val instance: RetrofitManager by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
             LogUtils.dTag("--okhttp--", "网络实例化成功")
             RetrofitManager()
         }
@@ -60,7 +60,7 @@ class RetrofitManager private constructor() {
     /**
      * 创建 OkHttpClient
      */
-    private val mOkHttpClient by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    private val mOkHttpClient by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         OkHttpClient.Builder()
             .proxy(Proxy.NO_PROXY)
             .callTimeout(TOME_OUT.toLong(), TimeUnit.SECONDS)
@@ -95,15 +95,15 @@ class RetrofitManager private constructor() {
      */
     private fun provideCacheFile() =
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            var file = BaseApplication.getApplication().externalCacheDir //获取系统管理的sd卡缓存文件
+            var file = BaseApplication.instance.externalCacheDir //获取系统管理的sd卡缓存文件
             if (file == null) { //如果获取的为空,就是用自己定义的缓存文件夹做缓存路径
-                file = File("/mnt/sdcard/${BaseApplication.getApplication().packageName}")
+                file = File("/mnt/sdcard/${BaseApplication.instance.packageName}")
                 if (!file.exists()) {
                     file.mkdirs()
                 }
             }
             file
         } else {
-            BaseApplication.getApplication().cacheDir!!
+            BaseApplication.instance.cacheDir
         }
 }

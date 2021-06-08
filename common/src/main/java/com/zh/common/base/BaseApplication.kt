@@ -21,19 +21,19 @@ import java.util.*
 abstract class BaseApplication : MultiDexApplication() {
 
     private var mActivityList: LinkedList<RxAppCompatActivity>? = null
-    val mBaseUrl: String = ZjConfig.base_url
 
     //让外部获取到BaseApplication
     companion object {
-        private var mApplication: BaseApplication? = null
+        @JvmStatic
+        lateinit var instance: BaseApplication
 
-        @Synchronized
-        fun getApplication(): BaseApplication = mApplication!!
+        @JvmStatic
+        val mBaseUrl: String = ZjConfig.base_url
     }
 
     override fun onCreate() {
         super.onCreate()
-        mApplication = this
+        instance = this
 
         //初始化所有数据
         if (isAppMainProcess()) {
@@ -78,15 +78,9 @@ abstract class BaseApplication : MultiDexApplication() {
             val pid = Process.myPid()
             val process = getAppNameByPID(applicationContext, pid)
             when {
-                TextUtils.isEmpty(process) -> {
-                    true
-                }
-                packageName.equals(process, ignoreCase = true) -> {
-                    true
-                }
-                else -> {
-                    false
-                }
+                TextUtils.isEmpty(process) -> true
+                packageName.equals(process, ignoreCase = true) -> true
+                else -> false
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -115,13 +109,13 @@ abstract class BaseApplication : MultiDexApplication() {
 
     init {
         //设置全局的Header构建器
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
             MaterialHeader(context).setColorSchemeResources(
                 R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark
             )
         }
         //设置全局的Footer构建器
-        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout ->
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
             ClassicsFooter(context).setDrawableSize(20f)
         }
     }

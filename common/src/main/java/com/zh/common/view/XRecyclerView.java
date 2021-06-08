@@ -123,6 +123,8 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
      */
     public void openItemDefaultAnimator() {
         if (isOpenAnimator) {
+            clearAnimation();
+            mRecyclerView.setLayoutAnimation(null);
             mRecyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(mContext, animationId));
         }
     }
@@ -139,6 +141,7 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
      * 清除动画
      */
     public void closeItemAnimator() {
+        clearAnimation();
         isOpenAnimator = false;
         mRecyclerView.setLayoutAnimation(null);
     }
@@ -415,5 +418,6 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
         if (mBaseQuickAdapter != null) {
             mBaseQuickAdapter.removeEmptyView();
         }
+        removeAllViews();
     }
 }

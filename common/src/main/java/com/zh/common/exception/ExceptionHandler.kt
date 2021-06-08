@@ -32,10 +32,10 @@ object ExceptionHandler {
             ex = ApiException(e, ERROR.HTTP_ERROR)
             when (e.code()) {
                 UNAUTHORIZED, FORBIDDEN, NOT_FOUND, REQUEST_TIMEOUT, GATEWAY_TIMEOUT, INTERNAL_SERVER_ERROR, BAD_GATEWAY, SERVICE_UNAVAILABLE -> ex.message =
-                    BaseApplication.getApplication()
+                    BaseApplication.instance
                         .getString(R.string.http_network_error) //均视为网络错误
                 else -> ex.message =
-                    BaseApplication.getApplication().getString(R.string.http_network_error)
+                    BaseApplication.instance.getString(R.string.http_network_error)
             }
             ex
         } else if (e is ServerException) {//服务器返回的错误
@@ -48,33 +48,33 @@ object ExceptionHandler {
         ) {
             ex = ApiException(e, ERROR.PARSE_ERROR)
             ex.message =
-                BaseApplication.getApplication().getString(R.string.http_parsing_error) //均视为解析错误
+                BaseApplication.instance.getString(R.string.http_parsing_error) //均视为解析错误
             ex
         } else if (e is ConnectException) {
             ex = ApiException(e, ERROR.NETWORD_ERROR)
             ex.message =
-                BaseApplication.getApplication()
+                BaseApplication.instance
                     .getString(R.string.http_connection_failed) //均视为网络错误
             ex
         } else if (e is SSLHandshakeException) {
             ex = ApiException(e, ERROR.SSL_ERROR)
             ex.message =
-                BaseApplication.getApplication().getString(R.string.http_ssl_verification_failed)
+                BaseApplication.instance.getString(R.string.http_ssl_verification_failed)
             ex
         } else if (e is ConnectTimeoutException) {
             ex = ApiException(e, ERROR.TIMEOUT_ERROR)
             ex.message =
-                BaseApplication.getApplication().getString(R.string.http_connection_timed_out)
+                BaseApplication.instance.getString(R.string.http_connection_timed_out)
             ex
         } else if (e is SocketTimeoutException) { //连接超时
             ex = ApiException(e, ERROR.TIMEOUT_ERROR)
             ex.message =
-                BaseApplication.getApplication().getString(R.string.http_connection_timed_out)
+                BaseApplication.instance.getString(R.string.http_connection_timed_out)
             ex
         } else {
             ex = ApiException(e, ERROR.UNKNOWN)
             ex.message =
-                BaseApplication.getApplication().getString(R.string.http_unknown_error) //未知错误
+                BaseApplication.instance.getString(R.string.http_unknown_error) //未知错误
             ex
         }
     }

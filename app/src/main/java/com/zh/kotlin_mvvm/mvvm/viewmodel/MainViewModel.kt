@@ -34,8 +34,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun doLogin(map: Map<String, Any>) {
-        val apiService = apiService<INetService>()
-        doNetRequest(apiService.login(BaseMapToBody.convertMapToBody(map)),
+        doNetRequest(apiService<INetService>().login(BaseMapToBody.convertMapToBody(map)),
             object : BaseObserver<LoginBean>(true) {
 
                 override fun onISuccess(message: String, response: LoginBean) {
@@ -52,8 +51,7 @@ class MainViewModel : BaseViewModel() {
 
     fun doLogin2(map: Map<String, Any>) {
         val host = "https://www.baidu.com"
-        val apiService = apiService<INetService>(host)
-        doNetRequest(apiService.login(BaseMapToBody.convertMapToBody(map)),
+        doNetRequest(apiService<INetService>(host).login(BaseMapToBody.convertMapToBody(map)),
             object : BaseObserver<LoginBean>(true) {
 
                 override fun onISuccess(message: String, response: LoginBean) {

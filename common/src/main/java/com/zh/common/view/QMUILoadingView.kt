@@ -16,6 +16,9 @@ import com.zh.common.R
  * 加载菊花
  */
 class QMUILoadingView : View {
+
+    private val LINE_COUNT = 12
+    private val DEGREE_PER_LINE = 360 / LINE_COUNT
     private var mSize: Int
     private var mPaintColor: Int
     private var mAnimateValue = 0
@@ -88,6 +91,7 @@ class QMUILoadingView : View {
 
     fun stop() {
         mAnimator?.apply {
+            clearAnimation()
             removeUpdateListener(mUpdateListener)
             removeAllUpdateListeners()
             cancel()
@@ -141,10 +145,5 @@ class QMUILoadingView : View {
         } else {
             stop()
         }
-    }
-
-    companion object {
-        private const val LINE_COUNT = 12
-        private const val DEGREE_PER_LINE = 360 / LINE_COUNT
     }
 }

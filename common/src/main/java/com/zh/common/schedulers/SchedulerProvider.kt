@@ -11,8 +11,7 @@ import io.reactivex.schedulers.Schedulers
  * @date: 2019/5/24
  * @description: Rxjava线程切换
  */
-class SchedulerProvider  // Prevent direct instantiation.
-private constructor() : BaseSchedulerProvider {
+class SchedulerProvider private constructor() : BaseSchedulerProvider {
     override fun computation(): Scheduler {
         return Schedulers.computation()
     }
@@ -33,16 +32,6 @@ private constructor() : BaseSchedulerProvider {
     }
 
     companion object {
-
-        private var INSTANCE: SchedulerProvider? = null
-
-        @get:Synchronized
-        val instance: SchedulerProvider
-            get() {
-                if (INSTANCE == null) {
-                    INSTANCE = SchedulerProvider()
-                }
-                return INSTANCE!!
-            }
+        val instance by lazy(LazyThreadSafetyMode.SYNCHRONIZED) { SchedulerProvider() }
     }
 }
