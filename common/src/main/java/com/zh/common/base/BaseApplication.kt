@@ -17,7 +17,6 @@ import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.unit.Subunits
 import java.util.*
 
-
 open class BaseApplication : MultiDexApplication() {
 
     private var mActivityList: LinkedList<RxAppCompatActivity>? = null
