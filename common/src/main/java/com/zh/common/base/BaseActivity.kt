@@ -19,6 +19,7 @@ import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.utils.JumpActivity
 import com.zh.common.utils.LanguageUtil
+import com.zh.common.view.dialog.LoadingDialog
 
 /**
  * @auth xiaohua
@@ -30,6 +31,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), 
     lateinit var binding: BINDING
     private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
     private var mApplication: BaseApplication? = null
+    private var loadingDialog: LoadingDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,5 +144,32 @@ abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), 
             return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
         }
         return false
+    }
+
+    private fun getLoadingDialog() {
+        loadingDialog ?: also { loadingDialog = LoadingDialog(this) }
+    }
+
+    /**
+     * 显示加载dialog
+     */
+    fun showLoading() {
+        try {
+            getLoadingDialog()
+            loadingDialog?.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 结束dialog
+     */
+    fun dismissLoading() {
+        try {
+            loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

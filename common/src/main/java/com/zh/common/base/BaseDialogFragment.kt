@@ -1,10 +1,12 @@
 package com.zh.common.base
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
@@ -23,6 +25,7 @@ import com.zh.common.base.factory.ViewModelFactory
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.utils.JumpActivity
+import com.zh.common.view.dialog.LoadingDialog
 
 
 abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
@@ -32,6 +35,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
     lateinit var binding: BINDING
     private var rootView: View? = null
     lateinit var mContext: Context
+    private var loadingDialog: LoadingDialog? = null
 
     @get:LayoutRes
     abstract val layoutRes: Int
@@ -87,24 +91,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         initView(savedInstanceState, view)
     }
 
-    /**
-     * 全屏显示Dialog
-     *
-     * @param savedInstanceState
-     * @return
-     */
-    @NonNull
-    override fun onCreateDialog(@Nullable savedInstanceState: Bundle?): Dialog {
-        val dialog = Dialog(mContext)
-        dialog.apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
-            window?.setBackgroundDrawableResource(R.color.transparent)
-            setCanceledOnTouchOutside(true)
-            setCancelable(true)
-        }
-        return dialog
-    }
-
     private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
         if (layoutRes != 0) binding =
             DataBindingUtil.inflate(inflater, layoutRes, container, false)
@@ -138,10 +124,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         rootView?.let {
             it.parent?.let { it2 -> (it2 as ViewGroup).removeView(it) }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
         binding?.unbind()
         dialog?.dismiss()
     }
@@ -206,5 +188,32 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         val postcard = ARouter.getInstance().build(url)
         LogisticsCenter.completion(postcard)
         return postcard.destination
+    }
+
+    private fun getLoadingDialog() {
+        loadingDialog ?: also { loadingDialog = LoadingDialog(mContext) }
+    }
+
+    /**
+     * 显示加载dialog
+     */
+    fun showLoading() {
+        try {
+            getLoadingDialog()
+            loadingDialog?.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 结束dialog
+     */
+    fun dismissLoading() {
+        try {
+            loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

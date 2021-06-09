@@ -21,6 +21,7 @@ import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.common.immersion.ImmersionOwner
 import com.zh.common.immersion.ImmersionProxy
 import com.zh.common.utils.JumpActivity
+import com.zh.common.view.dialog.LoadingDialog
 
 /**
  * @auth xiaohua
@@ -33,6 +34,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
     lateinit var binding: BINDING
     private var rootView: View? = null
     private lateinit var mContext: Context
+    private var loadingDialog: LoadingDialog? = null
 
     //ImmersionBar代理类
     private val mImmersionProxy = ImmersionProxy(this)
@@ -214,4 +216,31 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
      * @return the boolean
      */
     override fun immersionBarEnabled(): Boolean = true
+
+    private fun getLoadingDialog() {
+        loadingDialog ?: also { loadingDialog = LoadingDialog(context!!) }
+    }
+
+    /**
+     * 显示加载dialog
+     */
+    fun showLoading() {
+        try {
+            getLoadingDialog()
+            loadingDialog?.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 结束dialog
+     */
+    fun dismissLoading() {
+        try {
+            loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

@@ -10,6 +10,7 @@ import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.kotlin_mvvm.R
 import kotlinx.android.synthetic.main.activity_test.*
 import kotlinx.coroutines.*
+import java.util.concurrent.Delayed
 import kotlin.concurrent.thread
 
 class TestActivity(
@@ -25,6 +26,11 @@ class TestActivity(
             bgv.setNumber(bgv.getNumber() - 1)
         }
         button13.setOnClickListener {
+            showLoading()
+            GlobalScope.launch {
+                delay(1000)
+                dismissLoading()
+            }
             if (button13.text.equals("有数字")){
                 bgv.setShowNumber(false)
                 button13.text = "无数字"
