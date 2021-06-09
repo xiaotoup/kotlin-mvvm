@@ -27,4 +27,8 @@
         <attr name="bv_padding_left_right" format="dimension" />
         <attr name="bv_padding_top_bottom" format="dimension" />
     </declare-styleable>
+    <!--RecyclerView 最大高度属性-->
+    <declare-styleable name="MaxHeightRecycler">
+        <attr name="maxHeight" format="dimension"/>
+    </declare-styleable>
 </resources>

@@ -17,15 +17,15 @@ import com.zh.common.R
  */
 @SuppressLint("AppCompatCustomView")
 class VCodeView @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : TextView(context!!, attrs, defStyleAttr) {
+) : TextView(context, attrs, defStyleAttr) {
     private var sendVeriCode: String? = "发送验证码"
-    private var mNormalPaint : Paint? = null//画正常文字画笔
-    private var mDisablePaint : Paint? = null//画倒计时画笔（不可点击）
-    private val normalColor : Int//正常可点击文字颜色
-    private val disableColor : Int//不可点击文字颜色
+    private var mNormalPaint: Paint? = null//画正常文字画笔
+    private var mDisablePaint: Paint? = null//画倒计时画笔（不可点击）
+    private val normalColor: Int//正常可点击文字颜色
+    private val disableColor: Int//不可点击文字颜色
     private var textSizes: Float = 30f //字体大小
     private val defaultCountdownTime = 60 //默认倒计时，60s
     private var countdownTime = defaultCountdownTime //倒计时
@@ -77,7 +77,7 @@ class VCodeView @JvmOverloads constructor(
      * @param type          表示测量的是宽还是高，1表示宽，2表示高
      * @return
      */
-    fun getMeasureWH(widthOrHeight: Int, type: Int): Int {
+    private fun getMeasureWH(widthOrHeight: Int, type: Int): Int {
         val mode = MeasureSpec.getMode(widthOrHeight)
         val size = MeasureSpec.getSize(widthOrHeight)
         when (mode) {
@@ -155,12 +155,13 @@ class VCodeView @JvmOverloads constructor(
 
     init {
         val typedArray =
-            getContext().obtainStyledAttributes(attrs, R.styleable.VCodeView, defStyleAttr, 0)
+            context.obtainStyledAttributes(attrs, R.styleable.VCodeView, defStyleAttr, 0)
         normalColor = typedArray.getColor(R.styleable.VCodeView_vc_normalColor, Color.WHITE)
         disableColor = typedArray.getColor(R.styleable.VCodeView_vc_disableColor, Color.WHITE)
         textSizes = typedArray.getDimension(R.styleable.VCodeView_vc_textSize, 30f)
         if (typedArray.hasValue(R.styleable.VCodeView_vc_text)) sendVeriCode =
             typedArray.getString(R.styleable.VCodeView_vc_text)
+        typedArray.recycle()
         init()
     }
 }

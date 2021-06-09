@@ -56,6 +56,7 @@ class BadgeView @JvmOverloads constructor(
             SizeUtils.dp2px(3f).toFloat()
         )
         maxNumber = typedArray.getInt(R.styleable.BadgeView_bv_max_number, 99)
+        typedArray.recycle()
         if (textString == null) {
             textString = "0"
         }

@@ -3,16 +3,12 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
-import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ScreenUtils
-import com.blankj.utilcode.util.SizeUtils
-import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.*
 import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
-import com.zh.config.PermissionConfig
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
