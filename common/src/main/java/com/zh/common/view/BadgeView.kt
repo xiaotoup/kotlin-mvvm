@@ -34,7 +34,7 @@ class BadgeView @JvmOverloads constructor(
 
     init {
         val typedArray =
-            getContext().obtainStyledAttributes(attrs, R.styleable.BadgeView, defStyleAttr, 0)
+            context.obtainStyledAttributes(attrs, R.styleable.BadgeView, defStyleAttr, 0)
         isShowNumber = typedArray.getBoolean(R.styleable.BadgeView_bv_show_number, true)
         noTextWidth = typedArray.getDimension(
             R.styleable.BadgeView_bv_no_text_width,

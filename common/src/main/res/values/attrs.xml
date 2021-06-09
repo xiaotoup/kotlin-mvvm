@@ -29,6 +29,6 @@
     </declare-styleable>
     <!--RecyclerView 最大高度属性-->
     <declare-styleable name="MaxHeightRecycler">
-        <attr name="maxHeight" format="dimension"/>
+        <attr name="maxHeightRecycler" format="dimension"/>
     </declare-styleable>
 </resources>
