@@ -24,6 +24,8 @@ open class BaseViewModel : AndroidViewModel(BaseApplication.instance) {
 
     var pageIndex = 1
     var pageSize = 10
+    val nextPageIndex = { pageIndex += 1 }
+    val resetPageIndex = { pageIndex = 1 }
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
 
     @SuppressLint("StaticFieldLeak")
