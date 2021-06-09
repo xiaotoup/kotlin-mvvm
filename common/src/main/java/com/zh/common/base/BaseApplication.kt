@@ -18,7 +18,7 @@ import me.jessyan.autosize.unit.Subunits
 import java.util.*
 
 
-abstract class BaseApplication : MultiDexApplication() {
+open class BaseApplication : MultiDexApplication() {
 
     private var mActivityList: LinkedList<RxAppCompatActivity>? = null
 
@@ -52,7 +52,7 @@ abstract class BaseApplication : MultiDexApplication() {
     /**
      * 初始化操作
      */
-    abstract fun onCreateMethod()
+    open fun onCreateMethod(){}
 
     private fun initARouter() {
         if (BuildConfig.DEBUG) { // 这两行必须写在init之前，否则这些配置在init过程中将无效
