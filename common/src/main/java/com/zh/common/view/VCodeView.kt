@@ -47,7 +47,16 @@ class VCodeView @JvmOverloads constructor(
         }
     }
 
-    private fun init() {
+    init {
+        val typedArray =
+            context.obtainStyledAttributes(attrs, R.styleable.VCodeView, defStyleAttr, 0)
+        normalColor = typedArray.getColor(R.styleable.VCodeView_vc_normalColor, Color.WHITE)
+        disableColor = typedArray.getColor(R.styleable.VCodeView_vc_disableColor, Color.WHITE)
+        textSizes = typedArray.getDimension(R.styleable.VCodeView_vc_textSize, 30f)
+        if (typedArray.hasValue(R.styleable.VCodeView_vc_text)) sendVeriCode =
+            typedArray.getString(R.styleable.VCodeView_vc_text)
+        typedArray.recycle()
+
         mNormalPaint = Paint()
         mNormalPaint?.apply {
             this.textSize = textSizes
@@ -153,18 +162,6 @@ class VCodeView @JvmOverloads constructor(
         invalidate()
         mHandler.removeMessages(WHAT_COUNTDOWN)
         mHandler.removeCallbacksAndMessages(null)
-    }
-
-    init {
-        val typedArray =
-            context.obtainStyledAttributes(attrs, R.styleable.VCodeView, defStyleAttr, 0)
-        normalColor = typedArray.getColor(R.styleable.VCodeView_vc_normalColor, Color.WHITE)
-        disableColor = typedArray.getColor(R.styleable.VCodeView_vc_disableColor, Color.WHITE)
-        textSizes = typedArray.getDimension(R.styleable.VCodeView_vc_textSize, 30f)
-        if (typedArray.hasValue(R.styleable.VCodeView_vc_text)) sendVeriCode =
-            typedArray.getString(R.styleable.VCodeView_vc_text)
-        typedArray.recycle()
-        init()
     }
 
     override fun onDetachedFromWindow() {
