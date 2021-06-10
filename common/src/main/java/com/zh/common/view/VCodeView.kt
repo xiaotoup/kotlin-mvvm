@@ -151,6 +151,7 @@ class VCodeView @JvmOverloads constructor(
     fun stopCountdown() {
         isCountdown = false
         invalidate()
+        mHandler.removeMessages(WHAT_COUNTDOWN)
         mHandler.removeCallbacksAndMessages(null)
     }
 
