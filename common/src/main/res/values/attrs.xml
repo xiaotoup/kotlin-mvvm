@@ -29,6 +29,18 @@
     </declare-styleable>
     <!--RecyclerView 最大高度属性-->
     <declare-styleable name="MaxHeightRecycler">
-        <attr name="maxHeightRecycler" format="dimension"/>
+        <attr name="maxHeightRecycler" format="dimension" />
+    </declare-styleable>
+    <!--三角形-->
+    <declare-styleable name="SharpView">
+        <attr name="sv_resolutionWidth" format="dimension" />
+        <attr name="sv_resolutionHeight" format="dimension" />
+        <attr name="sv_triangle_color" format="color" />
+        <attr name="sv_direction">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="right" value="2" />
+            <enum name="left" value="3" />
+        </attr>
     </declare-styleable>
 </resources>

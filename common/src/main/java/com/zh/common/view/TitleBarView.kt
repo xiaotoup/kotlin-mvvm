@@ -63,7 +63,7 @@ class TitleBarView @JvmOverloads constructor(
 
         // Load attributes
         val typedArray =
-            getContext().obtainStyledAttributes(attrs, R.styleable.TitleBarView, defStyle, 0)
+           context.obtainStyledAttributes(attrs, R.styleable.TitleBarView, defStyle, 0)
 
         // 标题文字属性
         mCenterString = typedArray.getString(R.styleable.TitleBarView_tb_centerText)
