@@ -23,7 +23,7 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun back(view: View) {
-        /*CustomDialog.Builder(mContext!!)
+        /*CustomDialog.Builder(view.context)
              .setMessage("是否退出?")
              .setPositiveButton("确认", DialogInterface.OnClickListener { p0, p1 ->
                  (mContext as Activity).finish()

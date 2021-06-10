@@ -3,7 +3,6 @@ package com.zh.common.base
 import android.content.Context
 import android.util.Log
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.NetworkUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.bean.BaseResponse
@@ -76,7 +75,7 @@ abstract class BaseObserver<T> : Observer<T> {
     }
 
     protected abstract fun onISuccess(message: String, response: T)
-    protected abstract fun onIError(e: ApiException)
+    protected open fun onIError(e: ApiException) {}
 
     fun getDisposable() = disposable
 
