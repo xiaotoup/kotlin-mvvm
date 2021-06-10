@@ -1,55 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/color_white"
-    android:layout_height="400dp">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
+    <!--<View
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layerType="hardware"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/sharp_shadow_layer"
+        android:rotation="90" />-->
+    <com.zh.common.view.SharpView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_gravity="center_horizontal"
+        app:sv_resolutionWidth="20dp"
+        app:sv_resolutionHeight="12dp"
+        app:sv_direction="top"
+        />
 
-    <Button
-        android:id="@+id/button2"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
-
-    <Button
-        android:id="@+id/button8"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_height="50dp"
+        android:background="@drawable/r10_white_bg"
+        android:gravity="center"
+        android:text="弹框"
+        android:textColor="@color/color_text_333"
+        android:textSize="16sp" />
 </LinearLayout>

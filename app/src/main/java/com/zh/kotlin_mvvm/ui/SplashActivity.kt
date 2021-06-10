@@ -1,7 +1,9 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.*
 import com.luck.picture.lib.tools.DoubleUtils
@@ -55,10 +57,10 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
             BasePopWindow(this)
                 .createView(
                     R.layout.layout_pop,
-                    ScreenUtils.getScreenWidth(),
-                    SizeUtils.dp2px(400f)
+                    SizeUtils.dp2px(150f),
+                    FrameLayout.LayoutParams.WRAP_CONTENT
                 )
-                .showAsDropDown(btnPopupWindow, -10, 10)
+                .showAsDropDown(btnPopupWindow, 0, 0, Gravity.TOP)
         }
     }
 

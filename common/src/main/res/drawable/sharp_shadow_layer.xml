@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="84%"
+            android:pivotY="126%">
+            <shape android:shape="rectangle">
+                <size
+                    android:width="20dp"
+                    android:height="20dp" />
+                <solid android:color="#0DCCCCCC" />
+            </shape>
+        </rotate>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="86%"
+            android:pivotY="130%">
+            <shape android:shape="rectangle">
+                <size
+                    android:width="20dp"
+                    android:height="20dp" />
+                <solid android:color="#10CCCCCC" />
+            </shape>
+        </rotate>
+    </item>
+     <item>
+         <rotate
+             android:fromDegrees="45"
+             android:pivotX="88%"
+             android:pivotY="134%">
+             <shape android:shape="rectangle">
+                 <size
+                     android:width="20dp"
+                     android:height="20dp" />
+                 <solid android:color="#15CCCCCC" />
+             </shape>
+         </rotate>
+     </item>
+     <item>
+         <rotate
+             android:fromDegrees="45"
+             android:pivotX="90%"
+             android:pivotY="137%">
+             <shape android:shape="rectangle">
+                 <size
+                     android:width="20dp"
+                     android:height="20dp" />
+                 <solid android:color="#1ACCCCCC" />
+             </shape>
+         </rotate>
+     </item>
+    <item>
+        <rotate
+            android:fromDegrees="45"
+            android:pivotX="91%"
+            android:pivotY="140%">
+            <shape android:shape="rectangle">
+                <size
+                    android:width="20dp"
+                    android:height="20dp" />
+                <solid android:color="#FFFFFF" />
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

@@ -31,8 +31,8 @@
             android:id="@+id/btnList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="跳转List页面" />
+            android:text="跳转List页面"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btnDialog"
@@ -57,15 +57,15 @@
             android:id="@+id/btnPopupWindow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="PopupWindow" />
+            android:text="PopupWindow"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btnPicture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:text="相机相册" />
+            android:text="相机相册"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/btnTest"

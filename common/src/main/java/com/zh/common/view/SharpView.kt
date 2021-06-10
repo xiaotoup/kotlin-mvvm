@@ -51,28 +51,30 @@ class SharpView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        val sWidth = width.toInt()
+        val sHeight = height.toInt()
         //设置画笔的路径
         val path = Path()
         when (direction) {
-            svLEFT -> {
-                path.moveTo(0f, height / 2)
-                path.lineTo(width, height)
-                path.lineTo(width, 0f)
-            }
             svTOP -> {
-                path.moveTo(0f, width)
-                path.lineTo(width, height)
-                path.lineTo(width / 2, 0f)
-            }
-            svRIGHT -> {
-                path.moveTo(0f, 0f)
-                path.lineTo(0f, height)
-                path.lineTo(width, height / 2)
+                path.moveTo(0f, sHeight.toFloat())
+                path.lineTo(sWidth.toFloat(), sHeight.toFloat())
+                path.lineTo(sWidth.toFloat() / 2, 0f)
             }
             svBOTTOM -> {
                 path.moveTo(0f, 0f)
-                path.lineTo(width / 2, height)
-                path.lineTo(width, 0f)
+                path.lineTo(sWidth.toFloat() / 2, sHeight.toFloat())
+                path.lineTo(sWidth.toFloat(), 0f)
+            }
+            svLEFT -> {
+                path.moveTo(0f, sHeight.toFloat() / 2)
+                path.lineTo(sWidth.toFloat(), sHeight.toFloat())
+                path.lineTo(sWidth.toFloat(), 0f)
+            }
+            svRIGHT -> {
+                path.moveTo(0f, 0f)
+                path.lineTo(0f, sHeight.toFloat())
+                path.lineTo(sWidth.toFloat(), sHeight.toFloat() / 2)
             }
         }
         path.close()
