@@ -80,18 +80,19 @@ class VCodeView @JvmOverloads constructor(
     private fun getMeasureWH(widthOrHeight: Int, type: Int): Int {
         val mode = MeasureSpec.getMode(widthOrHeight)
         val size = MeasureSpec.getSize(widthOrHeight)
-        when (mode) {
-            MeasureSpec.EXACTLY -> return size
-            MeasureSpec.AT_MOST -> {
-                if (type == 1) { //宽
-                    return mNormalPaint!!.measureText(sendVeriCode)
-                        .toInt() + paddingLeft + paddingRight
-                } else if (type == 2) { //高
-                    return (mNormalPaint!!.descent() - mNormalPaint!!.ascent()).toInt() + paddingTop + paddingBottom
+        mNormalPaint?.apply {
+            when (mode) {
+                MeasureSpec.EXACTLY -> return size
+                MeasureSpec.AT_MOST -> {
+                    if (type == 1) { //宽
+                        return measureText(sendVeriCode).toInt() + paddingLeft + paddingRight
+                    } else if (type == 2) { //高
+                        return (descent() - ascent()).toInt() + paddingTop + paddingBottom
+                    }
+                    return size
                 }
-                return size
+                MeasureSpec.UNSPECIFIED -> return size
             }
-            MeasureSpec.UNSPECIFIED -> return size
         }
         return size
     }
@@ -163,5 +164,10 @@ class VCodeView @JvmOverloads constructor(
             typedArray.getString(R.styleable.VCodeView_vc_text)
         typedArray.recycle()
         init()
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        stopCountdown()
     }
 }
