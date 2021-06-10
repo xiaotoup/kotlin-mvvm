@@ -109,13 +109,13 @@ class ShadowContainer @JvmOverloads constructor(
         val child = getChildAt(0)
         val layoutParams = child.layoutParams as SLayoutParams
         val childBottomMargin =
-            (Math.max(deltaLength, layoutParams.bottomMargin.toFloat()) + 1).toInt()
+            (deltaLength.coerceAtLeast(layoutParams.bottomMargin.toFloat()) + 1).toInt()
         val childLeftMargin =
-            (Math.max(deltaLength, layoutParams.leftMargin.toFloat()) + 1).toInt()
+            (deltaLength.coerceAtLeast(layoutParams.leftMargin.toFloat()) + 1).toInt()
         val childRightMargin =
-            (Math.max(deltaLength, layoutParams.rightMargin.toFloat()) + 1).toInt()
+            (deltaLength.coerceAtLeast(layoutParams.rightMargin.toFloat()) + 1).toInt()
         val childTopMargin =
-            (Math.max(deltaLength, layoutParams.topMargin.toFloat()) + 1).toInt()
+            (deltaLength.coerceAtLeast(layoutParams.topMargin.toFloat()) + 1).toInt()
         val widthMeasureSpecMode: Int
         val widthMeasureSpecSize: Int
         val heightMeasureSpecMode: Int
@@ -124,30 +124,38 @@ class ShadowContainer @JvmOverloads constructor(
             widthMeasureSpecMode = MeasureSpec.UNSPECIFIED
             widthMeasureSpecSize = MeasureSpec.getSize(widthMeasureSpec)
         } else {
-            if (layoutParams.width == LayoutParams.MATCH_PARENT) {
-                widthMeasureSpecMode = MeasureSpec.EXACTLY
-                widthMeasureSpecSize = measuredWidth - childLeftMargin - childRightMargin
-            } else if (LayoutParams.WRAP_CONTENT == layoutParams.width) {
-                widthMeasureSpecMode = MeasureSpec.AT_MOST
-                widthMeasureSpecSize = measuredWidth - childLeftMargin - childRightMargin
-            } else {
-                widthMeasureSpecMode = MeasureSpec.EXACTLY
-                widthMeasureSpecSize = layoutParams.width
+            when {
+                layoutParams.width == LayoutParams.MATCH_PARENT -> {
+                    widthMeasureSpecMode = MeasureSpec.EXACTLY
+                    widthMeasureSpecSize = measuredWidth - childLeftMargin - childRightMargin
+                }
+                LayoutParams.WRAP_CONTENT == layoutParams.width -> {
+                    widthMeasureSpecMode = MeasureSpec.AT_MOST
+                    widthMeasureSpecSize = measuredWidth - childLeftMargin - childRightMargin
+                }
+                else -> {
+                    widthMeasureSpecMode = MeasureSpec.EXACTLY
+                    widthMeasureSpecSize = layoutParams.width
+                }
             }
         }
         if (heightMode == MeasureSpec.UNSPECIFIED) {
             heightMeasureSpecMode = MeasureSpec.UNSPECIFIED
             heightMeasureSpecSize = MeasureSpec.getSize(heightMeasureSpec)
         } else {
-            if (layoutParams.height == LayoutParams.MATCH_PARENT) {
-                heightMeasureSpecMode = MeasureSpec.EXACTLY
-                heightMeasureSpecSize = measuredHeight - childBottomMargin - childTopMargin
-            } else if (LayoutParams.WRAP_CONTENT == layoutParams.height) {
-                heightMeasureSpecMode = MeasureSpec.AT_MOST
-                heightMeasureSpecSize = measuredHeight - childBottomMargin - childTopMargin
-            } else {
-                heightMeasureSpecMode = MeasureSpec.EXACTLY
-                heightMeasureSpecSize = layoutParams.height
+            when {
+                layoutParams.height == LayoutParams.MATCH_PARENT -> {
+                    heightMeasureSpecMode = MeasureSpec.EXACTLY
+                    heightMeasureSpecSize = measuredHeight - childBottomMargin - childTopMargin
+                }
+                LayoutParams.WRAP_CONTENT == layoutParams.height -> {
+                    heightMeasureSpecMode = MeasureSpec.AT_MOST
+                    heightMeasureSpecSize = measuredHeight - childBottomMargin - childTopMargin
+                }
+                else -> {
+                    heightMeasureSpecMode = MeasureSpec.EXACTLY
+                    heightMeasureSpecSize = layoutParams.height
+                }
             }
         }
         measureChild(
@@ -214,7 +222,6 @@ class ShadowContainer @JvmOverloads constructor(
         val a = context.obtainStyledAttributes(attrs, R.styleable.ShadowContainer)
         val shadowColor =
             a.getColor(R.styleable.ShadowContainer_sc_containerShadowColor, Color.RED)
-        //        int shadowColor = Color.RED;
         val shadowRadius =
             a.getDimension(R.styleable.ShadowContainer_sc_containerShadowRadius, 0f)
         deltaLength = a.getDimension(R.styleable.ShadowContainer_sc_containerDeltaLength, 0f)
