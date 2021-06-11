@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/YFragment1">
+
+    <fragment
+        android:id="@+id/YFragment1"
+        android:name="com.zh.kotlin_mvvm.navigation.YFragment1"
+        android:label="fragment_y1"
+        tools:layout="@layout/fragment_y1" >
+        <action
+            android:id="@+id/action_YFragment1_to_YFragment2"
+            app:destination="@id/YFragment2"
+            app:enterAnim="@anim/layout_right_enter"
+            app:popExitAnim="@anim/layout_right_exit"/>
+    </fragment>
+    <fragment
+        android:id="@+id/YFragment2"
+        android:name="com.zh.kotlin_mvvm.navigation.YFragment2"
+        android:label="fragment_y2"
+        tools:layout="@layout/fragment_y2" />
+</navigation>

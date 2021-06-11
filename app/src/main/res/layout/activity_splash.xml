@@ -80,5 +80,12 @@
             android:onClick="clickTest"
             android:text="测试" />
 
+        <Button
+            android:id="@+id/btnNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="navigation"
+            android:textAllCaps="false" />
+
     </LinearLayout>
 </layout>

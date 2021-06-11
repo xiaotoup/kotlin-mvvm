@@ -58,6 +58,9 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         btnPopupWindow.setOnClickListener {
             openPopupWindow()
         }
+        btnNavigation.setOnClickListener {
+            startActivity(NavigationActivity::class.java)
+        }
     }
 
     fun clickTest(view: View) {

@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.TextNetActivity"></activity>
+        <activity android:name=".ui.NavigationActivity"></activity>
+        <activity android:name=".ui.TextNetActivity" />
         <activity android:name=".ui.PictureActivity" />
         <activity android:name=".ui.TestActivity" />
         <activity android:name=".ui.TestALiPayActivity" />
