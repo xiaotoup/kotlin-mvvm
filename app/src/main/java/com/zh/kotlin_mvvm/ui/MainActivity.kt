@@ -3,6 +3,8 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.blankj.utilcode.util.ScreenUtils
 import com.zh.common.base.BaseActivity
@@ -21,6 +23,7 @@ class MainActivity(
 ) : BaseActivity<ActivityMainBinding>() {
 
     var sid = ObservableField<String>("iiiii")
+    var sid2 = MutableLiveData<String>("点我试试?")
 
     override fun initView(savedInstanceState: Bundle?) {
         binding.activity = this
@@ -32,6 +35,7 @@ class MainActivity(
     }
 
     fun netLogin(view: View) {
+        sid2.value = "开始请求"
         val map = mapOf<String, Any>(
             "mobile" to "13648394964",
             "pwd" to "123456",

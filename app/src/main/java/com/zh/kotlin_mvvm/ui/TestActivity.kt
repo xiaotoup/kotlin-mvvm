@@ -3,14 +3,13 @@ package com.zh.kotlin_mvvm.ui
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.BaseViewModel
-import com.zh.common.base.viewmodel.NormalViewModel
 import com.zh.kotlin_mvvm.R
 import kotlinx.android.synthetic.main.activity_test.*
 import kotlinx.coroutines.*
-import java.util.concurrent.Delayed
 import kotlin.concurrent.thread
 
 class TestActivity(
@@ -31,7 +30,7 @@ class TestActivity(
                 delay(1000)
                 dismissLoading()
             }
-            if (button13.text.equals("有数字")){
+            if (button13.text.equals("有数字")) {
                 bgv.setShowNumber(false)
                 button13.text = "无数字"
             } else {

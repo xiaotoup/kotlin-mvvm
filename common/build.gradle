@@ -87,6 +87,5 @@ dependencies {
     kapt "com.android.databinding:compiler:$compiler_version"
 
     //新导入的包全部添加到下面
-    api 'org.greenrobot:eventbus:3.1.1'
 
 }

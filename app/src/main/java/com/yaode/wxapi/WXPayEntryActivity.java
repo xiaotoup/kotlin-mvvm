@@ -16,11 +16,8 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.zh.common.utils.LiveDataBus;
 import com.zh.kotlin_mvvm.R;
-import com.zh.kotlin_mvvm.ui.TestWxPayActivity;
-import com.zh.kotlin_mvvm.utils.WxPaySuccessEvent;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
 
@@ -55,7 +52,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
             Log.d(TAG, "onPayFinish,errCode=" + resp.errCode);
-            EventBus.getDefault().post(new WxPaySuccessEvent(resp.errCode));
+            LiveDataBus.get().with("wx_errCode").postValue(resp.errCode);
         }
         finish();
     }
