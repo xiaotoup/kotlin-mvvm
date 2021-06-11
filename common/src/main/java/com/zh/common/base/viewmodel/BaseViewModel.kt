@@ -1,10 +1,7 @@
 package com.zh.common.base.viewmodel
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.util.Log
-import androidx.lifecycle.AndroidViewModel
-import com.zh.common.base.BaseApplication
+import androidx.lifecycle.ViewModel
 import com.zh.common.base.BaseObserver
 import com.zh.common.base.bean.BaseResponse
 import com.zh.common.di.RetrofitManager
@@ -20,19 +17,18 @@ import io.reactivex.disposables.Disposable
  * @time 2020/10/8 - 10:02
  * @desc ViewModel基类
  */
-open class BaseViewModel : AndroidViewModel(BaseApplication.instance) {
+open class BaseViewModel : ViewModel() {
 
     var pageIndex = 1
     var pageSize = 10
-    private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
-
-    @SuppressLint("StaticFieldLeak")
-    val mAppContext: Context = getApplication<BaseApplication>().applicationContext
+    private var isAddDisposable = false
+    private val mCompositeDisposable = CompositeDisposable()
 
     //添加网络请求到CompositeDisposable
     private fun addSubscribe(disposable: Disposable) {
         mCompositeDisposable.also {
             Log.e("--okhttp--", "disposable is add")
+            isAddDisposable = true
             it.add(disposable)
         }
     }
@@ -40,8 +36,11 @@ open class BaseViewModel : AndroidViewModel(BaseApplication.instance) {
     override fun onCleared() {
         //解除网络请求
         mCompositeDisposable.also {
-            Log.e("--okhttp--", "disposable is clear")
-            mCompositeDisposable.clear()
+            if (isAddDisposable) {
+                Log.e("--okhttp--", "disposable is clear")
+                isAddDisposable = false
+                mCompositeDisposable.clear()
+            }
         }
     }
 

@@ -1,24 +1,20 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.*
 import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
-import com.zh.common.utils.LiveDataBus
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
 import kotlinx.android.synthetic.main.activity_splash.*
-import okhttp3.internal.wait
 
 class SplashActivity : BaseActivity<ViewDataBinding>() {
 
@@ -37,6 +33,9 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
     private fun initData() {
         btnToLogin.setOnClickListener {
             startActivity(ZjConfig.MainActivity)
+        }
+        btnNet.setOnClickListener {
+            startActivity(ZjConfig.TextNetActivity)
         }
         btnLogin.setOnClickListener {
             startActivity(ZjConfig.LoginActivity)

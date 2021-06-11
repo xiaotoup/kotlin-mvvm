@@ -1,59 +1,106 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
-import android.view.View
-import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.fragment.app.FragmentTransaction
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.blankj.utilcode.util.ScreenUtils
+import com.blankj.utilcode.util.LogUtils
 import com.zh.common.base.BaseActivity
-import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.config.ZjConfig
-import com.zh.kotlin_mvvm.BR
+import com.zh.found.FoundFragment
+import com.zh.home.HomeFragment
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.databinding.ActivityMainBinding
-import com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel
+import com.zh.mine.MineFragment
+import com.zh.new.NewFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 @Route(path = ZjConfig.MainActivity)
 class MainActivity(
-    override val layoutRes: Int = R.layout.activity_main,
-    override val viewModel:MainViewModel = MainViewModel(),
-    override val viewModelId: Int = BR.viewModel
+    override val layoutRes: Int = R.layout.activity_main
 ) : BaseActivity<ActivityMainBinding>() {
 
-    var sid = ObservableField<String>("iiiii")
-    var sid2 = MutableLiveData<String>("点我试试?")
+    private var currentIndex = 0
+
+    private var mHomeFragment: HomeFragment? = null
+    private var mFoundFragment: FoundFragment? = null
+    private var mNewFragment: NewFragment? = null
+    private var mMineFragment: MineFragment? = null
 
     override fun initView(savedInstanceState: Bundle?) {
-        binding.activity = this
-        initData()
+        initFragment(0)
+        clickTab()
     }
 
-    fun initData() {
-        ScreenUtils.getAppScreenWidth()
+    /**
+     * 添加fragment
+     */
+    private fun initFragment(position: Int) {
+        val beginTransaction = supportFragmentManager.beginTransaction()
+        selectText(position)
+        hideAllFragment(beginTransaction)
+        when (position) {
+            0 -> {
+                mHomeFragment ?: also {
+                    mHomeFragment = HomeFragment()
+                    mHomeFragment?.let { beginTransaction.add(R.id.container, it) }
+                }
+                mHomeFragment?.let { beginTransaction.show(it) }
+            }
+            1 -> {
+                mFoundFragment ?: also {
+                    mFoundFragment = FoundFragment()
+                    mFoundFragment?.let { beginTransaction.add(R.id.container, it) }
+                }
+                mFoundFragment?.let { beginTransaction.show(it) }
+            }
+            2 -> {
+                mNewFragment ?: also {
+                    mNewFragment = NewFragment()
+                    mNewFragment?.let { beginTransaction.add(R.id.container, it) }
+                }
+                mNewFragment?.let { beginTransaction.show(it) }
+            }
+            3 -> {
+                mMineFragment ?: also {
+                    mMineFragment = MineFragment()
+                    mMineFragment?.let { beginTransaction.add(R.id.container, it) }
+                }
+                mMineFragment?.let { beginTransaction.show(it) }
+            }
+            else -> {
+                LogUtils.e("加载菜单出错!")
+            }
+        }
+        beginTransaction.commitAllowingStateLoss()
+        currentIndex = position
     }
 
-    fun netLogin(view: View) {
-        sid2.value = "开始请求"
-        val map = mapOf<String, Any>(
-            "mobile" to "13648394964",
-            "pwd" to "123456",
-            "loginType" to "PASSWORD"
-        )
-        viewModel.doLogin(map);
+    /**
+     * 隐藏已经加载的Fragment
+     */
+    private fun hideAllFragment(beginTransaction: FragmentTransaction) {
+        mHomeFragment?.let { beginTransaction.hide(it) }
+        mFoundFragment?.let { beginTransaction.hide(it) }
+        mNewFragment?.let { beginTransaction.hide(it) }
+        mMineFragment?.let { beginTransaction.hide(it) }
     }
 
-    fun netLogin2(view: View) {
-        val map = mapOf<String, Any>(
-            "mobile" to "13648394964",
-            "pwd" to "123456",
-            "loginType" to "PASSWORD"
-        )
-        viewModel.doLogin2(map);
+    /**
+     * 设置文字选中
+     */
+    private fun selectText(position: Int) {
+        for (i in 0 until llTab.childCount) {
+            llTab.getChildAt(i).isSelected = position == i
+        }
     }
 
-    fun back(view: View) {
-        finish()
+    /**
+     * 点击事件
+     */
+    private fun clickTab() {
+        tabHome.setOnClickListener { initFragment(0) }
+        tabFound.setOnClickListener { initFragment(1) }
+        tabNew.setOnClickListener { initFragment(2) }
+        tabMine.setOnClickListener { initFragment(3) }
     }
 }

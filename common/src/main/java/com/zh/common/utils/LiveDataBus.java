@@ -15,6 +15,8 @@ import java.util.Map;
 
 /**
  * LiveData 单列
+ * 用作事件传递时的观察者
+ * 保证所有事件不丢失，保存非激活状态的事件，并能够在激活状态回调，且没有内存泄漏
  */
 public final class LiveDataBus {
 
@@ -51,6 +53,9 @@ public final class LiveDataBus {
             this.observer = observer;
         }
 
+        /**
+         * 在生命周期结束前的任何时候都可能会调用
+         */
         @Override
         public void onChanged(@Nullable T t) {
             if (observer != null) {

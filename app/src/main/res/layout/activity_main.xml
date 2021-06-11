@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.zh.kotlin_mvvm.mvvm.viewmodel.MainViewModel" />
-
-        <variable
-            name="activity"
-            type="com.zh.kotlin_mvvm.ui.MainActivity" />
     </data>
 
     <LinearLayout
@@ -20,50 +12,43 @@
         android:orientation="vertical"
         tools:context=".ui.MainActivity">
 
-        <Button
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{activity.back}"
-            android:text="返回" />
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-        <Button
+        <LinearLayout
+            android:id="@+id/llTab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="netLogin"
-            android:text="发起网络请求" />
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="netLogin2"
-            android:text="发起网络请求2" />
+            <TextView
+                android:id="@+id/tabHome"
+                style="@style/tab_text_style"
+                android:drawableTop="@drawable/tab_home_check_sel"
+                android:text="首页" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@{activity.sid2}" />
+            <TextView
+                android:id="@+id/tabFound"
+                style="@style/tab_text_style"
+                android:drawableTop="@drawable/tab_found_check_sel"
+                android:text="发现" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@{viewModel.sid}" />
+            <TextView
+                android:id="@+id/tabNew"
+                style="@style/tab_text_style"
+                android:drawableTop="@drawable/tab_new_check_sel"
+                android:text="消息" />
 
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            app:errorRes="@{viewModel.imgUrl}"
-            app:imageUrl="@{viewModel.imgUrl}"
-            app:placeRes="@{viewModel.imgUrl}" />
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            app:avatarUrl="@{viewModel.imgUrl}" />
+            <TextView
+                android:id="@+id/tabMine"
+                style="@style/tab_text_style"
+                android:drawableTop="@drawable/tab_mine_check_sel"
+                android:text="我的" />
+        </LinearLayout>
     </LinearLayout>
 </layout>
