@@ -56,18 +56,22 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
             startActivity(PictureActivity::class.java)
         }
         btnPopupWindow.setOnClickListener {
-            if (DoubleUtils.isFastDoubleClick()) return@setOnClickListener
-            BasePopWindow(this)
-                .createView(
-                    R.layout.layout_pop,
-                    SizeUtils.dp2px(150f),
-                    FrameLayout.LayoutParams.WRAP_CONTENT
-                )
-                .showAsDropDown(btnPopupWindow, 0, 0, Gravity.TOP)
+            openPopupWindow()
         }
     }
 
     fun clickTest(view: View) {
         startActivity(TestActivity::class.java)
+    }
+
+    private fun openPopupWindow() {
+        if (DoubleUtils.isFastDoubleClick()) return
+        BasePopWindow(this)
+            .createView(
+                R.layout.layout_pop,
+                SizeUtils.dp2px(150f),
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            )
+            .showAsDropDown(btnPopupWindow, 0, 0, Gravity.TOP)
     }
 }
