@@ -46,6 +46,4 @@ interface INetService {
         @Url url: String,
         @Body description: RequestBody
     ): Observable<String>
-
-    fun  getd() : Deferred<BaseResponse<String>>
 }
