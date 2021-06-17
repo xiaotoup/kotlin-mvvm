@@ -53,7 +53,7 @@ public class XRecyclerView extends FrameLayout implements INetCallbackView {
         //初始化RecyclerView
         mRecyclerView = new RecyclerView(context);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.setOverScrollMode(2);
+        mRecyclerView.setOverScrollMode(OVER_SCROLL_NEVER);
         openItemDefaultAnimator();
         addView(mRecyclerView, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         //初始化LoadingView
