@@ -33,7 +33,7 @@ class TextNetActivity(
             "pwd" to "123456",
             "loginType" to "PASSWORD"
         )
-        viewModel.doLogin(map);
+        viewModel.doLogin(map)
     }
 
     fun netLogin2(view: View) {
@@ -42,7 +42,7 @@ class TextNetActivity(
             "pwd" to "123456",
             "loginType" to "PASSWORD"
         )
-        viewModel.doLogin2(map);
+        viewModel.doLogin2(map)
     }
 
     fun back(view: View) {
