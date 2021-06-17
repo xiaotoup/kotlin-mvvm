@@ -63,7 +63,7 @@ class TitleBarView @JvmOverloads constructor(
 
         // Load attributes
         val typedArray =
-           context.obtainStyledAttributes(attrs, R.styleable.TitleBarView, defStyle, 0)
+            context.obtainStyledAttributes(attrs, R.styleable.TitleBarView, defStyle, 0)
 
         // 标题文字属性
         mCenterString = typedArray.getString(R.styleable.TitleBarView_tb_centerText)
@@ -191,10 +191,11 @@ class TitleBarView @JvmOverloads constructor(
         typedArray.recycle()
     }
 
-    private fun setLeftImage(){
+    private fun setLeftImage() {
         mLeftImage?.apply {
             visibility = View.VISIBLE
-            setImageDrawable(mLeftDrawable)
+            if (mLeftDrawable != null) setImageDrawable(mLeftDrawable)
+            else setImageDrawable(mLeftImage?.drawable)
             setOnClickListener {
                 if (DoubleUtils.isFastDoubleClick()) return@setOnClickListener
                 (context as Activity).finish()
