@@ -29,7 +29,6 @@ class RelativeItemView @JvmOverloads constructor(
     /**
      * 控件
      */
-    private val mRlParent: RelativeLayout
     private val mIvLeftImg: ImageView//左边图片
     private val mTvLeft: TextView//左边文字
     private val mEtContent: EditText//输入框文字
@@ -68,7 +67,6 @@ class RelativeItemView @JvmOverloads constructor(
 
     init {
         LayoutInflater.from(context).inflate(R.layout.layout_item_relative, this, true)
-        mRlParent = findViewById(R.id.rlParent)
         mIvLeftImg = findViewById(R.id.ivLeftImg)
         mTvLeft = findViewById(R.id.tvLeft)
         mEtContent = findViewById(R.id.etContent)
