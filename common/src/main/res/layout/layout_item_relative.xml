@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:paddingLeft="15dp"
+        android:paddingStart="15dp"
         android:visibility="gone" />
 
     <TextView
@@ -18,9 +18,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/ivLeftImg"
+        android:layout_toEndOf="@+id/ivLeftImg"
         android:gravity="center_vertical"
-        android:paddingLeft="15dp"
+        android:includeFontPadding="false"
+        android:paddingStart="15dp"
         tools:text="左边文字" />
 
     <EditText
@@ -28,10 +29,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/tvRight"
-        android:layout_toRightOf="@+id/tvLeft"
+        android:layout_toStartOf="@+id/tvRight"
+        android:layout_toEndOf="@+id/tvLeft"
         android:background="@color/transparent"
         android:gravity="center_vertical"
+        android:includeFontPadding="false"
         android:singleLine="true"
         android:textSize="14sp"
         tools:text="输入框文字" />
@@ -40,10 +42,11 @@
         android:id="@+id/tvRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
-        android:paddingRight="15dp"
+        android:includeFontPadding="false"
+        android:paddingEnd="15dp"
         tools:text="右边文字" />
 
     <View
