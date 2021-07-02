@@ -2,4 +2,5 @@
     <string name="app_name">kotlin_mvvm</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="accessibility_desc">无障碍服务</string>
 </resources>

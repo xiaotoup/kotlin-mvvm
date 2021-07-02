@@ -46,4 +46,100 @@
         <!-- 文字 -->
         <attr name="vc_text" format="string" />
     </declare-styleable>
+
+    <!--Relative一行控件-->
+    <declare-styleable name="RelativeItemView">
+        <!-- 左边图片 -->
+        <attr name="riv_leftImg" format="reference" />
+        <!-- 左边图片宽度 -->
+        <attr name="riv_leftImgWidth" format="dimension" />
+        <!-- 左边图片高度 -->
+        <attr name="riv_leftImgHeight" format="dimension" />
+        <!-- 左边文字 -->
+        <attr name="riv_leftText" format="string" />
+        <!-- 左边文字颜色 -->
+        <attr name="riv_leftTextColor" format="color" />
+        <!-- 左边文字_字体大小 -->
+        <attr name="riv_leftTextSize" format="dimension" />
+        <!-- 左边文字_据左边距离 -->
+        <attr name="riv_leftTextPaddingLeft" format="dimension" />
+        <!-- 左边文字_drawableLeft图片 -->
+        <attr name="riv_leftTextDrawable" format="reference" />
+        <!-- 左边文字_drawablePadding -->
+        <attr name="riv_leftTextDrawablePadding" format="dimension" />
+        <!-- 左边文字_drawableTint -->
+        <attr name="riv_leftTextDrawableTint" format="color" />
+        <!-- 左边文字_加粗属性 -->
+        <attr name="riv_leftTextStyle">
+            <flag name="normal" value="0x00" />
+            <flag name="bold" value="0x01" />
+            <flag name="italic" value="0x02" />
+        </attr>
+        <!-- Edit文字 -->
+        <attr name="riv_editText" format="string" />
+        <!-- Edit文字颜色 -->
+        <attr name="riv_editTextColor" format="color" />
+        <!-- Edit的hint文字 -->
+        <attr name="riv_editTextHint" format="string" />
+        <!-- Edit的hint文字颜色 -->
+        <attr name="riv_editTextHintColor" format="color" />
+        <!-- Edit文字_字体大小 -->
+        <attr name="riv_editTextSize" format="dimension" />
+        <!-- Edit是否可以编辑 -->
+        <attr name="riv_editTextEnabled" format="boolean" />
+        <!-- Edit背景 -->
+        <attr name="riv_editTextBackground" format="reference|color" />
+        <!-- Edit的gravity位置 -->
+        <attr name="riv_editTextGravity">
+            <flag name="left" value="0x03" />
+            <flag name="right" value="0x05" />
+            <flag name="center_vertical" value="0x10" />
+        </attr>
+        <!-- Edit文字_MarginLeft -->
+        <attr name="riv_editTextMarginLeft" format="dimension" />
+        <!-- Edit文字_MarginRight -->
+        <attr name="riv_editTextMarginRight" format="dimension" />
+        <!-- Edit文字_PaddingLeft -->
+        <attr name="riv_editTextPaddingLeft" format="dimension" />
+        <!-- Edit文字_PaddingRight -->
+        <attr name="riv_editTextPaddingRight" format="dimension" />
+        <!-- Edit文字_加粗属性 -->
+        <attr name="riv_editTextStyle">
+            <flag name="normal" value="0x00" />
+            <flag name="bold" value="0x01" />
+            <flag name="italic" value="0x02" />
+        </attr>
+        <!-- 右边文字 -->
+        <attr name="riv_rightText" format="string" />
+        <!-- 右边文字颜色 -->
+        <attr name="riv_rightTextColor" format="color" />
+        <!-- 右边文字_字体大小 -->
+        <attr name="riv_rightTextSize" format="dimension" />
+        <!-- 右边文字_据左边距离 -->
+        <attr name="riv_rightTextPaddingRight" format="dimension" />
+        <!-- 右边文字_drawableRight图片 -->
+        <attr name="riv_rightTextDrawable" format="reference" />
+        <!-- 右边文字_drawablePadding -->
+        <attr name="riv_rightTextDrawablePadding" format="dimension" />
+        <!-- 右边文字_drawableTint -->
+        <attr name="riv_rightTextDrawableTint" format="color" />
+        <!-- 右边文字_加粗属性 -->
+        <attr name="riv_rightTextStyle">
+            <flag name="normal" value="0x00" />
+            <flag name="bold" value="0x01" />
+            <flag name="italic" value="0x02" />
+        </attr>
+        <!-- 下划线是否显示 -->
+        <attr name="riv_driverShow" format="boolean" />
+        <!-- 下划线颜色 -->
+        <attr name="riv_driverColor" format="color" />
+        <!-- 下划线高度 -->
+        <attr name="riv_driverHeight" format="dimension" />
+        <!-- 下划线距离左边距离 -->
+        <attr name="riv_driverMarginLeft" format="dimension" />
+        <!-- 下划线距离右边距离 -->
+        <attr name="riv_driverMarginRight" format="dimension" />
+        <!-- 下划线距离左右边距离 -->
+        <attr name="riv_driverMarginLeftRight" format="dimension" />
+    </declare-styleable>
 </resources>

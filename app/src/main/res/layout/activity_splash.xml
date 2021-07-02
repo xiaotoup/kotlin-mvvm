@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,83 +10,118 @@
             type="com.zh.common.base.viewmodel.NormalViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".ui.SplashActivity">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btnToLogin"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="底部菜单" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.SplashActivity">
 
-        <Button
-            android:id="@+id/btnNet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="网络请求" />
+            <Button
+                android:id="@+id/btnToLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="底部菜单" />
 
-        <Button
-            android:id="@+id/btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="跳转登录页面" />
+            <Button
+                android:id="@+id/btnNet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="网络请求" />
 
-        <Button
-            android:id="@+id/btnList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="跳转List页面"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="跳转登录页面" />
 
-        <Button
-            android:id="@+id/btnDialog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DialogFragment"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="跳转List页面"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnWxPay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="微信支付" />
+            <Button
+                android:id="@+id/btnDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DialogFragment"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnALiPay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="支付宝支付" />
+            <Button
+                android:id="@+id/btnWxPay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="微信支付" />
 
-        <Button
-            android:id="@+id/btnPopupWindow"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="PopupWindow"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnALiPay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="支付宝支付" />
 
-        <Button
-            android:id="@+id/btnPicture"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="相机相册"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnPopupWindow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PopupWindow"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnTest"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="clickTest"
-            android:text="测试" />
+            <Button
+                android:id="@+id/btnPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="相机相册"
+                android:textAllCaps="false" />
 
-        <Button
-            android:id="@+id/btnNavigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="navigation"
-            android:textAllCaps="false" />
+            <Button
+                android:id="@+id/btnTest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="clickTest"
+                android:text="测试" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btnNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="navigation"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnRedBank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="选择器" />
+
+            <com.zh.common.view.RelativeItemView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                app:riv_leftText="微信"
+                app:riv_leftTextColor="@color/colorPrimary"
+                app:riv_leftTextSize="16sp"
+                app:riv_leftTextDrawable="@drawable/picture_icon_back_arrow"
+                app:riv_leftTextDrawablePadding="5dp"
+                app:riv_leftTextPaddingLeft="15dp"
+                app:riv_leftTextStyle="bold"
+                app:riv_rightText="235"
+                app:riv_rightTextSize="13sp"
+                app:riv_rightTextColor="@color/color_text_999"
+                app:riv_rightTextDrawable="@drawable/picture_icon_arrow_down"
+                app:riv_rightTextDrawableTint="@color/color_text_999"
+                app:riv_rightTextPaddingRight="15dp"
+                app:riv_rightTextDrawablePadding="5dp"
+                app:riv_driverColor="@color/colorPrimaryDark"
+                app:riv_driverShow="true"
+                app:riv_editTextHint="请输入"
+                app:riv_editTextSize="12sp"
+                app:riv_editTextGravity="left"
+                app:riv_editTextPaddingLeft="15dp"
+                app:riv_editTextMarginLeft="50dp"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

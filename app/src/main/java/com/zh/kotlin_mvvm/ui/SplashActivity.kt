@@ -5,7 +5,9 @@ import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.databinding.ViewDataBinding
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.SizeUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
@@ -15,6 +17,7 @@ import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
 import kotlinx.android.synthetic.main.activity_splash.*
+
 
 class SplashActivity : BaseActivity<ViewDataBinding>() {
 
@@ -27,6 +30,7 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         ToastUtils.showShort("启动了")
         val message = "{\"code\":200, \"message\":\"提示内容\",\"data\":{\"content\":\"哈哈哈哈\"}}"
         LogUtils.wTag("okhttp", message)
+
         initData()
     }
 
@@ -60,6 +64,9 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         }
         btnNavigation.setOnClickListener {
             startActivity(NavigationActivity::class.java)
+        }
+        btnRedBank.setOnClickListener {
+            startActivity(NumberPickerActivity::class.java)
         }
     }
 

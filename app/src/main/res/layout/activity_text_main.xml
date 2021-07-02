@@ -20,6 +20,12 @@
         android:orientation="vertical"
         tools:context=".ui.TextMainActivity">
 
+        <com.zh.common.view.TitleBarView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tb_centerText="测试"
+            app:tb_leftImageDrawable="@drawable/picture_icon_back_arrow" />
+
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

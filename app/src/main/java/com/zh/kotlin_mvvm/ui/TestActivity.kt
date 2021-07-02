@@ -39,14 +39,18 @@ class TestActivity(
             }
         }
 
+//        var lis:MutableList<String> = MutableList(1, 0)
         GlobalScope.apply {
             val launch = launch {
                 LogUtils.a("--" + Thread.currentThread().name)
                 launch(Dispatchers.Main) {
                     Toast.makeText(this@TestActivity, "你好啊", Toast.LENGTH_SHORT).show()
                 }
+//                lis = mutableListOf()
+//                lis.add("sss")
             }
         }
+//        LogUtils.a(lis.size)
         /* GlobalScope.launch {
              LogUtils.a("111111111111111-" + Thread.currentThread().name)
              delay(2000)
