@@ -117,6 +117,7 @@
                 app:riv_rightTextDrawablePadding="5dp"
                 app:riv_driverColor="@color/colorPrimaryDark"
                 app:riv_driverShow="true"
+                app:riv_driverMarginLeftRight="20dp"
                 app:riv_editTextHint="请输入"
                 app:riv_editTextSize="12sp"
                 app:riv_editTextGravity="left"
