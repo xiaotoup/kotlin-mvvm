@@ -379,7 +379,7 @@ class RelativeItemView @JvmOverloads constructor(
     }
 
     fun getLeftString(): String = mTvLeft.text.toString()
-    fun setLeftOnClickListener(listener: OnClickListener) {
+    fun setLeftClickListener(listener: OnClickListener) {
         mTvLeft.setOnClickListener(listener)
     }
 
@@ -406,7 +406,7 @@ class RelativeItemView @JvmOverloads constructor(
     }
 
     fun getRightString(): String = mTvRight.text.toString()
-    fun setRightOnClickListener(listener: OnClickListener) {
+    fun setRightClickListener(listener: OnClickListener) {
         mTvRight.setOnClickListener(listener)
     }
 }
