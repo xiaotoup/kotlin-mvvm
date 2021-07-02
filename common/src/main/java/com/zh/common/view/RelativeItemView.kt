@@ -377,7 +377,11 @@ class RelativeItemView @JvmOverloads constructor(
     fun setLeftTextString(src: Any) {
         mTvLeft.text = "$src"
     }
-    fun getLeftString():String = mTvLeft.text.toString()
+
+    fun getLeftString(): String = mTvLeft.text.toString()
+    fun setLeftOnClickListener(listener: OnClickListener) {
+        mTvLeft.setOnClickListener(listener)
+    }
 
     /**
      * 获取输入框文字
@@ -390,7 +394,8 @@ class RelativeItemView @JvmOverloads constructor(
     fun setEditTextHintString(src: Any) {
         mEtContent.hint = "$src"
     }
-    fun getEditString():String = mEtContent.text.toString()
+
+    fun getEditString(): String = mEtContent.text.toString()
 
     /**
      * 获取右边文字
@@ -399,5 +404,9 @@ class RelativeItemView @JvmOverloads constructor(
     fun setRightTextString(src: Any) {
         mTvRight.text = "$src"
     }
-    fun getRightString():String = mTvRight.text.toString()
+
+    fun getRightString(): String = mTvRight.text.toString()
+    fun setRightOnClickListener(listener: OnClickListener) {
+        mTvRight.setOnClickListener(listener)
+    }
 }

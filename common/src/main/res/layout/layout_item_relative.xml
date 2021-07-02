@@ -15,7 +15,7 @@
     <TextView
         android:id="@+id/tvLeft"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_centerVertical="true"
         android:layout_toEndOf="@+id/ivLeftImg"
         android:gravity="center_vertical"
@@ -40,7 +40,7 @@
     <TextView
         android:id="@+id/tvRight"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:gravity="center_vertical"
