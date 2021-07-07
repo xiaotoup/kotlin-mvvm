@@ -142,4 +142,8 @@
         <!-- 下划线距离左右边距离 -->
         <attr name="riv_driverMarginLeftRight" format="dimension" />
     </declare-styleable>
+    <!--状态栏-->
+    <declare-styleable name="StatusBarView">
+        <attr name="sv_backgroundColor" format="color"/>
+    </declare-styleable>
 </resources>
