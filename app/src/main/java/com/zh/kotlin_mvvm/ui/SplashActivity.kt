@@ -13,6 +13,7 @@ import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
+import com.zh.common.utils.EmptyUtils
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
@@ -30,6 +31,7 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         ToastUtils.showShort("启动了")
         val message = "{\"code\":200, \"message\":\"提示内容\",\"data\":{\"content\":\"哈哈哈哈\"}}"
         LogUtils.wTag("okhttp", message)
+        LogUtils.wTag("okhttp", "null is ${EmptyUtils.isEmpty("null")}")
 
         initData()
     }
