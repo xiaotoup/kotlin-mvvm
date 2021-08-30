@@ -13,8 +13,12 @@ import com.blankj.utilcode.util.ActivityUtils
 
 /**
  * PopupWindow基类
+ * 默认不显示背景半透明
  */
-open class BasePopWindow(private val mContext: Context) {
+open class BasePopWindow(
+    private val mContext: Context,
+    private val showBackgroundAlpha: Boolean = false
+) {
 
     private lateinit var popWindow: PopupWindow
     private lateinit var contentView: View
@@ -99,6 +103,11 @@ open class BasePopWindow(private val mContext: Context) {
         return this
     }
 
+    /**
+     * Gravity.TOP | Gravity.LEFT 以屏幕左上角为坐标原点
+     * Gravity.BOTTOM | Gravity.RIGHT 以屏幕右下角为坐标原点
+     * Gravity.LEFT 以屏幕左侧，屏幕高度 1/2 处为坐标原点
+     */
     fun showAtLocation(downView: View, gravity: Int, xOff: Int, yOff: Int): BasePopWindow {
         try {
             popWindow.showAtLocation(downView, gravity, xOff, yOff)
@@ -112,7 +121,7 @@ open class BasePopWindow(private val mContext: Context) {
     /**
      * 背景色设置
      */
-    fun setBackgroundAlpha(bgAlpha: Float) {
+    private fun setBackgroundAlpha(bgAlpha: Float) {
         try {
             val lp: WindowManager.LayoutParams = ActivityUtils.getTopActivity().window.attributes
             lp.alpha = bgAlpha
@@ -146,9 +155,9 @@ open class BasePopWindow(private val mContext: Context) {
             isFocusable = true//解决再次点击该控件无法消失PopWindowBug
             isTouchable = true//设置可以点击
             isOutsideTouchable = true//点击外部消失
-            setBackgroundAlpha(0.6f)
+            if (showBackgroundAlpha) setBackgroundAlpha(0.6f)
             setOnDismissListener {
-                setBackgroundAlpha(1f)
+                if (showBackgroundAlpha) setBackgroundAlpha(1f)
                 setDismissListener()
             }
         }
