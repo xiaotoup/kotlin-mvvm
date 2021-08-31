@@ -9,19 +9,13 @@ import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.OnKeyboardListener
 import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
-import com.zh.config.ZjConfig
-import me.jessyan.autosize.internal.CustomAdapt
 
 /**
  * @auth xiaohua
  * @time 2021/4/23 - 14:16
  * @desc 管理跳转页面、标题颜色
  */
-interface JumpActivity : CustomAdapt {
-
-    //今日头条适配方案
-    override fun isBaseOnWidth(): Boolean = true
-    override fun getSizeInDp(): Float = ZjConfig.screenWidth
+interface JumpActivity {
 
     //可以重写状态栏和导航栏颜色
     // 注：颜色不能使用Color.WHITE设置（报错），必须使用R.color.white

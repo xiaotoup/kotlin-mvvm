@@ -40,18 +40,15 @@ open class BaseApplication : MultiDexApplication() {
             //组件化实例化
             initARouter()
             //今日头条适配
-            AutoSizeConfig.getInstance()
-                .unitsManager
-                .setSupportDP(true)
-                .setSupportSP(true)
-                .supportSubunits = Subunits.MM
+            AutoSizeConfig.getInstance().setBaseOnWidth(true)
+                .unitsManager.supportSubunits = Subunits.MM
         }
     }
 
     /**
      * 初始化操作
      */
-    open fun onCreateMethod(){}
+    open fun onCreateMethod() {}
 
     private fun initARouter() {
         if (BuildConfig.DEBUG) { // 这两行必须写在init之前，否则这些配置在init过程中将无效

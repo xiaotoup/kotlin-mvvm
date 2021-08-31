@@ -79,10 +79,10 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.9.0'
     api 'com.squareup.retrofit2:converter-gson:2.9.0'
     api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    api 'com.squareup.retrofit2:converter-scalars:2.4.0'
+    api 'com.squareup.retrofit2:converter-scalars:2.9.0'
 
     kapt 'com.alibaba:arouter-compiler:1.5.1'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.12.0'
     kapt "com.android.databinding:compiler:$compiler_version"
 
     //新导入的包全部添加到下面
