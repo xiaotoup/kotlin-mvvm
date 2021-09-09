@@ -12,7 +12,6 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.BuildConfig
 import com.zh.common.R
-import com.zh.config.ZjConfig
 import me.jessyan.autosize.AutoSizeConfig
 import me.jessyan.autosize.unit.Subunits
 import java.util.*
@@ -25,9 +24,6 @@ open class BaseApplication : MultiDexApplication() {
     companion object {
         @JvmStatic
         lateinit var instance: BaseApplication
-
-        @JvmStatic
-        val mBaseUrl: String = ZjConfig.base_url
     }
 
     override fun onCreate() {

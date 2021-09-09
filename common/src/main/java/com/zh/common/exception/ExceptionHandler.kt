@@ -1,8 +1,8 @@
 package com.zh.common.exception
 
+import android.content.res.Resources
 import com.google.gson.JsonParseException
 import com.zh.common.R
-import com.zh.common.base.BaseApplication
 import org.apache.http.conn.ConnectTimeoutException
 import org.json.JSONException
 import retrofit2.HttpException
@@ -15,6 +15,7 @@ import javax.net.ssl.SSLHandshakeException
  * 异常处理器
  */
 object ExceptionHandler {
+
     //对应HTTP的状态码
     private const val UNAUTHORIZED = 401
     private const val FORBIDDEN = 403
@@ -32,49 +33,37 @@ object ExceptionHandler {
             ex = ApiException(e, ERROR.HTTP_ERROR)
             when (e.code()) {
                 UNAUTHORIZED, FORBIDDEN, NOT_FOUND, REQUEST_TIMEOUT, GATEWAY_TIMEOUT, INTERNAL_SERVER_ERROR, BAD_GATEWAY, SERVICE_UNAVAILABLE -> ex.message =
-                    BaseApplication.instance
-                        .getString(R.string.http_network_error) //均视为网络错误
-                else -> ex.message =
-                    BaseApplication.instance.getString(R.string.http_network_error)
+                    Resources.getSystem().getString(R.string.http_network_error) //均视为网络错误
+                else -> ex.message = Resources.getSystem().getString(R.string.http_network_error)
             }
             ex
         } else if (e is ServerException) {//服务器返回的错误
             ex = ApiException(e, e.code)
             ex.message = e.msg
             ex
-        } else if (e is JsonParseException
-            || e is JSONException
-            || e is ParseException
-        ) {
+        } else if (e is JsonParseException || e is JSONException || e is ParseException) {
             ex = ApiException(e, ERROR.PARSE_ERROR)
-            ex.message =
-                BaseApplication.instance.getString(R.string.http_parsing_error) //均视为解析错误
+            ex.message = Resources.getSystem().getString(R.string.http_parsing_error) //均视为解析错误
             ex
         } else if (e is ConnectException) {
             ex = ApiException(e, ERROR.NETWORD_ERROR)
-            ex.message =
-                BaseApplication.instance
-                    .getString(R.string.http_connection_failed) //均视为网络错误
+            ex.message = Resources.getSystem().getString(R.string.http_connection_failed) //均视为网络错误
             ex
         } else if (e is SSLHandshakeException) {
             ex = ApiException(e, ERROR.SSL_ERROR)
-            ex.message =
-                BaseApplication.instance.getString(R.string.http_ssl_verification_failed)
+            ex.message = Resources.getSystem().getString(R.string.http_ssl_verification_failed)
             ex
         } else if (e is ConnectTimeoutException) {
             ex = ApiException(e, ERROR.TIMEOUT_ERROR)
-            ex.message =
-                BaseApplication.instance.getString(R.string.http_connection_timed_out)
+            ex.message = Resources.getSystem().getString(R.string.http_connection_timed_out)
             ex
-        } else if (e is SocketTimeoutException) { //连接超时
+        } else if (e is SocketTimeoutException) {//连接超时
             ex = ApiException(e, ERROR.TIMEOUT_ERROR)
-            ex.message =
-                BaseApplication.instance.getString(R.string.http_connection_timed_out)
+            ex.message = Resources.getSystem().getString(R.string.http_connection_timed_out)
             ex
         } else {
             ex = ApiException(e, ERROR.UNKNOWN)
-            ex.message =
-                BaseApplication.instance.getString(R.string.http_unknown_error) //未知错误
+            ex.message = Resources.getSystem().getString(R.string.http_unknown_error) //未知错误
             ex
         }
     }

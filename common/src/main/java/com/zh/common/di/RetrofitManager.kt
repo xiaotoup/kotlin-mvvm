@@ -1,8 +1,8 @@
 package com.zh.common.di
 
 import android.os.Environment
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
-import com.zh.common.base.BaseApplication
 import com.zh.common.http.LocalCookieJar
 import com.zh.common.http.RequestIntercept
 import com.zh.config.ZjConfig
@@ -95,15 +95,15 @@ class RetrofitManager private constructor() {
      */
     private fun provideCacheFile() =
         if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
-            var file = BaseApplication.instance.externalCacheDir //获取系统管理的sd卡缓存文件
+            var file = ActivityUtils.getTopActivity().externalCacheDir //获取系统管理的sd卡缓存文件
             if (file == null) { //如果获取的为空,就是用自己定义的缓存文件夹做缓存路径
-                file = File("/mnt/sdcard/${BaseApplication.instance.packageName}")
+                file = File("/mnt/sdcard/${ActivityUtils.getTopActivity().packageName}")
                 if (!file.exists()) {
                     file.mkdirs()
                 }
             }
             file
         } else {
-            BaseApplication.instance.cacheDir
+            ActivityUtils.getTopActivity().cacheDir
         }
 }
