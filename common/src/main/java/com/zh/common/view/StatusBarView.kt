@@ -8,8 +8,8 @@ import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.blankj.utilcode.util.BarUtils
 import com.zh.common.R
+import me.jessyan.autosize.utils.ScreenUtils
 
 /**
  * 自定义状态栏，可自定义颜色
@@ -40,7 +40,7 @@ class StatusBarView @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         //动态获取状态栏高度，并设置
-        setMeasuredDimension(widthMeasureSpec, BarUtils.getStatusBarHeight())
+        setMeasuredDimension(widthMeasureSpec, ScreenUtils.getStatusBarHeight())
     }
 
     @SuppressLint("DrawAllocation")
