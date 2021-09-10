@@ -124,8 +124,7 @@ class RelativeItemView @JvmOverloads constructor(
         )
         //左边文字加粗设置
         mTvLeft.typeface = when (typedArray.getInt(
-            R.styleable.RelativeItemView_riv_leftTextStyle,
-            0
+            R.styleable.RelativeItemView_riv_leftTextStyle, 0
         )) {
             1 -> Typeface.defaultFromStyle(Typeface.BOLD)
             2 -> Typeface.defaultFromStyle(Typeface.ITALIC)
@@ -135,9 +134,7 @@ class RelativeItemView @JvmOverloads constructor(
         if (typedArray.hasValue(R.styleable.RelativeItemView_riv_leftTextDrawable)) {
             mTvLeft.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 typedArray.getDrawable(R.styleable.RelativeItemView_riv_leftTextDrawable),
-                null,
-                null,
-                null
+                null, null, null
             )
             //左边文字Drawable图片Padding
             if (typedArray.hasValue(R.styleable.RelativeItemView_riv_leftTextDrawablePadding)) {
@@ -151,8 +148,7 @@ class RelativeItemView @JvmOverloads constructor(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     mTvLeft.compoundDrawableTintList = ColorStateList.valueOf(
                         typedArray.getColor(
-                            R.styleable.RelativeItemView_riv_leftTextDrawableTint,
-                            0
+                            R.styleable.RelativeItemView_riv_leftTextDrawableTint, 0
                         )
                     )
                 }
@@ -194,8 +190,7 @@ class RelativeItemView @JvmOverloads constructor(
             )
             //输入框文字加粗设置
             mEtContent.typeface = when (typedArray.getInt(
-                R.styleable.RelativeItemView_riv_editTextStyle,
-                0
+                R.styleable.RelativeItemView_riv_editTextStyle, 0
             )) {
                 1 -> Typeface.defaultFromStyle(Typeface.BOLD)
                 2 -> Typeface.defaultFromStyle(Typeface.ITALIC)
@@ -273,8 +268,7 @@ class RelativeItemView @JvmOverloads constructor(
         )
         //右边文字加粗设置
         mTvRight.typeface = when (typedArray.getInt(
-            R.styleable.RelativeItemView_riv_rightTextStyle,
-            0
+            R.styleable.RelativeItemView_riv_rightTextStyle, 0
         )) {
             1 -> Typeface.defaultFromStyle(Typeface.BOLD)
             2 -> Typeface.defaultFromStyle(Typeface.ITALIC)
@@ -284,8 +278,7 @@ class RelativeItemView @JvmOverloads constructor(
         if (typedArray.hasValue(R.styleable.RelativeItemView_riv_rightTextDrawable)) {
             //右边文字Drawable图片
             mTvRight.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                null,
-                null,
+                null, null,
                 typedArray.getDrawable(R.styleable.RelativeItemView_riv_rightTextDrawable),
                 null
             )
@@ -301,8 +294,7 @@ class RelativeItemView @JvmOverloads constructor(
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     mTvRight.compoundDrawableTintList = ColorStateList.valueOf(
                         typedArray.getColor(
-                            R.styleable.RelativeItemView_riv_rightTextDrawableTint,
-                            0
+                            R.styleable.RelativeItemView_riv_rightTextDrawableTint, 0
                         )
                     )
                 }
@@ -343,13 +335,11 @@ class RelativeItemView @JvmOverloads constructor(
             } else {
                 //底部横线左边距离
                 lp.leftMargin = typedArray.getDimension(
-                    R.styleable.RelativeItemView_riv_driverMarginLeft,
-                    0f
+                    R.styleable.RelativeItemView_riv_driverMarginLeft, 0f
                 ).toInt()
                 //底部横线右边距离
                 lp.rightMargin = typedArray.getDimension(
-                    R.styleable.RelativeItemView_riv_driverMarginRight,
-                    0f
+                    R.styleable.RelativeItemView_riv_driverMarginRight, 0f
                 ).toInt()
             }
             mViewDriver.layoutParams = lp
