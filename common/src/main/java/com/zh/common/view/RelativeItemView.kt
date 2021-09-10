@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.SizeUtils
 import com.zh.common.R
 
@@ -81,9 +82,7 @@ class RelativeItemView @JvmOverloads constructor(
          */
         if (typedArray.hasValue(R.styleable.RelativeItemView_riv_leftImg)) {
             //左边文字PaddingLeft - 默认5dp
-            mTvLeft.setPadding(
-                SizeUtils.dp2px(5f), 0, 0, 0
-            )
+            mTvLeft.setPadding(SizeUtils.dp2px(5f), 0, 0, 0)
             mIvLeftImg.setImageDrawable(typedArray.getDrawable(R.styleable.RelativeItemView_riv_leftImg))
             val lp = mIvLeftImg.layoutParams as LayoutParams
             //左边图片设置宽高
@@ -106,21 +105,21 @@ class RelativeItemView @JvmOverloads constructor(
         mTvLeft.setTextColor(
             typedArray.getColor(
                 R.styleable.RelativeItemView_riv_leftTextColor,
-                defaultLeftTextColor.toInt()
+                ContextCompat.getColor(context, defaultLeftTextColor)
             )
         )
         //左边文字字体大小
         mTvLeft.setTextSize(
             TypedValue.COMPLEX_UNIT_PX, typedArray.getDimension(
                 R.styleable.RelativeItemView_riv_leftTextSize,
-                defaultLeftTextSize
+                SizeUtils.sp2px(defaultLeftTextSize).toFloat()
             )
         )
         //左边文字PaddingLeft
         mTvLeft.setPadding(
             typedArray.getDimension(
                 R.styleable.RelativeItemView_riv_leftTextPaddingLeft,
-                defaultLeftTextPaddingLeft
+                SizeUtils.dp2px(defaultLeftTextPaddingLeft).toFloat()
             ).toInt(), 0, 0, 0
         )
         //左边文字加粗设置
@@ -144,7 +143,7 @@ class RelativeItemView @JvmOverloads constructor(
             if (typedArray.hasValue(R.styleable.RelativeItemView_riv_leftTextDrawablePadding)) {
                 mTvLeft.compoundDrawablePadding = typedArray.getDimension(
                     R.styleable.RelativeItemView_riv_leftTextDrawablePadding,
-                    defaultLeftDrawablePadding
+                    SizeUtils.dp2px(defaultLeftDrawablePadding).toFloat()
                 ).toInt()
             }
             //左边文字Drawable图片Tint
@@ -174,14 +173,14 @@ class RelativeItemView @JvmOverloads constructor(
             mEtContent.setTextColor(
                 typedArray.getColor(
                     R.styleable.RelativeItemView_riv_editTextColor,
-                    defaultEditTextColor.toInt()
+                    ContextCompat.getColor(context, defaultEditTextColor)
                 )
             )
             //输入框文字字体大小
             mEtContent.textSize = SizeUtils.px2sp(
                 typedArray.getDimension(
                     R.styleable.RelativeItemView_riv_editTextSize,
-                    defaultEditTextSize
+                    SizeUtils.sp2px(defaultEditTextSize).toFloat()
                 )
             ).toFloat()
             //输入框文字Hint
@@ -190,7 +189,7 @@ class RelativeItemView @JvmOverloads constructor(
             mEtContent.setHintTextColor(
                 typedArray.getColor(
                     R.styleable.RelativeItemView_riv_editTextHintColor,
-                    defaultEditTextHintColor.toInt()
+                    ContextCompat.getColor(context, defaultEditTextHintColor)
                 )
             )
             //输入框文字加粗设置
@@ -254,14 +253,14 @@ class RelativeItemView @JvmOverloads constructor(
         mTvRight.setTextColor(
             typedArray.getColor(
                 R.styleable.RelativeItemView_riv_rightTextColor,
-                defaultRightTextColor.toInt()
+                ContextCompat.getColor(context, defaultRightTextColor)
             )
         )
         //右边文字字体大小
         mTvRight.setTextSize(
             TypedValue.COMPLEX_UNIT_PX, typedArray.getDimension(
                 R.styleable.RelativeItemView_riv_rightTextSize,
-                defaultRightTextSize
+                SizeUtils.sp2px(defaultRightTextSize).toFloat()
             )
         )
         //右边文字右边padding
@@ -269,7 +268,7 @@ class RelativeItemView @JvmOverloads constructor(
             0, 0,
             typedArray.getDimension(
                 R.styleable.RelativeItemView_riv_rightTextPaddingRight,
-                defaultRightTextPaddingRight
+                SizeUtils.dp2px(defaultRightTextPaddingRight).toFloat()
             ).toInt(), 0
         )
         //右边文字加粗设置
@@ -294,7 +293,7 @@ class RelativeItemView @JvmOverloads constructor(
             if (typedArray.hasValue(R.styleable.RelativeItemView_riv_rightTextDrawablePadding)) {
                 mTvRight.compoundDrawablePadding = typedArray.getDimension(
                     R.styleable.RelativeItemView_riv_rightTextDrawablePadding,
-                    defaultRightDrawablePadding
+                    SizeUtils.dp2px(defaultRightDrawablePadding).toFloat()
                 ).toInt()
             }
             //右边文字Drawable图片Tint
@@ -320,7 +319,7 @@ class RelativeItemView @JvmOverloads constructor(
             mViewDriver.setBackgroundColor(
                 typedArray.getColor(
                     R.styleable.RelativeItemView_riv_driverColor,
-                    defaultDriverColor.toInt()
+                    ContextCompat.getColor(context, defaultDriverColor)
                 )
             )
             val lp = mViewDriver.layoutParams as LayoutParams
@@ -328,7 +327,7 @@ class RelativeItemView @JvmOverloads constructor(
             if (typedArray.hasValue(R.styleable.RelativeItemView_riv_driverHeight)) {
                 lp.height = typedArray.getDimension(
                     R.styleable.RelativeItemView_riv_driverHeight,
-                    defaultDriverHeight
+                    SizeUtils.dp2px(defaultDriverHeight).toFloat()
                 ).toInt()
             } else {
                 lp.height = 1
