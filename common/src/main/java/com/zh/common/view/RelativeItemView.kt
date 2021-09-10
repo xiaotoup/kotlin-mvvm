@@ -398,4 +398,10 @@ class RelativeItemView @JvmOverloads constructor(
     fun setRightClickListener(listener: OnClickListener) {
         mTvRight.setOnClickListener(listener)
     }
+
+    fun setRightImg(res: Int) {
+        mTvRight.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            0 , 0 , res , 0
+        )
+    }
 }
