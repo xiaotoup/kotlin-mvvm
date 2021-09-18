@@ -24,14 +24,9 @@ class StatusBarView @JvmOverloads constructor(
     init {
         val typedArray =
             context.obtainStyledAttributes(attrs, R.styleable.StatusBarView, defStyleAttr, 0)
-        if (typedArray.hasValue(R.styleable.StatusBarView_sv_backgroundColor)) {
-            paint.color = typedArray.getColor(
-                R.styleable.StatusBarView_sv_backgroundColor,
-                defaultColor.toInt()
-            )
-        } else {
-            paint.color = ContextCompat.getColor(context, defaultColor)
-        }
+        paint.color = typedArray.getColor(
+            R.styleable.StatusBarView_sv_backgroundColor, ContextCompat.getColor(context, defaultColor)
+        )
         paint.isAntiAlias = true
         paint.style = Paint.Style.FILL
         typedArray.recycle()
