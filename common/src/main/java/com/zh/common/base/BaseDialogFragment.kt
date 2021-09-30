@@ -39,9 +39,10 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
 
     @get:LayoutRes
     abstract val layoutRes: Int
-    abstract val marginWidth: Int//dialog到两边的距离,设置一边的距离即可
+    open val marginHorizontal: Int = 30 //dialog到两边的距离,设置一边的距离即可
     open val viewModel: BaseViewModel = NormalViewModel()
     open val viewModelId = 0
+    open val isBottomInto = false // 默认中间弹出
     abstract fun initView(savedInstanceState: Bundle?, view: View)
 
     override fun onAttach(context: Context) {
@@ -53,6 +54,7 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         super.onActivityCreated(savedInstanceState)
         dialog?.apply {
             try {
+                setDialogAnimation()
                 // 解决Dialog内D存泄漏
                 setOnDismissListener(null)
                 setOnCancelListener(null)
@@ -87,7 +89,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //在OnCreate方法中调用下面方法，然后再使用线程，就能在uncaughtException方法中捕获到异常
-        isCancelable = true
         initView(savedInstanceState, view)
     }
 
@@ -99,18 +100,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         binding?.setVariable(viewModelId, mViewModel)
         //支持LiveData绑定xml，数据改变，UI自动会更新
         binding?.lifecycleOwner = this
-    }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.let {
-            it.window?.setLayout(
-                ScreenUtils.getScreenWidth() - 2 * SizeUtils.dp2px(
-                    marginWidth.toFloat()
-                ),
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
     }
 
     override fun onPause() {
@@ -128,9 +117,32 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         dialog?.dismiss()
     }
 
-    fun setBottomAnimation() {
-        dialog?.window?.setGravity(Gravity.BOTTOM)
-        dialog?.window?.setWindowAnimations(R.style.StyleBottomAnimation)
+    //外部点击消失
+    fun isCanceledOnTouchOutside(isOutside: Boolean = true) {
+        dialog?.setCanceledOnTouchOutside(isOutside)
+    }
+
+    //弹出动画 - 默认中间弹出
+    private fun setDialogAnimation() {
+        dialog?.window?.let {
+            if (isBottomInto) {
+                it.setLayout(
+                    ScreenUtils.getScreenWidth(),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                it.setGravity(Gravity.BOTTOM)
+                it.setWindowAnimations(android.R.style.Animation_InputMethod)
+            } else {
+                it.setLayout(
+                    ScreenUtils.getScreenWidth() - SizeUtils.dp2px(
+                        2 * marginHorizontal.toFloat()
+                    ),
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                it.setGravity(Gravity.CENTER)
+                it.setWindowAnimations(android.R.style.Animation_Toast)
+            }
+        }
     }
 
     override fun show(manager: FragmentManager, tag: String?) {

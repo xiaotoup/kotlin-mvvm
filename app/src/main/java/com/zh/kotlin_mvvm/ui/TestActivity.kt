@@ -1,10 +1,12 @@
 package com.zh.kotlin_mvvm.ui
 
 import android.os.Bundle
-import android.widget.Toast
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.MutableLiveData
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.kotlin_mvvm.R
@@ -40,7 +42,7 @@ class TestActivity(
         }
 
 //        var lis:MutableList<String> = MutableList(1, 0)
-        GlobalScope.apply {
+        /*GlobalScope.apply {
             val launch = launch {
                 LogUtils.a("--" + Thread.currentThread().name)
                 launch(Dispatchers.Main) {
@@ -49,21 +51,67 @@ class TestActivity(
 //                lis = mutableListOf()
 //                lis.add("sss")
             }
-        }
+        }*/
 //        LogUtils.a(lis.size)
-        /* GlobalScope.launch {
-             LogUtils.a("111111111111111-" + Thread.currentThread().name)
-             delay(2000)
-             LogUtils.a("222222222222222-" + Thread.currentThread().name)
- //            testJoin()
-         }
-         LogUtils.a("3333333333333333-" + Thread.currentThread().name)*/
+//         GlobalScope.launch {
+//             LogUtils.a("111111111111111-" + Thread.currentThread().name)
+//             delay(2000)
+//             LogUtils.a("222222222222222-" + Thread.currentThread().name)
+//             ToastUtils.showShort("111")
+//             handler.sendMessage(Message())
+//             withContext(Dispatchers.Main){
+//                 bgv.setNumber(20)
+//             }
+//         }
+//         ToastUtils.showShort("222")
+//         LogUtils.a("3333333333333333-" + Thread.currentThread().name)
+
+        /*GlobalScope.launch {
+            LogUtils.a("111111111111111-" + Thread.currentThread().name)
+            delay(2000)
+            LogUtils.a("222222222222222-" + Thread.currentThread().name)
+            testJoin()
+        }*/
+
 //      test()
         initData()
     }
 
+    private val handler: Handler = object : Handler(Looper.myLooper()!!) {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            bgv.setNumber(20)
+        }
+    }
+
     fun initData() {
+        /*GlobalScope.launch {
+            test1()
+            test2()
+            test3()
+        }*/
 //        thread()
+        GlobalScope.launch {
+            val t1 = async { test1() }
+            val t2 = async { test2() }
+            t1.start()
+            t2.start()
+        }
+    }
+
+    private suspend fun test1() {
+        delay(1000)
+        LogUtils.a("test1")
+    }
+
+    private suspend fun test2() {
+        delay(3000)
+        LogUtils.a("test2")
+    }
+
+    private suspend fun test3() {
+        delay(2000)
+        LogUtils.a("test3")
     }
 
     private fun thread() {
