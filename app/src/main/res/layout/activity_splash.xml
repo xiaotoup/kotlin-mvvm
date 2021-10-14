@@ -98,6 +98,13 @@
                 android:layout_height="wrap_content"
                 android:text="选择器" />
 
+            <Button
+                android:id="@+id/btnMotion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="MotionLayout"
+                android:textAllCaps="false"/>
+
             <com.zh.common.view.RelativeItemView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

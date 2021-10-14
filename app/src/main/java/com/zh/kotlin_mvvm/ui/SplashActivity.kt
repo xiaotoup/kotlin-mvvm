@@ -75,6 +75,9 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         btnRedBank.setOnClickListener {
             startActivity(NumberPickerActivity::class.java)
         }
+        btnMotion.setOnClickListener {
+            startActivity(MotionActivity::class.java)
+        }
     }
 
     fun clickTest(view: View) {
