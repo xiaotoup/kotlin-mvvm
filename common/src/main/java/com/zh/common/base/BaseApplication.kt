@@ -2,6 +2,7 @@ package com.zh.common.base
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.res.Resources
 import android.os.Process
 import android.text.TextUtils
 import androidx.multidex.MultiDexApplication
@@ -110,5 +111,14 @@ open class BaseApplication : MultiDexApplication() {
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
             ClassicsFooter(context).setDrawableSize(20f)
         }
+    }
+
+    /**
+     * 设置app不随着系统字体的调整而变化
+     */
+    override fun getResources(): Resources {
+        val resources = super.getResources()
+        resources.configuration.setToDefaults()
+        return resources
     }
 }
