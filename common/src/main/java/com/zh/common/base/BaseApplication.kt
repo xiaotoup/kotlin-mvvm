@@ -37,7 +37,7 @@ open class BaseApplication : MultiDexApplication() {
             //组件化实例化
             initARouter()
             //今日头条适配
-            AutoSizeConfig.getInstance().setBaseOnWidth(true)
+            AutoSizeConfig.getInstance().setBaseOnWidth(true).setExcludeFontScale(true)
                 .unitsManager.supportSubunits = Subunits.MM
         }
     }
@@ -111,14 +111,5 @@ open class BaseApplication : MultiDexApplication() {
         SmartRefreshLayout.setDefaultRefreshFooterCreator { context, _ ->
             ClassicsFooter(context).setDrawableSize(20f)
         }
-    }
-
-    /**
-     * 设置app不随着系统字体的调整而变化
-     */
-    override fun getResources(): Resources {
-        val resources = super.getResources()
-        resources.configuration.setToDefaults()
-        return resources
     }
 }
