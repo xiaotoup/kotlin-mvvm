@@ -3,7 +3,8 @@
     package="com.zh.login">
 
     <application>
-        <activity android:name=".ui.LoginActivity"></activity>
+        <activity android:name=".ui.sdActivity"></activity>
+        <activity android:name=".ui.LoginActivity" />
     </application>
 
 </manifest>
