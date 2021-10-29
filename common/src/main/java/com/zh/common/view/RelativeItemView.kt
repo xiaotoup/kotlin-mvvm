@@ -132,10 +132,18 @@ class RelativeItemView @JvmOverloads constructor(
         }
         //左边文字Drawable图片
         if (typedArray.hasValue(R.styleable.RelativeItemView_riv_leftTextDrawable)) {
-            mTvLeft.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                typedArray.getDrawable(R.styleable.RelativeItemView_riv_leftTextDrawable),
-                null, null, null
-            )
+            //左边文字_drawableLeft图片是否在左右
+            if (typedArray.hasValue(R.styleable.RelativeItemView_riv_leftTextDrawableRight)) {//显示在右边边
+                mTvLeft.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    null, null,
+                    typedArray.getDrawable(R.styleable.RelativeItemView_riv_leftTextDrawable), null
+                )
+            } else {//显示在左边
+                mTvLeft.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                    typedArray.getDrawable(R.styleable.RelativeItemView_riv_leftTextDrawable),
+                    null, null, null
+                )
+            }
             //左边文字Drawable图片Padding
             if (typedArray.hasValue(R.styleable.RelativeItemView_riv_leftTextDrawablePadding)) {
                 mTvLeft.compoundDrawablePadding = typedArray.getDimension(
@@ -256,6 +264,14 @@ class RelativeItemView @JvmOverloads constructor(
             TypedValue.COMPLEX_UNIT_PX, typedArray.getDimension(
                 R.styleable.RelativeItemView_riv_rightTextSize,
                 SizeUtils.sp2px(defaultRightTextSize).toFloat()
+            )
+        )
+        //右边文字hint
+        mTvRight.hint = typedArray.getString(R.styleable.RelativeItemView_riv_rightTextHint)
+        mTvRight.setHintTextColor(
+            typedArray.getColor(
+                R.styleable.RelativeItemView_riv_rightTextHintColor,
+                ContextCompat.getColor(context, defaultEditTextHintColor)
             )
         )
         //右边文字右边padding
@@ -401,7 +417,7 @@ class RelativeItemView @JvmOverloads constructor(
 
     fun setRightImg(res: Int) {
         mTvRight.setCompoundDrawablesRelativeWithIntrinsicBounds(
-            0 , 0 , res , 0
+            0, 0, res, 0
         )
     }
 }
