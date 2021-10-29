@@ -396,7 +396,7 @@ class RelativeItemView @JvmOverloads constructor(
         mEtContent.setText("$src")
     }
 
-    fun setEditTextHintString(src: Any) {
+    fun setEditTextHint(src: Any) {
         mEtContent.hint = "$src"
     }
 
@@ -406,11 +406,11 @@ class RelativeItemView @JvmOverloads constructor(
      * 获取右边文字
      */
     fun getRightTextView(): TextView = mTvRight
-    fun setRightTextString(src: Any) {
+    fun setRightText(src: Any) {
         mTvRight.text = "$src"
     }
 
-    fun getRightString(): String = mTvRight.text.toString()
+    fun getRightText(): String = mTvRight.text.toString()
     fun setRightClickListener(listener: OnClickListener) {
         mTvRight.setOnClickListener(listener)
     }
