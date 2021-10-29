@@ -65,7 +65,7 @@
         <attr name="riv_leftTextPaddingLeft" format="dimension" />
         <!-- 左边文字_drawableLeft图片 -->
         <attr name="riv_leftTextDrawable" format="reference" />
-        <!-- 左边文字_drawableLeft图片是否在左右 -->
+        <!-- 左边文字_drawableLeft图片是否在右边 -->
         <attr name="riv_leftTextDrawableRight" format="boolean" />
         <!-- 左边文字_drawablePadding -->
         <attr name="riv_leftTextDrawablePadding" format="dimension" />
