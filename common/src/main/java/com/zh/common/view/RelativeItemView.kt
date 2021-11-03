@@ -17,6 +17,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import com.blankj.utilcode.util.SizeUtils
 import com.zh.common.R
 
@@ -410,6 +411,16 @@ class RelativeItemView @JvmOverloads constructor(
         mTvRight.text = "$src"
     }
 
+    fun setRightImageTint(color: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mTvRight.compoundDrawableTintList = ColorStateList.valueOf(color)
+        } else {
+            val drawable = mTvRight.compoundDrawables[0]
+            val right = tintListDrawable(drawable, ContextCompat.getColorStateList(context, color)!!)
+            mTvRight.setCompoundDrawables(null, null, right, null)
+        }
+    }
+
     fun getRightText(): String = mTvRight.text.toString()
     fun setRightClickListener(listener: OnClickListener) {
         mTvRight.setOnClickListener(listener)
@@ -419,5 +430,16 @@ class RelativeItemView @JvmOverloads constructor(
         mTvRight.setCompoundDrawablesRelativeWithIntrinsicBounds(
             0, 0, res, 0
         )
+    }
+
+    private fun tintListDrawable(drawable: Drawable , colors: ColorStateList): Drawable {
+        val wrappedDrawable = getCanTintDrawable(drawable)
+        DrawableCompat.setTintList(wrappedDrawable , colors)
+        return wrappedDrawable
+    }
+
+    private fun getCanTintDrawable(drawable: Drawable): Drawable {
+        val state = drawable.constantState
+        return DrawableCompat.wrap(state?.newDrawable() ?: drawable).mutate()
     }
 }
