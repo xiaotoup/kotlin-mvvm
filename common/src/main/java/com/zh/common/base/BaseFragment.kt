@@ -147,7 +147,6 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
         super.onDestroy()
         mImmersionProxy.onDestroy()
         binding?.unbind()
-        ImmersionBar.destroy(this)
     }
 
     /**

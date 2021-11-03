@@ -118,11 +118,6 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         dialog?.dismiss()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        ImmersionBar.destroy(this)
-    }
-
     //外部点击消失
     fun isCanceledOnTouchOutside(isOutside: Boolean = true) {
         dialog?.setCanceledOnTouchOutside(isOutside)

@@ -88,7 +88,6 @@ abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), 
         super.onDestroy()
         synchronized(BaseActivity::class.java) { mApplication?.getActivityList()?.remove(this) }
         binding?.unbind()
-        loadingDialog?.let { ImmersionBar.destroy(this, it) }
     }
 
     /**
