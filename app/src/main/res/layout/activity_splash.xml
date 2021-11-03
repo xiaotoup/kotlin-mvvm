@@ -105,6 +105,13 @@
                 android:text="MotionLayout"
                 android:textAllCaps="false"/>
 
+            <Button
+                android:id="@+id/btnTab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="scrollView滑动tab联动"
+                android:textAllCaps="false"/>
+
             <com.zh.common.view.RelativeItemView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

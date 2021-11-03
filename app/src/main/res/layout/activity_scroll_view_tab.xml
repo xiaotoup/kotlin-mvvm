@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.ScrollViewTabActivity">
+
+        <com.zh.common.view.TitleBarView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tb_centerText="scrollView滑动tab联动" />
+
+        <com.flyco.tablayout.CommonTabLayout
+            android:id="@+id/cTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="4dp"
+            app:tl_indicator_color="@color/colorPrimary"
+            app:tl_indicator_corner_radius="2dp"
+            app:tl_indicator_height="4dp"
+            app:tl_indicator_width="59dp"
+            app:tl_tab_space_equal="true"
+            app:tl_textBold="BOTH"
+            app:tl_textSelectColor="@color/color_text_333"
+            app:tl_textUnselectColor="#686C6E"
+            app:tl_textsize="15sp" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/test1"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@color/color_text_999"
+                    android:gravity="center"
+                    android:text="测试布局1"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/test2"
+                    android:layout_width="match_parent"
+                    android:layout_height="400dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_text_999"
+                    android:gravity="center"
+                    android:text="测试布局2"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/test3"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/color_text_999"
+                    android:gravity="center"
+                    android:text="测试布局3"
+                    android:textSize="34sp" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</layout>

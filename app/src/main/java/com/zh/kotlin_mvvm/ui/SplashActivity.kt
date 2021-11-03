@@ -78,6 +78,9 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         btnMotion.setOnClickListener {
             startActivity(MotionActivity::class.java)
         }
+        btnTab.setOnClickListener {
+            startActivity(ScrollViewTabActivity::class.java)
+        }
     }
 
     fun clickTest(view: View) {
