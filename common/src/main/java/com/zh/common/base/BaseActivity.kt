@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.launcher.ARouter
+import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.tools.DoubleUtils
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.zh.common.base.factory.ViewModelFactory
@@ -87,6 +88,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), 
         super.onDestroy()
         synchronized(BaseActivity::class.java) { mApplication?.getActivityList()?.remove(this) }
         binding?.unbind()
+        loadingDialog?.let { ImmersionBar.destroy(this, it) }
     }
 
     /**

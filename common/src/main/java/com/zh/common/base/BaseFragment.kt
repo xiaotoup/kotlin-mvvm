@@ -13,6 +13,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
+import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.tools.DoubleUtils
 import com.trello.rxlifecycle2.components.support.RxFragment
 import com.zh.common.base.factory.ViewModelFactory
@@ -146,6 +147,7 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
         super.onDestroy()
         mImmersionProxy.onDestroy()
         binding?.unbind()
+        ImmersionBar.destroy(this)
     }
 
     /**

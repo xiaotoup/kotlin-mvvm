@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.core.LogisticsCenter
 import com.alibaba.android.arouter.launcher.ARouter
 import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.SizeUtils
+import com.gyf.immersionbar.ImmersionBar
 import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.R
 import com.zh.common.base.factory.ViewModelFactory
@@ -115,6 +116,11 @@ abstract class BaseDialogFragment<BINDING : ViewDataBinding> :
         }
         binding?.unbind()
         dialog?.dismiss()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ImmersionBar.destroy(this)
     }
 
     //外部点击消失
