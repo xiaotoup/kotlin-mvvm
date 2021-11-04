@@ -9,6 +9,7 @@ import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.SizeUtils
 import com.blankj.utilcode.util.ToastUtils
+import com.gyf.immersionbar.OnKeyboardListener
 import com.luck.picture.lib.tools.DoubleUtils
 import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
@@ -28,6 +29,11 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
 
     override val viewModel: BaseViewModel
         get() = NormalViewModel()
+
+    override val keyboardListener: OnKeyboardListener
+        get() = OnKeyboardListener { isPopup, _ ->
+            ToastUtils.showShort(if (isPopup) "键盘显示" else "键盘隐藏")
+        }
 
     override fun initView(savedInstanceState: Bundle?) {
         ToastUtils.showShort("启动了")
