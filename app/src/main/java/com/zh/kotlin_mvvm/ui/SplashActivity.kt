@@ -42,9 +42,6 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         LogUtils.wTag("okhttp", "null is ${EmptyUtils.isEmpty("null")}")
         LogUtils.wTag("statusBarHeight", "${ScreenUtils.getStatusBarHeight()}")
         LogUtils.wTag("navBarHeight", "${ScreenUtils.getHeightOfNavigationBar(this)}")
-        LogUtils.wTag("double", "${100.00.noDecimal()}")
-        LogUtils.wTag("double", "${100.10.noDecimal()}")
-
 
         initData()
     }
