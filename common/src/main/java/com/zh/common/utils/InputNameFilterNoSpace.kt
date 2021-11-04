@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.ToastUtils
 import java.util.regex.Pattern
 
 /**
- * created by liuyun on 2020/8/26
+ * 正则规则算法
  */
 class InputNameFilterNoSpace : InputFilter {
     private var prompt: String? = null

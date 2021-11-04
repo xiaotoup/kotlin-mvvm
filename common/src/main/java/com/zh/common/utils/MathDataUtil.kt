@@ -1,6 +1,7 @@
 package com.zh.common.utils
 
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 /**
  * Created by pc on 2017/9/25.
@@ -27,8 +28,8 @@ object MathDataUtil {
      * @return 两个参数的和
      */
     fun add(v1: Double, v2: Double): Double {
-        val b1 = BigDecimal(java.lang.Double.toString(v1))
-        val b2 = BigDecimal(java.lang.Double.toString(v2))
+        val b1 = BigDecimal(v1.toString())
+        val b2 = BigDecimal(v2.toString())
         return b1.add(b2).toDouble()
     }
 
@@ -40,8 +41,8 @@ object MathDataUtil {
      * @return 两个参数的差
      */
     fun sub(v1: Double, v2: Double): Double {
-        val b1 = BigDecimal(java.lang.Double.toString(v1))
-        val b2 = BigDecimal(java.lang.Double.toString(v2))
+        val b1 = BigDecimal(v1.toString())
+        val b2 = BigDecimal(v2.toString())
         return b1.subtract(b2).toDouble()
     }
 
@@ -53,8 +54,8 @@ object MathDataUtil {
      * @return 两个参数的积
      */
     fun mul(v1: Double, v2: Double): Double {
-        val b1 = BigDecimal(java.lang.Double.toString(v1))
-        val b2 = BigDecimal(java.lang.Double.toString(v2))
+        val b1 = BigDecimal(v1.toString())
+        val b2 = BigDecimal(v2.toString())
         return b1.multiply(b2).toDouble()
     }
     /**
@@ -81,9 +82,9 @@ object MathDataUtil {
         scale: Int = DEF_DIV_SCALE
     ): Double {
         require(scale >= 0) { "The scale must be a positive integer or zero" }
-        val b1 = BigDecimal(java.lang.Double.toString(v1))
-        val b2 = BigDecimal(java.lang.Double.toString(v2))
-        return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).toDouble()
+        val b1 = BigDecimal(v1.toString())
+        val b2 = BigDecimal(v2.toString())
+        return b1.divide(b2, scale, RoundingMode.HALF_UP).toDouble()
     }
 
     /**
@@ -95,8 +96,8 @@ object MathDataUtil {
      */
     fun round(v: Double, scale: Int): Double {
         require(scale >= 0) { "The scale must be a positive integer or zero" }
-        val b = BigDecimal(java.lang.Double.toString(v))
+        val b = BigDecimal(v.toString())
         val one = BigDecimal("1")
-        return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).toDouble()
+        return b.divide(one, scale, RoundingMode.HALF_UP).toDouble()
     }
 }

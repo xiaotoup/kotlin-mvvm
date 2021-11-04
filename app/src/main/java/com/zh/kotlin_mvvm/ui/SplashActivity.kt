@@ -15,7 +15,7 @@ import com.zh.common.base.BaseActivity
 import com.zh.common.base.BasePopWindow
 import com.zh.common.base.viewmodel.BaseViewModel
 import com.zh.common.base.viewmodel.NormalViewModel
-import com.zh.common.utils.EmptyUtils
+import com.zh.common.utils.*
 import com.zh.config.ZjConfig
 import com.zh.kotlin_mvvm.R
 import com.zh.kotlin_mvvm.dialog.TestDialog
@@ -42,6 +42,8 @@ class SplashActivity : BaseActivity<ViewDataBinding>() {
         LogUtils.wTag("okhttp", "null is ${EmptyUtils.isEmpty("null")}")
         LogUtils.wTag("statusBarHeight", "${ScreenUtils.getStatusBarHeight()}")
         LogUtils.wTag("navBarHeight", "${ScreenUtils.getHeightOfNavigationBar(this)}")
+        LogUtils.wTag("double", "${100.00.noDecimal()}")
+        LogUtils.wTag("double", "${100.10.noDecimal()}")
 
 
         initData()
