@@ -120,7 +120,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     app:riv_driverColor="@color/colorPrimaryDark"
-                    app:riv_driverMarginLeftRight="20dp"
+                    app:riv_driverMarginHorizontal="20dp"
                     app:riv_driverShow="true"
                     app:riv_editTextGravity="left"
                     app:riv_editTextHint="请输入"
