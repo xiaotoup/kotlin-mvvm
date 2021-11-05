@@ -9,7 +9,7 @@ Android开发项目基本使用框架，封装了各类组件，在基类实现�
 
 里面封装各种组件：
 
-viewmodel封装
+## viewmodel封装
 ```
 open class BaseViewModel : ViewModel() {
 
@@ -180,7 +180,7 @@ tb_divider 底部分割线
 tb_titleBarHeight TitleBar高度
 tb_titleBarBackground TitleBar背景色 
 ```
-###普通类继承 BaseActivity（BaseFragment、BaseDialogFragment 同理）
+### 普通类继承 BaseActivity（BaseFragment、BaseDialogFragment 同理）
 ```
 class PictureActivity(
     override val layoutRes: Int = R.layout.activity_picture,
@@ -195,7 +195,7 @@ class PictureActivity(
 }
 ```
 
-BaseActivity封装
+## BaseActivity封装
 ```
 abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), JumpActivity {
 
@@ -344,7 +344,7 @@ abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), 
         }
     }
 ```
-BaseFragment封装
+### BaseFragment封装
 ```
 abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
     JumpActivity, ImmersionOwner {
