@@ -8,6 +8,79 @@ Android开发项目基本使用框架，封装了各类组件，在基类实现�
 
 
 里面封装各种组件：
+
+viewmodel封装
+```
+open class BaseViewModel : ViewModel() {
+
+    var pageIndex = 1
+    var pageSize = 10
+    private var isAddDisposable = false
+    private val mCompositeDisposable = CompositeDisposable()
+
+    //添加网络请求到CompositeDisposable
+    private fun addSubscribe(disposable: Disposable) {
+        mCompositeDisposable.also {
+            Log.e("--okhttp--", "disposable is add")
+            isAddDisposable = true
+            it.add(disposable)
+        }
+    }
+
+    override fun onCleared() {
+        //解除网络请求
+        mCompositeDisposable.also {
+            if (isAddDisposable) {
+                Log.e("--okhttp--", "disposable is clear")
+                isAddDisposable = false
+                mCompositeDisposable.clear()
+            }
+        }
+    }
+
+    /**
+     * 实例化网络请求
+     * hostUrl 域名, 默认ZjConfig.base_url，需要修改传入新的域名（新的每次都传）
+     */
+    inline fun <reified T : Any> apiService(hostUrl: String = ZjConfig.base_url): T =
+        RetrofitManager.instance.apiService(T::class.java, hostUrl)
+
+    /**
+     * 公用的网络请求发起的操作
+     * @param observable 发起请求的被观察着
+     * @param observer 观察着回调
+     */
+    fun <R> doNetRequest(observable: Observable<out BaseResponse<R>>, observer: BaseObserver<R>) {
+        val subscribeWith = observable
+            .compose(ResponseTransformer.instance.handleResult())
+            .compose(SchedulerProvider.instance.applySchedulers())
+            .subscribeWith(observer)
+        subscribeWith.getDisposable()?.let { addSubscribe(it) }
+    }
+```
+## 发起网络请求
+
+单独创建接口类
+```
+@POST(ApiManager.APPLOGIN_URL)
+fun login(@Body body: RequestBody): Observable<BaseResponse<LoginBean>>
+```
+在viewmodle中调用即可
+```
+doNetRequest(apiService<INetService>().login(BaseMapToBody.convertMapToBody(map)),
+            object : BaseObserver<LoginBean>(true) {
+
+                override fun onISuccess(message: String, response: LoginBean) {
+                    sid.set(response.bussData)
+                    ToastUtils.showShort("code=${message}")
+                }
+
+                override fun onIError(e: ApiException) {
+                    sid.set(e.message)
+                    ToastUtils.showShort("code=${e.message}")
+                }
+            })
+```
 ## RelativeItemView 一个item，左右文字图片一个控件完美使用
 ```
 <com.zh.common.view.RelativeItemView
@@ -106,29 +179,6 @@ tb_rightImage2_marginRight 右边图片2_距离右边距离
 tb_divider 底部分割线 
 tb_titleBarHeight TitleBar高度
 tb_titleBarBackground TitleBar背景色 
-```
-## 发起网络请求
-
-单独创建接口类
-```
-@POST(ApiManager.APPLOGIN_URL)
-fun login(@Body body: RequestBody): Observable<BaseResponse<LoginBean>>
-```
-在viewmodle中调用即可
-```
-doNetRequest(apiService<INetService>().login(BaseMapToBody.convertMapToBody(map)),
-            object : BaseObserver<LoginBean>(true) {
-
-                override fun onISuccess(message: String, response: LoginBean) {
-                    sid.set(response.bussData)
-                    ToastUtils.showShort("code=${message}")
-                }
-
-                override fun onIError(e: ApiException) {
-                    sid.set(e.message)
-                    ToastUtils.showShort("code=${e.message}")
-                }
-            })
 ```
 ###普通类继承 BaseActivity（BaseFragment、BaseDialogFragment 同理）
 ```
@@ -512,52 +562,4 @@ abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
         }
     }
 ```
-viewmodel封装
-```
-open class BaseViewModel : ViewModel() {
 
-    var pageIndex = 1
-    var pageSize = 10
-    private var isAddDisposable = false
-    private val mCompositeDisposable = CompositeDisposable()
-
-    //添加网络请求到CompositeDisposable
-    private fun addSubscribe(disposable: Disposable) {
-        mCompositeDisposable.also {
-            Log.e("--okhttp--", "disposable is add")
-            isAddDisposable = true
-            it.add(disposable)
-        }
-    }
-
-    override fun onCleared() {
-        //解除网络请求
-        mCompositeDisposable.also {
-            if (isAddDisposable) {
-                Log.e("--okhttp--", "disposable is clear")
-                isAddDisposable = false
-                mCompositeDisposable.clear()
-            }
-        }
-    }
-
-    /**
-     * 实例化网络请求
-     * hostUrl 域名, 默认ZjConfig.base_url，需要修改传入新的域名（新的每次都传）
-     */
-    inline fun <reified T : Any> apiService(hostUrl: String = ZjConfig.base_url): T =
-        RetrofitManager.instance.apiService(T::class.java, hostUrl)
-
-    /**
-     * 公用的网络请求发起的操作
-     * @param observable 发起请求的被观察着
-     * @param observer 观察着回调
-     */
-    fun <R> doNetRequest(observable: Observable<out BaseResponse<R>>, observer: BaseObserver<R>) {
-        val subscribeWith = observable
-            .compose(ResponseTransformer.instance.handleResult())
-            .compose(SchedulerProvider.instance.applySchedulers())
-            .subscribeWith(observer)
-        subscribeWith.getDisposable()?.let { addSubscribe(it) }
-    }
-```
