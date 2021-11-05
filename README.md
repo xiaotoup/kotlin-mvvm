@@ -183,12 +183,12 @@ tb_titleBarBackground TitleBar背景色
 ### 普通类继承 BaseActivity（BaseFragment、BaseDialogFragment 同理）
 ```
 class PictureActivity(
-    override val layoutRes: Int = R.layout.activity_picture,
-    override val viewModel: BaseViewModel = NormalViewModel()
+    override val layoutRes: Int = R.layout.activity_picture
 ) : BaseActivity<ViewDataBinding>() {
 
-    private lateinit var pictureFragment: PictureFragment
-
+    //可以不写（使用默认）
+    override val viewModel: BaseViewModel = MyViewModel()
+    
     override fun initView(savedInstanceState: Bundle?) {
       
     }
