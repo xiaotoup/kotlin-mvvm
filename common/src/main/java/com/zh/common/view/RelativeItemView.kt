@@ -96,6 +96,9 @@ class RelativeItemView @JvmOverloads constructor(
                 ViewGroup.LayoutParams.WRAP_CONTENT.toFloat()
             ).toInt()
             mIvLeftImg.layoutParams = lp
+            mIvLeftImg.visibility = View.VISIBLE
+        } else {
+            mIvLeftImg.visibility = View.GONE
         }
 
         /**
@@ -342,9 +345,9 @@ class RelativeItemView @JvmOverloads constructor(
                 lp.height = 1
             }
             //底部横线两边距离
-            if (typedArray.hasValue(R.styleable.RelativeItemView_riv_driverMarginLeftRight)) {
+            if (typedArray.hasValue(R.styleable.RelativeItemView_riv_driverMarginHorizontal)) {
                 val margin = typedArray.getDimension(
-                    R.styleable.RelativeItemView_riv_driverMarginLeftRight,
+                    R.styleable.RelativeItemView_riv_driverMarginHorizontal,
                     0f
                 ).toInt()
                 lp.leftMargin = margin

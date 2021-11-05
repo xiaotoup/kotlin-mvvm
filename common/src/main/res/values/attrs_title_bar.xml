@@ -145,7 +145,7 @@
         <!-- 下划线距离右边距离 -->
         <attr name="riv_driverMarginRight" format="dimension" />
         <!-- 下划线距离左右边距离 -->
-        <attr name="riv_driverMarginLeftRight" format="dimension" />
+        <attr name="riv_driverMarginHorizontal" format="dimension" />
     </declare-styleable>
     <!--状态栏-->
     <declare-styleable name="StatusBarView">
