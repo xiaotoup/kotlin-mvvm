@@ -1,10 +1,10 @@
-### kotlin-mvvm
+# kotlin-mvvm
 kotlin mvvm+dataBinding+retrofit2+ARouter等BaseActivity、BaseFragment、BaseDialogFragment基类封装
 
 Android开发项目基本使用框架，封装了各类组件，在基类实现了沉浸式状态栏，可以自己更改颜色，更高效全能开发框架
 
 ![框架所有功能](https://user-images.githubusercontent.com/32659960/140476015-c2c98786-2e17-4871-af63-b67450d34b11.jpg")
-<img src="https://user-images.githubusercontent.com/32659960/140476015-c2c98786-2e17-4871-af63-b67450d34b11.jpg" width="400" height="800"/>
+<div align=left><img src="https://user-images.githubusercontent.com/32659960/140476015-c2c98786-2e17-4871-af63-b67450d34b11.jpg" width="400" height="800"/></div>
 
 
 里面封装各种组件：
@@ -36,7 +36,7 @@ Android开发项目基本使用框架，封装了各类组件，在基类实现�
                     app:riv_rightTextPaddingRight="15dp"
                     app:riv_rightTextSize="13sp" />
 ```
-# 属性
+### 属性
 ```
 riv_leftImg 左边图片
 riv_leftImgWidth 左边图片宽度 
