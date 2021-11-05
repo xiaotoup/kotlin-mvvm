@@ -88,3 +88,476 @@ riv_driverMarginHorizontal 下划线距离左右边距离
             app:tb_centerText="测试"
             app:tb_leftImageDrawable="@drawable/picture_icon_back_arrow" />
 ```
+### 属性
+```
+tb_centerText 中间标题
+tb_centerTextColor 中间标题文字颜色 
+tb_centerTextSize 中间标题文字_字体大小
+tb_rightText 右边文字 
+tb_rightTextColor 右边文字颜色 
+tb_rightTextSize 右边文字_字体大小
+tb_leftText 左边文字
+tb_leftTextColor 左边文字颜色 
+tb_leftTextSize 左边文字_字体大小 
+tb_leftImageDrawable 左边图片
+tb_rightImageDrawable 右边图片 
+tb_rightImageDrawable2 右边图片2
+tb_rightImage2_marginRight 右边图片2_距离右边距离 
+tb_divider 底部分割线 
+tb_titleBarHeight TitleBar高度
+tb_titleBarBackground TitleBar背景色 
+```
+## 发起网络请求
+
+单独创建接口类
+```
+@POST(ApiManager.APPLOGIN_URL)
+fun login(@Body body: RequestBody): Observable<BaseResponse<LoginBean>>
+```
+在viewmodle中调用即可
+```
+doNetRequest(apiService<INetService>().login(BaseMapToBody.convertMapToBody(map)),
+            object : BaseObserver<LoginBean>(true) {
+
+                override fun onISuccess(message: String, response: LoginBean) {
+                    sid.set(response.bussData)
+                    ToastUtils.showShort("code=${message}")
+                }
+
+                override fun onIError(e: ApiException) {
+                    sid.set(e.message)
+                    ToastUtils.showShort("code=${e.message}")
+                }
+            })
+```
+###普通类继承 BaseActivity（BaseFragment、BaseDialogFragment 同理）
+```
+class PictureActivity(
+    override val layoutRes: Int = R.layout.activity_picture,
+    override val viewModel: BaseViewModel = NormalViewModel()
+) : BaseActivity<ViewDataBinding>() {
+
+    private lateinit var pictureFragment: PictureFragment
+
+    override fun initView(savedInstanceState: Bundle?) {
+      
+    }
+}
+```
+
+BaseActivity封装
+```
+abstract class BaseActivity<BINDING : ViewDataBinding> : RxAppCompatActivity(), JumpActivity {
+
+    lateinit var binding: BINDING
+    private val isNotAddActivityList = "is_add_activity_list" //是否加入到activity的list，管理
+    private var mApplication: BaseApplication? = null
+    private var loadingDialog: LoadingDialog? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mApplication = application as BaseApplication
+        //添加到栈管理
+        val isNotAdd = intent.getBooleanExtra(isNotAddActivityList, false)
+        synchronized(BaseActivity::class.java) {
+            if (!isNotAdd) mApplication?.getActivityList()?.add(this)
+        }
+        initViewDataBinding()
+        initImmersionBars()
+        //初始化组件
+        ARouter.getInstance().inject(this)
+        initView(savedInstanceState)
+    }
+
+    private fun initViewDataBinding() {
+        if (layoutRes != 0) binding = DataBindingUtil.setContentView(this, layoutRes)
+        val mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
+        //允许设置变量的值而不反映
+        binding?.setVariable(viewModelId, mViewModel)
+        //支持LiveData绑定xml，数据改变，UI自动会更新
+        binding?.lifecycleOwner = this
+    }
+
+    @get:LayoutRes
+    abstract val layoutRes: Int
+    open val viewModel: BaseViewModel = NormalViewModel()
+    open val viewModelId = 0
+    abstract fun initView(savedInstanceState: Bundle?)
+
+    override fun onDestroy() {
+        super.onDestroy()
+        synchronized(BaseActivity::class.java) { mApplication?.getActivityList()?.remove(this) }
+        binding?.unbind()
+    }
+
+    /**
+     * 页面跳转
+     *
+     * @param url 对应组建的名称 (“/mine/setting”)
+     * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
+     */
+    fun startActivityForResult(url: String, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        ARouter.getInstance().build(url).navigation(this, type)
+    }
+
+    //不使用路由跳转
+    fun startActivityForResult(classActivity: Class<*>, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(this, classActivity), type)
+    }
+
+    /**
+     * 携带数据的页面跳转
+     *
+     * @param url 对应组建的名称  (“/mine/setting”)
+     * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
+     */
+    fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        ARouter.getInstance().build(url).with(bundle).navigation(this, type)
+    }
+
+    //不使用路由跳转
+    fun startActivityForResult(classActivity: Class<*>, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(this, classActivity).putExtras(bundle), type)
+    }
+
+    /**
+     * 语言适配
+     */
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase?.let { LanguageUtil().attachBaseContext(it) })
+    }
+
+    /**
+     * 点击edittext以外区域隐藏软键盘
+     */
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val v = currentFocus
+            if (isShouldHideInput(v, ev)) {
+                val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm?.hideSoftInputFromWindow(v!!.windowToken, 0)
+            }
+            return super.dispatchTouchEvent(ev)
+        }
+        // 必不可少，否则所有的组件都不会有TouchEvent了
+        try {
+            if (window.superDispatchTouchEvent(ev)) {
+                return true
+            }
+        } catch (e: Exception) {
+        }
+        return onTouchEvent(ev)
+    }
+
+    private fun isShouldHideInput(v: View?, event: MotionEvent): Boolean {
+        if (v != null && v is EditText) {
+            val leftTop = intArrayOf(0, 0)
+            // 获取输入框当前的location位置
+            v.getLocationInWindow(leftTop)
+            val left = leftTop[0]
+            val top = leftTop[1]
+            val bottom = top + v.getHeight()
+            val right = left + v.getWidth()
+            return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
+        }
+        return false
+    }
+
+    private fun getLoadingDialog() {
+        loadingDialog ?: also { loadingDialog = LoadingDialog(this) }
+    }
+
+    /**
+     * 显示加载dialog
+     */
+    fun showLoading() {
+        try {
+            getLoadingDialog()
+            loadingDialog?.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 结束dialog
+     */
+    fun dismissLoading() {
+        try {
+            loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+```
+BaseFragment封装
+```
+abstract class BaseFragment<BINDING : ViewDataBinding> : RxFragment(),
+    JumpActivity, ImmersionOwner {
+
+    lateinit var binding: BINDING
+    private var rootView: View? = null
+    private lateinit var mContext: Context
+    private var loadingDialog: LoadingDialog? = null
+
+    //ImmersionBar代理类
+    private val mImmersionProxy = ImmersionProxy(this)
+
+    override fun initImmersionBar() {
+        initImmersionBars()
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        mImmersionProxy.isUserVisibleHint = isVisibleToUser
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mContext = context
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mImmersionProxy.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        ARouter.getInstance().inject(this)
+        if (null == rootView) { //如果缓存中有rootView则直接使用
+            initViewDataBinding(inflater, container)
+            this.rootView = binding.root;
+        } else {
+            rootView?.let {
+                it.parent?.let { it2 -> (it2 as ViewGroup).removeView(it) }
+            }
+        }
+        return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //在OnCreate方法中调用下面方法，然后再使用线程，就能在uncaughtException方法中捕获到异常
+        initView(savedInstanceState)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        mImmersionProxy.onActivityCreated(savedInstanceState)
+    }
+
+    private fun initViewDataBinding(inflater: LayoutInflater, container: ViewGroup?) {
+        if (layoutRes != 0) binding =
+            DataBindingUtil.inflate(inflater, layoutRes, container, false)
+        val mViewModel = ViewModelProvider(this, ViewModelFactory(viewModel))[viewModel::class.java]
+        //允许设置变量的值而不反映
+        binding?.setVariable(viewModelId, mViewModel)
+        //支持LiveData绑定xml，数据改变，UI自动会更新
+        binding?.lifecycleOwner = this
+    }
+
+    @get:LayoutRes
+    abstract val layoutRes: Int
+    open val viewModel: BaseViewModel = NormalViewModel()
+    open val viewModelId = 0
+    abstract fun initView(savedInstanceState: Bundle?)
+
+    open fun getRootView(): View? = rootView
+
+    override fun onResume() {
+        super.onResume()
+        mImmersionProxy.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mImmersionProxy.onPause()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        //为rootView做缓存，在viewpager中使用fragment时可以提升切换流畅度
+        rootView?.let {
+            it.parent?.let { it2 -> (it2 as ViewGroup).removeView(it) }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mImmersionProxy.onDestroy()
+        binding?.unbind()
+    }
+
+    /**
+     * 页面跳转
+     *
+     * @param url 对应组建的名称 (“/mine/setting”)
+     * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
+     */
+    fun startActivityForResult(url: String, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        val intent = Intent(context, getDestination(url))
+        startActivityForResult(intent, type)
+    }
+
+    //不使用路由跳转
+    fun startActivityForResult(classActivity: Class<*>, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(activity, classActivity), type)
+    }
+
+    /**
+     * 携带数据的页面跳转
+     *
+     * @param url 对应组建的名称  (“/mine/setting”)
+     * navigation的第一个参数***必须是Activity***，第二个参数则是RequestCode
+     */
+    fun startActivityForResult(url: String, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        val intent = Intent(context, getDestination(url))
+        intent.putExtras(bundle)
+        startActivityForResult(intent, type)
+    }
+
+    //不使用路由跳转
+    fun startActivityForResult(classActivity: Class<*>, bundle: Bundle, type: Int) {
+        if (DoubleUtils.isFastDoubleClick()) return
+        startActivityForResult(Intent(activity, classActivity).putExtras(bundle), type)
+    }
+
+    /**
+     * 由于ARouter不支持Fragment startActivityForResult(),需要获取跳转的Class
+     * 根据路径获取具体要跳转的class
+     */
+    private fun getDestination(url: String): Class<*> {
+        val postcard = ARouter.getInstance().build(url)
+        LogisticsCenter.completion(postcard)
+        return postcard.destination
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        mImmersionProxy.onHiddenChanged(hidden)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        mImmersionProxy.onConfigurationChanged(newConfig)
+    }
+
+    /**
+     * 懒加载，在view初始化完成之前执行
+     * On lazy after view.
+     */
+    override fun onLazyBeforeView() {}
+
+    /**
+     * 懒加载，在view初始化完成之后执行
+     * On lazy before view.
+     */
+    override fun onLazyAfterView() {}
+
+    /**
+     * Fragment用户可见时候调用
+     * On visible.
+     */
+    override fun onVisible() {}
+
+    /**
+     * Fragment用户不可见时候调用
+     * On invisible.
+     */
+    override fun onInvisible() {}
+
+    /**
+     * 是否可以实现沉浸式，当为true的时候才可以执行initImmersionBar方法
+     * Immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    override fun immersionBarEnabled(): Boolean = true
+
+    private fun getLoadingDialog() {
+        loadingDialog ?: also { loadingDialog = LoadingDialog(context!!) }
+    }
+
+    /**
+     * 显示加载dialog
+     */
+    fun showLoading() {
+        try {
+            getLoadingDialog()
+            loadingDialog?.show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    /**
+     * 结束dialog
+     */
+    fun dismissLoading() {
+        try {
+            loadingDialog?.let { if (it.isShowing) it.dismiss() }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+```
+viewmodel封装
+```
+open class BaseViewModel : ViewModel() {
+
+    var pageIndex = 1
+    var pageSize = 10
+    private var isAddDisposable = false
+    private val mCompositeDisposable = CompositeDisposable()
+
+    //添加网络请求到CompositeDisposable
+    private fun addSubscribe(disposable: Disposable) {
+        mCompositeDisposable.also {
+            Log.e("--okhttp--", "disposable is add")
+            isAddDisposable = true
+            it.add(disposable)
+        }
+    }
+
+    override fun onCleared() {
+        //解除网络请求
+        mCompositeDisposable.also {
+            if (isAddDisposable) {
+                Log.e("--okhttp--", "disposable is clear")
+                isAddDisposable = false
+                mCompositeDisposable.clear()
+            }
+        }
+    }
+
+    /**
+     * 实例化网络请求
+     * hostUrl 域名, 默认ZjConfig.base_url，需要修改传入新的域名（新的每次都传）
+     */
+    inline fun <reified T : Any> apiService(hostUrl: String = ZjConfig.base_url): T =
+        RetrofitManager.instance.apiService(T::class.java, hostUrl)
+
+    /**
+     * 公用的网络请求发起的操作
+     * @param observable 发起请求的被观察着
+     * @param observer 观察着回调
+     */
+    fun <R> doNetRequest(observable: Observable<out BaseResponse<R>>, observer: BaseObserver<R>) {
+        val subscribeWith = observable
+            .compose(ResponseTransformer.instance.handleResult())
+            .compose(SchedulerProvider.instance.applySchedulers())
+            .subscribeWith(observer)
+        subscribeWith.getDisposable()?.let { addSubscribe(it) }
+    }
+```
