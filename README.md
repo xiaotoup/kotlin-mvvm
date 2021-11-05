@@ -65,7 +65,7 @@ open class BaseViewModel : ViewModel() {
 @POST(ApiManager.APPLOGIN_URL)
 fun login(@Body body: RequestBody): Observable<BaseResponse<LoginBean>>
 ```
-在viewmodle中调用即可
+在viewmodle中调用即可(BaseObserver<LoginBean>(true)显示loading加载框)
 ```
 doNetRequest(apiService<INetService>().login(BaseMapToBody.convertMapToBody(map)), object : BaseObserver<LoginBean>(true) {
 
