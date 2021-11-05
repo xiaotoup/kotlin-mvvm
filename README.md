@@ -4,7 +4,7 @@ kotlin mvvm+dataBinding+retrofit2+ARouter等BaseActivity、BaseFragment、BaseDi
 Android开发项目基本使用框架，封装了各类组件，在基类实现了沉浸式状态栏，可以自己更改颜色，更高效全能开发框架
 
 ![Screenshot_2021-11-05-15-46-03-512_com zh kotlin_mvvm](https://user-images.githubusercontent.com/32659960/140476015-c2c98786-2e17-4871-af63-b67450d34b11.jpg")
-<img src="https://user-images.githubusercontent.com/32659960/140476015-c2c98786-2e17-4871-af63-b67450d34b11.jpg" width="400" height="600"/>
+<img src="https://user-images.githubusercontent.com/32659960/140476015-c2c98786-2e17-4871-af63-b67450d34b11.jpg" width="400" height="800"/>
 
 
 里面封装各种组件：
