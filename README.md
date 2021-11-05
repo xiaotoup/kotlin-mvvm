@@ -7,6 +7,6 @@ kotlin mvvm+dataBinding+retrofit2+ARouter等BaseActivity、BaseFragment、BaseDi
 
 里面封装各种组件：
 # RelativeItemView 一个item，左右文字图片一个控件完美使用
----java---
+```
 sdasd
----java---
+```
